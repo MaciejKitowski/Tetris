@@ -4,6 +4,7 @@ using System.Collections;
 public class arenaController : MonoBehaviour
 {
     public GameObject[,] arenaTile = new GameObject[10, 20];
+    public bool displayLogs = true;
 
     void Awake()
     {
@@ -16,7 +17,7 @@ public class arenaController : MonoBehaviour
                 string[] buffer = obj.name.Split(splitChars);
 
                 arenaTile[int.Parse(buffer[1]), y] = obj.gameObject;
-                if(Debug.isDebugBuild) Debug.Log("ArenaController - " + arenaTile[int.Parse(buffer[1]), y].name + " set to arenaTile[" + int.Parse(buffer[1]) + "," + y + "]");
+                if(Debug.isDebugBuild && displayLogs) Debug.Log("ArenaController - " + arenaTile[int.Parse(buffer[1]), y].name + " set to arenaTile[" + int.Parse(buffer[1]) + "," + y + "]");
             }
         }
     }
