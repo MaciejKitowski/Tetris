@@ -24,6 +24,11 @@ public class nextBlockController : MonoBehaviour
         }
 	}
 
+    public GameObject getBlock()
+    {
+        return transform.GetChild(0).gameObject;
+    }
+
     public void randBlock()
     {
         Destroy(transform.GetChild(0).gameObject); //Remove old block
@@ -40,6 +45,7 @@ public class nextBlockController : MonoBehaviour
         buffer.transform.localScale = new Vector3(scaleSmall, scaleSmall);
         buffer.transform.localPosition = new Vector3(0, positionDifference);
         buffer.transform.SetSiblingIndex(1);
+        buffer.GetComponent<blockController>().randColor();
     }
 
     public void randBlocksAll()
@@ -52,6 +58,7 @@ public class nextBlockController : MonoBehaviour
         buffer.transform.localScale = new Vector3(scaleBig, scaleBig);
         buffer.transform.localPosition = new Vector3(0, 0);
         buffer.transform.SetSiblingIndex(0);
+        buffer.GetComponent<blockController>().randColor();
 
         //Second block
         buffer = Instantiate(blockManager.blockPrefab[Random.Range(0, blockManager.blockPrefab.Length)]) as GameObject;
@@ -59,5 +66,6 @@ public class nextBlockController : MonoBehaviour
         buffer.transform.localScale = new Vector3(scaleSmall, scaleSmall);
         buffer.transform.localPosition = new Vector3(0, positionDifference);
         buffer.transform.SetSiblingIndex(1);
+        buffer.GetComponent<blockController>().randColor();
     }
 }
