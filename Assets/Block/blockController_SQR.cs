@@ -5,12 +5,12 @@ public class blockController_SQR : blockController
 {
     override public void turnLeft()
     {
-        if (tile[0].arenaTile.posX > 0) moveTilesHorizontal(-1);
+        if (canTurn(new int[2] { 0, 2 }, -1)) moveTilesHorizontal(-1);
     }
 
     override public void turnRight()
     {
-        if (tile[1].arenaTile.posX < 9) moveTilesHorizontal(1);
+        if (canTurn(new int[2] { 1, 3 }, 1)) moveTilesHorizontal(1);
     }
 
     override public void fallDown()

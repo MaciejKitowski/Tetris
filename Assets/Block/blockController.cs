@@ -80,7 +80,7 @@ public class blockController : MonoBehaviour
         tile[3].transform.position = managerArena.tile[tile[0].arenaTile.posX + thirdTileX, tile[0].arenaTile.posY + thirdTileY].transform.position;
     }
 
-    virtual public bool canTurn(int[] tileIndex, int side)
+    virtual protected bool canTurn(int[] tileIndex, int side)
     {
         foreach(int i in tileIndex)
         {
