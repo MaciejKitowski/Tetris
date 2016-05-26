@@ -10,28 +10,36 @@ public class blockController : MonoBehaviour
     protected blockTileController[] tile = new blockTileController[4];
     protected arenaManager managerArena;
 
-    protected float fallTimer = 1f;
+    protected bool speedUp = false;
+    protected float fallTimer = 0.6f;
+    protected float fallTimerFast = 0.02f;
     protected float timer = 0;
 
-    virtual public void Start()
+    virtual protected void Start()
     {
         for (int i = 0; i < 4; ++i) tile[i] = transform.GetChild(i).GetComponent<blockTileController>();
         managerArena = FindObjectOfType<arenaManager>();
     }
 
-    virtual public void Update()
+    virtual protected void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R)) rotate();
-        else if (Input.GetKeyDown(KeyCode.A)) turnLeft();
-        else if (Input.GetKeyDown(KeyCode.D)) turnRight();
-        else if (Input.GetKeyDown(KeyCode.W)) canFall = true;
+        if (Input.GetKeyDown(KeyCode.R) && canFall && !speedUp) rotate();
+        else if (Input.GetKeyDown(KeyCode.A) && canFall && !speedUp) turnLeft();
+        else if (Input.GetKeyDown(KeyCode.D) && canFall && !speedUp) turnRight();
+        else if (Input.GetKeyDown(KeyCode.W) && !canFall && !speedUp) canFall = true;
+        else if (Input.GetKeyDown(KeyCode.S) && canFall && !speedUp)
+        {
+            speedUp = true;
+            timer = 0;
+        }
 
-        if(canFall)
+        if (canFall)
         {
             if (timer < 0)
             {
                 fallDown();
-                timer = fallTimer;
+                if (!speedUp) timer = fallTimer;
+                else timer = fallTimerFast;
             }
             else timer -= Time.deltaTime;
         }
