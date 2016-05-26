@@ -5,6 +5,11 @@ public class nextBlockController : MonoBehaviour
 {
     public GameObject[] blockPrefabs;
 
+    void Awake()
+    {
+        if (transform.childCount == 0) randNew();
+    }
+
 	void Update ()
     {
         if (Input.GetKeyDown(KeyCode.F)) randNew();
@@ -20,5 +25,10 @@ public class nextBlockController : MonoBehaviour
         buffer.transform.localPosition = new Vector2(0, 0);
         
         buffer.GetComponent<blockController>().randColor();
+    }
+
+    public GameObject getBlock()
+    {
+        return transform.GetChild(0).gameObject;
     }
 }
