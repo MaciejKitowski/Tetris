@@ -29,14 +29,16 @@ public class blockController_I : blockController
 
     override public void turnLeft()
     {
-        if ((actitveRotation == rotation.DOWN || actitveRotation == rotation.RIGHT || actitveRotation == rotation.UP) && tile[0].arenaTile.posX > 0) moveTilesHorizontal(-1);
-        else if (actitveRotation == rotation.LEFT && tile[3].arenaTile.posX > 0) moveTilesHorizontal(-1);
+        if ((actitveRotation == rotation.DOWN || actitveRotation == rotation.UP) && canTurn(new int[4] { 0, 1, 2, 3 }, -1)) moveTilesHorizontal(-1);
+        else if(actitveRotation == rotation.RIGHT && canTurn(new int[1] { 0 }, -1)) moveTilesHorizontal(-1);
+        else if(actitveRotation == rotation.LEFT && canTurn(new int[1] { 3 }, -1)) moveTilesHorizontal(-1);
     }
 
     override public void turnRight()
     {
-        if ((actitveRotation == rotation.DOWN || actitveRotation == rotation.LEFT || actitveRotation == rotation.UP) && tile[0].arenaTile.posX < 9) moveTilesHorizontal(1);
-        else if (actitveRotation == rotation.RIGHT && tile[3].arenaTile.posX < 9) moveTilesHorizontal(1);
+        if ((actitveRotation == rotation.DOWN || actitveRotation == rotation.UP) && canTurn(new int[4] { 0, 1, 2, 3 }, 1)) moveTilesHorizontal(1);
+        else if (actitveRotation == rotation.RIGHT && canTurn(new int[1] { 3 }, 1)) moveTilesHorizontal(1);
+        else if (actitveRotation == rotation.LEFT && canTurn(new int[1] { 0 }, 1)) moveTilesHorizontal(1);
     }
 
     override public void fallDown()

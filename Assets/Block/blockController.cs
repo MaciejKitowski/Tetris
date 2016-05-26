@@ -79,4 +79,17 @@ public class blockController : MonoBehaviour
         tile[2].transform.position = managerArena.tile[tile[0].arenaTile.posX + secondTileX, tile[0].arenaTile.posY + secondTileY].transform.position;
         tile[3].transform.position = managerArena.tile[tile[0].arenaTile.posX + thirdTileX, tile[0].arenaTile.posY + thirdTileY].transform.position;
     }
+
+    virtual public bool canTurn(int[] tileIndex, int side)
+    {
+        foreach(int i in tileIndex)
+        {
+            if (tile[i].arenaTile.posX + side > 9 || tile[i].arenaTile.posX + side < 0 || !managerArena.tile[tile[i].arenaTile.posX + side, tile[i].arenaTile.posY].isEmpty)
+            {
+                Debug.Log("Cannot move - tile index: " + i);
+                return false;
+            }
+        }
+        return true;
+    }
 }

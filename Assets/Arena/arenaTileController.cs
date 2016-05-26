@@ -16,5 +16,6 @@ public class arenaTileController : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D obj) { isEmpty = false; }
+    void OnCollisionStay2D(Collision2D obj) { isEmpty = false; }
     void OnCollisionExit2D(Collision2D obj) { isEmpty = true; }
 }

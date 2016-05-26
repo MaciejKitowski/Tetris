@@ -50,7 +50,7 @@ public class blockController_S_REV : blockController
         else if (actitveRotation == rotation.UP && tile[0].arenaTile.posY < 19 && managerArena.tile[tile[0].arenaTile.posX, tile[0].arenaTile.posY + 1].isEmpty
              && managerArena.tile[tile[2].arenaTile.posX, tile[2].arenaTile.posY + 1].isEmpty) moveTilesVertical(1);
 
-        else if (actitveRotation == rotation.LEFT && tile[3].arenaTile.posY < 19 && managerArena.tile[tile[0].arenaTile.posX, tile[0].arenaTile.posY + 1].isEmpty
+        else if (canFall && actitveRotation == rotation.LEFT && tile[3].arenaTile.posY < 19 && managerArena.tile[tile[0].arenaTile.posX, tile[0].arenaTile.posY + 1].isEmpty
              && managerArena.tile[tile[2].arenaTile.posX, tile[2].arenaTile.posY + 1].isEmpty && managerArena.tile[tile[3].arenaTile.posX, tile[3].arenaTile.posY + 1].isEmpty) moveTilesVertical(1);
         else canFall = false;
     }
