@@ -27,6 +27,7 @@ public class blockController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.A) && canFall && !speedUp) turnLeft();
         else if (Input.GetKeyDown(KeyCode.D) && canFall && !speedUp) turnRight();
         else if (Input.GetKeyDown(KeyCode.W) && !canFall && !speedUp) canFall = true;
+        else if (Input.GetKeyDown(KeyCode.C)) randColor();
         else if (Input.GetKeyDown(KeyCode.S) && canFall && !speedUp)
         {
             speedUp = true;
@@ -49,6 +50,12 @@ public class blockController : MonoBehaviour
     virtual public void turnLeft() { }
     virtual public void turnRight() { }
     virtual public void fallDown() { }
+
+    virtual public void randColor()
+    {
+        blockTileController.blockColor col = (blockTileController.blockColor)Random.Range(0, 4);
+        foreach (blockTileController tl in tile) tl.setColor(col);
+    }
 
     protected void moveTilesHorizontal(int direction)
     {
