@@ -84,12 +84,21 @@ public class blockController : MonoBehaviour
     {
         foreach(int i in tileIndex)
         {
-            if (tile[i].arenaTile.posX + side > 9 || tile[i].arenaTile.posX + side < 0 || !managerArena.tile[tile[i].arenaTile.posX + side, tile[i].arenaTile.posY].isEmpty)
+            if (tile[i].arenaTile.posX + side > 9 || tile[i].arenaTile.posX + side < 0 || !managerArena.tile[tile[i].arenaTile.posX + side, tile[i].arenaTile.posY].isEmpty) return false;
+        }
+        return true;
+    }
+
+    virtual protected bool canFallDown(int[] tileIndex, int tileDown)
+    {
+        if (tile[tileDown].arenaTile.posY < 19)
+        {
+            foreach(int i in tileIndex)
             {
-                Debug.Log("Cannot move - tile index: " + i);
-                return false;
+                if (!managerArena.tile[tile[i].arenaTile.posX, tile[i].arenaTile.posY + 1].isEmpty) return false;
             }
         }
+        else return false;
         return true;
     }
 }
