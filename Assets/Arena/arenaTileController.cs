@@ -5,6 +5,7 @@ public class arenaTileController : MonoBehaviour
 {
     public int posX, posY;
     public bool isEmpty = true;
+    public GameObject blockTile;
 
     void Awake()
     {
@@ -15,7 +16,21 @@ public class arenaTileController : MonoBehaviour
         posY = int.Parse(buffer[2]);
     }
 
-    void OnCollisionEnter2D(Collision2D obj) { isEmpty = false; }
-    void OnCollisionStay2D(Collision2D obj) { isEmpty = false; }
-    void OnCollisionExit2D(Collision2D obj) { isEmpty = true; }
+    void OnCollisionEnter2D(Collision2D obj)
+    {
+        blockTile = obj.gameObject;
+        isEmpty = false;
+    }
+
+    void OnCollisionStay2D(Collision2D obj)
+    {
+        blockTile = obj.gameObject;
+        isEmpty = false;
+    }
+
+    void OnCollisionExit2D(Collision2D obj)
+    {
+        blockTile = null;
+        isEmpty = true;
+    }
 }
