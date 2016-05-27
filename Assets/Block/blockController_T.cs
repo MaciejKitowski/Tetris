@@ -53,6 +53,7 @@ public class blockController_T : blockController
         else
         {
             canFall = false;
+            foreach (blockTileController tl in tile) tl.blockControllerRemoved = true;
             managerBlocks.pushBlock();
             Destroy(GetComponent<blockController>());
         }

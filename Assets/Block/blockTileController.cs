@@ -5,9 +5,22 @@ public class blockTileController : MonoBehaviour
 {
     public enum blockColor { GREEN, RED, BLUE, MAGENTA };
 
+    public bool blockControllerRemoved = false;
     public arenaTileController arenaTile;
     public blockColor color = blockColor.GREEN;
-    
+
+    private arenaManager managerArena;
+
+    void Start() { managerArena = FindObjectOfType<arenaManager>(); }
+
+    void Update()
+    {
+        if(blockControllerRemoved && arenaTile.posY < 19 && managerArena.tile[arenaTile.posX,arenaTile.posY + 1].isEmpty)
+        {
+            transform.position = managerArena.tile[arenaTile.posX, arenaTile.posY + 1].transform.position;
+        }
+    }
+
     void OnCollisionEnter2D(Collision2D obj)
     {
         if(obj.transform.tag == "Game_arenaTile")
