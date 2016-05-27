@@ -49,19 +49,12 @@ public class blockController_S : blockController
         else if (actitveRotation == rotation.RIGHT && canFallDown(new int[3] { 0, 2, 3 }, 2)) moveTilesVertical(1);
         else if (actitveRotation == rotation.UP && canFallDown(new int[2] { 0, 2 }, 0)) moveTilesVertical(1);
         else if (actitveRotation == rotation.LEFT && canFallDown(new int[2] { 0, 1 }, 0)) moveTilesVertical(1);
-        else canFall = false;
-
-        /*if (actitveRotation == rotation.DOWN && tile[3].arenaTile.posY < 19 && managerArena.tile[tile[1].arenaTile.posX, tile[1].arenaTile.posY + 1].isEmpty
-            && managerArena.tile[tile[3].arenaTile.posX, tile[3].arenaTile.posY + 1].isEmpty) moveTilesVertical(1);
-
-        else if (actitveRotation == rotation.RIGHT && tile[3].arenaTile.posY < 19 && managerArena.tile[tile[0].arenaTile.posX, tile[0].arenaTile.posY + 1].isEmpty
-             && managerArena.tile[tile[2].arenaTile.posX, tile[2].arenaTile.posY + 1].isEmpty && managerArena.tile[tile[3].arenaTile.posX, tile[3].arenaTile.posY + 1].isEmpty) moveTilesVertical(1);
-
-        else if (actitveRotation == rotation.UP && tile[0].arenaTile.posY < 19 && managerArena.tile[tile[0].arenaTile.posX, tile[0].arenaTile.posY + 1].isEmpty
-            && managerArena.tile[tile[2].arenaTile.posX, tile[2].arenaTile.posY + 1].isEmpty) moveTilesVertical(1);
-
-        else if (actitveRotation == rotation.LEFT && tile[0].arenaTile.posY < 19 && managerArena.tile[tile[0].arenaTile.posX, tile[0].arenaTile.posY + 1].isEmpty
-             && managerArena.tile[tile[1].arenaTile.posX, tile[1].arenaTile.posY + 1].isEmpty && managerArena.tile[tile[3].arenaTile.posX, tile[3].arenaTile.posY + 1].isEmpty) moveTilesVertical(1);
-        else canFall = false;*/
+        //else canFall = false;
+        else
+        {
+            canFall = false;
+            managerBlocks.pushBlock();
+            Destroy(GetComponent<blockController>());
+        }
     }
 }

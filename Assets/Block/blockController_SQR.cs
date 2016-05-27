@@ -19,6 +19,12 @@ public class blockController_SQR : blockController
         else if (actitveRotation == rotation.RIGHT) { }
         else if (actitveRotation == rotation.UP) { }
         else if (actitveRotation == rotation.LEFT) { }
-        else canFall = false;
+        //else canFall = false;
+        else
+        {
+            canFall = false;
+            managerBlocks.pushBlock();
+            Destroy(GetComponent<blockController>());
+        }
     }
 }

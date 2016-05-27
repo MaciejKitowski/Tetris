@@ -9,6 +9,7 @@ public class blockController : MonoBehaviour
 
     protected blockTileController[] tile = new blockTileController[4];
     protected arenaManager managerArena;
+    protected blocksManager managerBlocks;
 
     protected bool speedUp = false;
     protected float fallTimer = 0.6f;
@@ -19,6 +20,7 @@ public class blockController : MonoBehaviour
     {
         for (int i = 0; i < 4; ++i) tile[i] = transform.GetChild(i).GetComponent<blockTileController>();
         managerArena = FindObjectOfType<arenaManager>();
+        managerBlocks = FindObjectOfType<blocksManager>();
     }
 
     virtual protected void Update()

@@ -49,6 +49,12 @@ public class blockController_L : blockController
         else if (actitveRotation == rotation.RIGHT && canFallDown(new int[3] { 1, 2, 3 }, 1)) moveTilesVertical(1);
         else if (actitveRotation == rotation.UP && canFallDown(new int[2] { 0, 1 }, 0)) moveTilesVertical(1);
         else if (actitveRotation == rotation.LEFT && canFallDown(new int[3] { 0, 2, 3 }, 0)) moveTilesVertical(1);
-        else canFall = false;
+        //else canFall = false;
+        else
+        {
+            canFall = false;
+            managerBlocks.pushBlock();
+            Destroy(GetComponent<blockController>());
+        }
     }
 }

@@ -43,10 +43,16 @@ public class blockController_I : blockController
 
     override public void fallDown()
     {
-        if(actitveRotation == rotation.DOWN && canFallDown(new int[1] { 3 }, 3)) moveTilesVertical(1);
-        else if(actitveRotation == rotation.RIGHT && canFallDown(new int[4] { 0, 1, 2, 3 }, 0)) moveTilesVertical(1);
+        if (actitveRotation == rotation.DOWN && canFallDown(new int[1] { 3 }, 3)) moveTilesVertical(1);
+        else if (actitveRotation == rotation.RIGHT && canFallDown(new int[4] { 0, 1, 2, 3 }, 0)) moveTilesVertical(1);
         else if (actitveRotation == rotation.UP && canFallDown(new int[1] { 0 }, 0)) moveTilesVertical(1);
         else if (actitveRotation == rotation.LEFT && canFallDown(new int[4] { 0, 1, 2, 3 }, 0)) moveTilesVertical(1);
-        else canFall = false;
+        //else canFall = false;
+        else
+        {
+            canFall = false;
+            managerBlocks.pushBlock();
+            Destroy(GetComponent<blockController>());
+        }
     }
 }
