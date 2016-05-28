@@ -15,11 +15,10 @@ public class blockController_SQR : blockController
 
     override public void fallDown()
     {
-        if (actitveRotation == rotation.DOWN && canFallDown(new int[2] { 2, 3 }, 2)) moveTilesVertical(1);
+        if (actitveRotation == rotation.DOWN && canFallDown(new int[2] { 2, 3 }, 2)) moveTilesVertical();
         else if (actitveRotation == rotation.RIGHT) { }
         else if (actitveRotation == rotation.UP) { }
         else if (actitveRotation == rotation.LEFT) { }
-        //else canFall = false;
         else
         {
             canFall = false;

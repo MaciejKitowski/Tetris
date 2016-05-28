@@ -5,25 +5,25 @@ public class blockController_I : blockController
 {
     override public void rotate()
     {
-        if (actitveRotation == rotation.DOWN && tile[0].arenaTile.posX < 7) //DOWN -> RIGHT
+        if (actitveRotation == rotation.DOWN && tile[0].arenaTile.posX < 7)
         {
             actitveRotation = rotation.RIGHT;
-            rotateTiles(1, 0, 2, 0, 3, 0);
+            transform.Rotate(0, 0, 90f);
         }
-        else if(actitveRotation == rotation.RIGHT && tile[0].arenaTile.posY > 2) //RIGHT -> UP
+        else if(actitveRotation == rotation.RIGHT && tile[0].arenaTile.posY > 2)
         {
             actitveRotation = rotation.UP;
-            rotateTiles(0, -1, 0, -2, 0, -3);
+            transform.Rotate(0, 0, 90f);
         }
-        else if (actitveRotation == rotation.UP && tile[0].arenaTile.posX > 2) //UP -> LEFT
+        else if (actitveRotation == rotation.UP && tile[0].arenaTile.posX > 2)
         {
             actitveRotation = rotation.LEFT;
-            rotateTiles(-1, 0, -2, 0, -3, 0);
+            transform.Rotate(0, 0, 90f);
         }
-        else if (actitveRotation == rotation.LEFT && tile[0].arenaTile.posY < 17) //LEFT -> DOWN
+        else if (actitveRotation == rotation.LEFT && tile[0].arenaTile.posY < 17)
         {
             actitveRotation = rotation.DOWN;
-            rotateTiles(0, 1, 0, 2, 0, 3);
+            transform.Rotate(0, 0, 90f);
         }
     }
 
@@ -43,11 +43,10 @@ public class blockController_I : blockController
 
     override public void fallDown()
     {
-        if (actitveRotation == rotation.DOWN && canFallDown(new int[1] { 3 }, 3)) moveTilesVertical(1);
-        else if (actitveRotation == rotation.RIGHT && canFallDown(new int[4] { 0, 1, 2, 3 }, 0)) moveTilesVertical(1);
-        else if (actitveRotation == rotation.UP && canFallDown(new int[1] { 0 }, 0)) moveTilesVertical(1);
-        else if (actitveRotation == rotation.LEFT && canFallDown(new int[4] { 0, 1, 2, 3 }, 0)) moveTilesVertical(1);
-        //else canFall = false;
+        if (actitveRotation == rotation.DOWN && canFallDown(new int[1] { 3 }, 3)) moveTilesVertical();
+        else if (actitveRotation == rotation.RIGHT && canFallDown(new int[4] { 0, 1, 2, 3 }, 0)) moveTilesVertical();
+        else if (actitveRotation == rotation.UP && canFallDown(new int[1] { 0 }, 0)) moveTilesVertical();
+        else if (actitveRotation == rotation.LEFT && canFallDown(new int[4] { 0, 1, 2, 3 }, 0)) moveTilesVertical();
         else
         {
             canFall = false;

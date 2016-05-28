@@ -28,7 +28,6 @@ public class blockController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R) && canFall && !speedUp) rotate();
         else if (Input.GetKeyDown(KeyCode.A) && canFall && !speedUp) turnLeft();
         else if (Input.GetKeyDown(KeyCode.D) && canFall && !speedUp) turnRight();
-        else if (Input.GetKeyDown(KeyCode.W) && !canFall && !speedUp) canFall = true;
         else if (Input.GetKeyDown(KeyCode.C)) randColor();
         else if (Input.GetKeyDown(KeyCode.S) && canFall && !speedUp)
         {
@@ -61,28 +60,15 @@ public class blockController : MonoBehaviour
 
     protected void moveTilesHorizontal(int direction)
     {
-        tile[0].transform.position = managerArena.tile[tile[0].arenaTile.posX + direction, tile[0].arenaTile.posY].transform.position;
-        tile[1].transform.position = managerArena.tile[tile[1].arenaTile.posX + direction, tile[1].arenaTile.posY].transform.position;
-        tile[2].transform.position = managerArena.tile[tile[2].arenaTile.posX + direction, tile[2].arenaTile.posY].transform.position;
-        tile[3].transform.position = managerArena.tile[tile[3].arenaTile.posX + direction, tile[3].arenaTile.posY].transform.position;
+        transform.position = managerArena.tile[tile[0].arenaTile.posX + direction, tile[0].arenaTile.posY].transform.position;
     }
 
-    protected void moveTilesVertical(int direction)
+    protected void moveTilesVertical()
     {
-        tile[0].transform.position = managerArena.tile[tile[0].arenaTile.posX, tile[0].arenaTile.posY + direction].transform.position;
-        tile[1].transform.position = managerArena.tile[tile[1].arenaTile.posX, tile[1].arenaTile.posY + direction].transform.position;
-        tile[2].transform.position = managerArena.tile[tile[2].arenaTile.posX, tile[2].arenaTile.posY + direction].transform.position;
-        tile[3].transform.position = managerArena.tile[tile[3].arenaTile.posX, tile[3].arenaTile.posY + direction].transform.position;
+        transform.position = managerArena.tile[tile[0].arenaTile.posX, tile[0].arenaTile.posY + 1].transform.position;
     }
 
-    protected void rotateTiles(int firstTileX, int firstTileY, int secondTileX, int secondTileY, int thirdTileX, int thirdTileY)
-    {
-        tile[1].transform.position = managerArena.tile[tile[0].arenaTile.posX + firstTileX, tile[0].arenaTile.posY + firstTileY].transform.position;
-        tile[2].transform.position = managerArena.tile[tile[0].arenaTile.posX + secondTileX, tile[0].arenaTile.posY + secondTileY].transform.position;
-        tile[3].transform.position = managerArena.tile[tile[0].arenaTile.posX + thirdTileX, tile[0].arenaTile.posY + thirdTileY].transform.position;
-    }
-
-    virtual protected bool canTurn(int[] tileIndex, int side)
+    protected bool canTurn(int[] tileIndex, int side)
     {
         foreach(int i in tileIndex)
         {
@@ -91,7 +77,7 @@ public class blockController : MonoBehaviour
         return true;
     }
 
-    virtual protected bool canFallDown(int[] tileIndex, int tileDown)
+    protected bool canFallDown(int[] tileIndex, int tileDown)
     {
         if (tile[tileDown].arenaTile.posY < 19)
         {
