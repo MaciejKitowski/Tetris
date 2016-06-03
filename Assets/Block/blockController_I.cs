@@ -3,7 +3,7 @@ using System.Collections;
 
 public class blockController_I : blockController
 {
-    override public void rotate()
+    override protected void rotate()
     {
         if (actitveRotation == rotation.DOWN && tile[0].arenaTile.posX < 7)
         {
@@ -27,21 +27,21 @@ public class blockController_I : blockController
         }
     }
 
-    override public void turnLeft()
+    override protected void turnLeft()
     {
         if ((actitveRotation == rotation.DOWN || actitveRotation == rotation.UP) && canTurn(new int[4] { 0, 1, 2, 3 }, -1)) moveTilesHorizontal(-1);
         else if(actitveRotation == rotation.RIGHT && canTurn(new int[1] { 0 }, -1)) moveTilesHorizontal(-1);
         else if(actitveRotation == rotation.LEFT && canTurn(new int[1] { 3 }, -1)) moveTilesHorizontal(-1);
     }
 
-    override public void turnRight()
+    override protected void turnRight()
     {
         if ((actitveRotation == rotation.DOWN || actitveRotation == rotation.UP) && canTurn(new int[4] { 0, 1, 2, 3 }, 1)) moveTilesHorizontal(1);
         else if (actitveRotation == rotation.RIGHT && canTurn(new int[1] { 3 }, 1)) moveTilesHorizontal(1);
         else if (actitveRotation == rotation.LEFT && canTurn(new int[1] { 0 }, 1)) moveTilesHorizontal(1);
     }
 
-    override public void fallDown()
+    override protected void fallDown()
     {
         if (actitveRotation == rotation.DOWN && canFallDown(new int[1] { 3 }, 3)) moveTilesVertical();
         else if (actitveRotation == rotation.RIGHT && canFallDown(new int[4] { 0, 1, 2, 3 }, 0)) moveTilesVertical();

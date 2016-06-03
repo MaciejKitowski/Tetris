@@ -9,7 +9,6 @@ public class arenaTileController : MonoBehaviour
 
     void Awake()
     {
-        //Get tile position from name
         char[] splitChars = { '(', ',', ')' };
         string[] buffer = transform.name.Split(splitChars);
         posX = int.Parse(buffer[1]);

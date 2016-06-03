@@ -47,10 +47,10 @@ public class blockController : MonoBehaviour
         }
     }
 
-    virtual public void rotate() { }
-    virtual public void turnLeft() { }
-    virtual public void turnRight() { }
-    virtual public void fallDown() { }
+    virtual protected void rotate() { }
+    virtual protected void turnLeft() { }
+    virtual protected void turnRight() { }
+    virtual protected void fallDown() { }
 
     virtual public void randColor()
     {

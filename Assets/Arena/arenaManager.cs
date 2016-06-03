@@ -5,6 +5,8 @@ public class arenaManager : MonoBehaviour
 {
     public arenaTileController[,] tile = new arenaTileController[10,20];
 
+    private pointsCounter points;
+
     void Awake()
     {
         char[] splitChars = { '(', ',', ')' };
@@ -17,6 +19,7 @@ public class arenaManager : MonoBehaviour
                 tile[int.Parse(buffer[1]), y] = obj.gameObject.GetComponent<arenaTileController>();
             }
         }
+        points = FindObjectOfType<pointsCounter>();
     }
 
     void Update()
@@ -44,6 +47,6 @@ public class arenaManager : MonoBehaviour
             Destroy(tile[x, y].blockTile);
             tile[x, y].isEmpty = true;
         }
-        Debug.Log("Add points");
+        points.addPoints(50);
     }
 }
