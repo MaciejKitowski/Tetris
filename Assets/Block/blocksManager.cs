@@ -14,6 +14,7 @@ public class blocksManager : MonoBehaviour
 	void Update ()
     {
         if (Input.GetKeyDown(KeyCode.Space)) pushBlock();
+        if (transform.childCount == 0) pushBlock();
 	}
 
     public void pushBlock()
@@ -25,5 +26,13 @@ public class blocksManager : MonoBehaviour
 
         buffer.GetComponent<blockController>().canFall = true;
         nextBlock.randNew();
+    }
+
+    public void removeAllBlocks()
+    {
+        foreach(Transform obj in transform)
+        {
+            Destroy(obj.gameObject);
+        }
     }
 }

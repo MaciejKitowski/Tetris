@@ -18,4 +18,10 @@ public class pointsCounter : MonoBehaviour
         pointsVal += val;
         text.text = pointsVal.ToString();
     }
+
+    public void resetPoints()
+    {
+        pointsVal = 0;
+        text.text = pointsVal.ToString();
+    }
 }

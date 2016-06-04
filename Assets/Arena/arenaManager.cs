@@ -49,4 +49,12 @@ public class arenaManager : MonoBehaviour
         }
         points.addPoints(50);
     }
+
+    public void resetArena()
+    {
+        foreach(arenaTileController obj in tile)
+        {
+            obj.isEmpty = true;
+        }
+    }
 }
