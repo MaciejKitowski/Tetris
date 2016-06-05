@@ -4,8 +4,6 @@ using System.Collections;
 
 public class gameController : MonoBehaviour
 {
-    public Text debug_touchPosition;
-
     private pointsCounter points;
     private blocksManager managerBlocks;
     private nextBlockController nextBlock;
@@ -29,7 +27,6 @@ public class gameController : MonoBehaviour
         /*if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
             Vector3 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-            debug_touchPosition.text = "X=" + touchPos.x + ", Y=" + touchPos.y;
 
             if (touchPos.y < -3.3225f) managerBlocks.getBlock().GetComponent<blockController>().rotate();
             else
@@ -59,7 +56,6 @@ public class gameController : MonoBehaviour
                     else managerBlocks.getBlock().GetComponent<blockController>().speedUp = true;
                 }
             }
-            debug_touchPosition.text = "X=" + touchStartPos.x + "/" + touchEndPos.x + ", Y=" + touchStartPos.y + "/" + touchEndPos.y;
         }*/
     }
 
@@ -70,4 +66,9 @@ public class gameController : MonoBehaviour
         managerArena.resetArena();
         nextBlock.randNew();
     }
+
+    public void buttonTurnLeft() { managerBlocks.getBlock().GetComponent<blockController>().turnLeft(); }
+    public void buttonTurnRight() { managerBlocks.getBlock().GetComponent<blockController>().turnRight(); }
+    public void buttonRotate() { managerBlocks.getBlock().GetComponent<blockController>().rotate(); }
+    public void buttonSpeedUp() { managerBlocks.getBlock().GetComponent<blockController>().speedUp = true; }
 }
