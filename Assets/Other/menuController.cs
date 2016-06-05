@@ -8,7 +8,6 @@ public class menuController : MonoBehaviour
     void Awake()
     {
         game = GameObject.FindGameObjectWithTag("Game");
-        game.SetActive(false);
     }
 
     public void buttonStartGame()

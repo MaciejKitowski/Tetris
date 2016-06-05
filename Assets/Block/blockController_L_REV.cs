@@ -3,7 +3,7 @@ using System.Collections;
 
 public class blockController_L_REV : blockController
 {
-    override protected void rotate()
+    override public void rotate()
     {
         if (actitveRotation == rotation.DOWN && tile[0].arenaTile.posX < 8)
         {
@@ -27,7 +27,7 @@ public class blockController_L_REV : blockController
         }
     }
 
-    override protected void turnLeft()
+    override public void turnLeft()
     {
         if (actitveRotation == rotation.DOWN && canTurn(new int[1] { 0 }, -1)) moveTilesHorizontal(-1);
         else if (actitveRotation == rotation.RIGHT && canTurn(new int[2] { 0, 1 }, -1)) moveTilesHorizontal(-1);
@@ -35,7 +35,7 @@ public class blockController_L_REV : blockController
         else if (actitveRotation == rotation.LEFT && canTurn(new int[1] { 3 }, -1)) moveTilesHorizontal(-1);
     }
 
-    override protected void turnRight()
+    override public void turnRight()
     {
         if (actitveRotation == rotation.DOWN && canTurn(new int[3] { 1, 2, 3 }, 1)) moveTilesHorizontal(1);
         else if (actitveRotation == rotation.RIGHT && canTurn(new int[1] { 3 }, 1)) moveTilesHorizontal(1);

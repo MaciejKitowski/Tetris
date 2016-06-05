@@ -3,12 +3,12 @@ using System.Collections;
 
 public class blockController_SQR : blockController
 {
-    override protected void turnLeft()
+    override public void turnLeft()
     {
         if (canTurn(new int[2] { 0, 2 }, -1)) moveTilesHorizontal(-1);
     }
 
-    override protected void turnRight()
+    override public void turnRight()
     {
         if (canTurn(new int[2] { 1, 3 }, 1)) moveTilesHorizontal(1);
     }

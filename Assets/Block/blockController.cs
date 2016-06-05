@@ -6,12 +6,12 @@ public class blockController : MonoBehaviour
     public enum rotation { DOWN, RIGHT, UP, LEFT };
     public rotation actitveRotation = rotation.DOWN;
     public bool canFall = false;
+    public bool speedUp = false;
 
     protected blockTileController[] tile = new blockTileController[4];
     protected arenaManager managerArena;
     protected blocksManager managerBlocks;
 
-    protected bool speedUp = false;
     protected float fallTimer = 0.6f;
     protected float fallTimerFast = 0.02f;
     protected float timer = 0;
@@ -47,9 +47,9 @@ public class blockController : MonoBehaviour
         }
     }
 
-    virtual protected void rotate() { }
-    virtual protected void turnLeft() { }
-    virtual protected void turnRight() { }
+    virtual public void rotate() { }
+    virtual public void turnLeft() { }
+    virtual public void turnRight() { }
     virtual protected void fallDown() { }
 
     virtual public void randColor()

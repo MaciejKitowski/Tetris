@@ -35,4 +35,9 @@ public class blocksManager : MonoBehaviour
             Destroy(obj.gameObject);
         }
     }
+
+    public GameObject getBlock()
+    {
+        return transform.GetChild(transform.childCount - 1).gameObject;
+    }
 }

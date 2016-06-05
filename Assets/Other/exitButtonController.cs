@@ -10,6 +10,7 @@ public class exitButtonController : MonoBehaviour
     {
         game = GameObject.FindGameObjectWithTag("Game");
         menu = GameObject.FindGameObjectWithTag("MainMenu");
+        game.SetActive(false);
     }
 
 	void Update ()
