@@ -5,12 +5,15 @@ public class exitButtonController : MonoBehaviour
 {
     private GameObject game;
     private GameObject menu;
+    private GameObject settings;
 
     void Awake()
     {
         game = GameObject.FindGameObjectWithTag("Game");
         menu = GameObject.FindGameObjectWithTag("MainMenu");
+        settings = GameObject.FindGameObjectWithTag("Settings");
         game.SetActive(false);
+        settings.SetActive(false);
     }
 
 	void Update ()
@@ -23,6 +26,12 @@ public class exitButtonController : MonoBehaviour
                 menu.SetActive(true);
             }
             else if (menu.activeInHierarchy) Application.Quit();
+            else if(settings.activeInHierarchy)
+            {
+                menu.SetActive(true);
+                settings.GetComponent<settingsController>().saveSettings();
+                settings.SetActive(false);
+            }
         }
 	}
 }
