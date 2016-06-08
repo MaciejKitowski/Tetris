@@ -25,16 +25,6 @@ public class blockController : MonoBehaviour
 
     virtual protected void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R) && canFall && !speedUp) rotate();
-        else if (Input.GetKeyDown(KeyCode.A) && canFall && !speedUp) turnLeft();
-        else if (Input.GetKeyDown(KeyCode.D) && canFall && !speedUp) turnRight();
-        else if (Input.GetKeyDown(KeyCode.C)) randColor();
-        else if (Input.GetKeyDown(KeyCode.S) && canFall && !speedUp)
-        {
-            speedUp = true;
-            timer = 0;
-        }
-
         if (canFall)
         {
             if (timer < 0)
