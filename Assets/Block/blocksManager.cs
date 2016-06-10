@@ -13,7 +13,6 @@ public class blocksManager : MonoBehaviour
 	
 	void Update ()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) pushBlock();
         if (transform.childCount == 0) pushBlock();
 	}
 

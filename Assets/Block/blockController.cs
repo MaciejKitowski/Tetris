@@ -53,16 +53,16 @@ public class blockController : MonoBehaviour
         transform.position = managerArena.tile[tile[0].arenaTile.posX + direction, tile[0].arenaTile.posY].transform.position;
     }
 
-    protected void moveTilesVertical()
+    protected void moveTilesVertical(int direction = 1)
     {
-        transform.position = managerArena.tile[tile[0].arenaTile.posX, tile[0].arenaTile.posY + 1].transform.position;
+        transform.position = managerArena.tile[tile[0].arenaTile.posX, tile[0].arenaTile.posY + direction].transform.position;
     }
 
-    protected bool canTurn(int[] tileIndex, int side)
+    protected bool canTurn(int[] tileIndex, int direction)
     {
         foreach(int i in tileIndex)
         {
-            if (tile[i].arenaTile.posX + side > 9 || tile[i].arenaTile.posX + side < 0 || !managerArena.tile[tile[i].arenaTile.posX + side, tile[i].arenaTile.posY].isEmpty) return false;
+            if (tile[i].arenaTile.posX + direction > 9 || tile[i].arenaTile.posX + direction < 0 || !managerArena.tile[tile[i].arenaTile.posX + direction, tile[i].arenaTile.posY].isEmpty) return false;
         }
         return true;
     }
