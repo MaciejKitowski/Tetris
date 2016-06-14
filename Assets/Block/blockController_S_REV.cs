@@ -5,26 +5,16 @@ public class blockController_S_REV : blockController
 {
     override public void rotate()
     {
-        if(actitveRotation == rotation.DOWN && tile[0].arenaTile.posX < 8)
-        {
-            actitveRotation = rotation.RIGHT;
-            transform.Rotate(0, 0, 90f);
-        }
-        else if (actitveRotation == rotation.RIGHT && tile[0].arenaTile.posX > 0 && tile[0].arenaTile.posY > 1)
-        {
-            actitveRotation = rotation.UP;
-            transform.Rotate(0, 0, 90f);
-        }
-        else if (actitveRotation == rotation.UP && tile[0].arenaTile.posX > 1) //UP -> LEFT
-        {
-            actitveRotation = rotation.LEFT;
-            transform.Rotate(0, 0, 90f);
-        }
-        else if (actitveRotation == rotation.LEFT && tile[0].arenaTile.posX < 9 && tile[0].arenaTile.posY < 18)
-        {
-            actitveRotation = rotation.DOWN;
-            transform.Rotate(0, 0, 90f);
-        }
+        if (actitveRotation == rotation.DOWN && tile[0].arenaTile.posX >= 8) moveTilesHorizontal(-(tile[0].arenaTile.posX - 7));
+        else if (actitveRotation == rotation.RIGHT && tile[0].arenaTile.posY <= 1) moveTilesVertical(2 - tile[0].arenaTile.posY);
+        else if (actitveRotation == rotation.RIGHT && tile[0].arenaTile.posX == 0) moveTilesHorizontal(1);
+        else if (actitveRotation == rotation.UP && tile[0].arenaTile.posX <= 1) moveTilesHorizontal(2 - tile[0].arenaTile.posX);
+        else if (actitveRotation == rotation.LEFT && tile[0].arenaTile.posY >= 18) moveTilesVertical(-(tile[0].arenaTile.posY - 17));
+        else if (actitveRotation == rotation.LEFT && tile[0].arenaTile.posX == 9) moveTilesHorizontal(-1);
+
+        transform.Rotate(0, 0, 90f);
+        int rot = (int)transform.eulerAngles.z / 90;
+        actitveRotation = (rotation)rot;
     }
 
     override public void turnLeft()

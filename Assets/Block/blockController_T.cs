@@ -5,26 +5,15 @@ public class blockController_T : blockController
 {
     override public void rotate()
     {
-        if(actitveRotation == rotation.DOWN && tile[0].arenaTile.posX < 9 && tile[0].arenaTile.posY > 0)
-        {
-            actitveRotation = rotation.RIGHT;
-            transform.Rotate(0, 0, 90f);
-        }
-        else if (actitveRotation == rotation.RIGHT && tile[0].arenaTile.posX > 0)
-        {
-            actitveRotation = rotation.UP;
-            transform.Rotate(0, 0, 90f);
-        }
-        else if (actitveRotation == rotation.UP && tile[0].arenaTile.posX > 0 && tile[0].arenaTile.posY < 19)
-        {
-            actitveRotation = rotation.LEFT;
-            transform.Rotate(0, 0, 90f);
-        }
-        else if (actitveRotation == rotation.LEFT && tile[0].arenaTile.posX < 9)
-        {
-            actitveRotation = rotation.DOWN;
-            transform.Rotate(0, 0, 90f);
-        }
+        if (actitveRotation == rotation.DOWN && tile[0].arenaTile.posX == 9) moveTilesHorizontal(-1);
+        else if (actitveRotation == rotation.DOWN && tile[0].arenaTile.posY == 0) moveTilesVertical(1);
+        else if (actitveRotation == rotation.RIGHT && tile[0].arenaTile.posX == 0) moveTilesHorizontal(1);
+        else if (actitveRotation == rotation.UP && tile[0].arenaTile.posX == 0) moveTilesHorizontal(1);
+        else if (actitveRotation == rotation.LEFT && tile[0].arenaTile.posX == 9) moveTilesHorizontal(-1);
+
+        transform.Rotate(0, 0, 90f);
+        int rot = (int)transform.eulerAngles.z / 90;
+        actitveRotation = (rotation)rot;
     }
 
     override public void turnLeft()
