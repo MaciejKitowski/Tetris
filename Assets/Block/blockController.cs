@@ -9,6 +9,7 @@ public class blockController : MonoBehaviour
     public bool speedUp = false;
 
     protected blockTileController[] tile = new blockTileController[4];
+    protected blockRotationCheck[] rotationTile;
     protected arenaManager managerArena;
     protected blocksManager managerBlocks;
 
@@ -18,7 +19,10 @@ public class blockController : MonoBehaviour
 
     virtual protected void Start()
     {
+        rotationTile = new blockRotationCheck[transform.GetChild(4).childCount];
+
         for (int i = 0; i < 4; ++i) tile[i] = transform.GetChild(i).GetComponent<blockTileController>();
+        for (int i = 0; i < transform.GetChild(4).childCount; ++i) rotationTile[i] = transform.GetChild(4).GetChild(i).GetComponent<blockRotationCheck>();
         managerArena = FindObjectOfType<arenaManager>();
         managerBlocks = FindObjectOfType<blocksManager>();
     }
@@ -45,7 +49,7 @@ public class blockController : MonoBehaviour
     virtual public void randColor()
     {
         blockTileController.blockColor col = (blockTileController.blockColor)Random.Range(0, 7);
-        foreach (Transform tl in transform) tl.GetComponent<blockTileController>().setColor(col);
+        for(int i = 0; i < 4; ++i) transform.GetChild(i).GetComponent<blockTileController>().setColor(col);
     }
 
     protected void moveTilesHorizontal(int direction)
@@ -77,6 +81,16 @@ public class blockController : MonoBehaviour
             }
         }
         else return false;
+        return true;
+    }
+
+    protected bool canRotate()
+    {
+        foreach(blockRotationCheck tl in rotationTile)
+        {
+            if (tl.activeBlock == null || !tl.activeBlock.isEmpty) return false;
+        }
+
         return true;
     }
 }

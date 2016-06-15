@@ -17,19 +17,28 @@ public class arenaTileController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D obj)
     {
-        blockTile = obj.gameObject;
-        isEmpty = false;
+        if(obj.transform.tag == "Game_blockTile")
+        {
+            blockTile = obj.gameObject;
+            isEmpty = false;
+        }
     }
 
     void OnCollisionStay2D(Collision2D obj)
     {
-        blockTile = obj.gameObject;
-        isEmpty = false;
+        if (obj.transform.tag == "Game_blockTile")
+        {
+            blockTile = obj.gameObject;
+            isEmpty = false;
+        }
     }
 
     void OnCollisionExit2D(Collision2D obj)
     {
-        blockTile = null;
-        isEmpty = true;
+        if (obj.transform.tag == "Game_blockTile")
+        {
+            blockTile = null;
+            isEmpty = true;
+        }
     }
 }

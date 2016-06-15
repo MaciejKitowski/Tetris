@@ -11,9 +11,12 @@ public class blockController_T : blockController
         else if (actitveRotation == rotation.UP && tile[0].arenaTile.posX == 0) moveTilesHorizontal(1);
         else if (actitveRotation == rotation.LEFT && tile[0].arenaTile.posX == 9) moveTilesHorizontal(-1);
 
-        transform.Rotate(0, 0, 90f);
-        int rot = (int)transform.eulerAngles.z / 90;
-        actitveRotation = (rotation)rot;
+        if (canRotate())
+        {
+            transform.Rotate(0, 0, 90f);
+            int rot = (int)transform.eulerAngles.z / 90;
+            actitveRotation = (rotation)rot;
+        }
     }
 
     override public void turnLeft()
