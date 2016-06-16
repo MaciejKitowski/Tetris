@@ -23,6 +23,7 @@ public class blocksManager : MonoBehaviour
         buffer.transform.SetAsLastSibling();
         buffer.transform.localPosition = startTile.transform.localPosition;
 
+        buffer.GetComponent<blockController>().enabled = true;
         buffer.GetComponent<blockController>().canFall = true;
         nextBlock.randNew();
     }

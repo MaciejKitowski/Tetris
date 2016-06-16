@@ -12,6 +12,7 @@ public class blockController : MonoBehaviour
     protected blockRotationCheck[] rotationTile;
     protected arenaManager managerArena;
     protected blocksManager managerBlocks;
+    protected detectorController detector;
 
     protected float fallTimer = 0.6f;
     protected float fallTimerFast = 0.02f;
@@ -25,25 +26,53 @@ public class blockController : MonoBehaviour
         for (int i = 0; i < transform.GetChild(4).childCount; ++i) rotationTile[i] = transform.GetChild(4).GetChild(i).GetComponent<blockRotationCheck>();
         managerArena = FindObjectOfType<arenaManager>();
         managerBlocks = FindObjectOfType<blocksManager>();
+        detector = transform.GetComponentInChildren<detectorController>();
     }
 
     virtual protected void Update()
     {
-        if (canFall)
+        canFall = detector.canChangeDirectionVERT(actitveRotation);
+
+        //if (canFall)
+        if(detector.canChangeDirectionVERT(actitveRotation))
         {
             if (timer < 0)
             {
-                fallDown();
+                moveTilesVertical();
                 if (!speedUp) timer = fallTimer;
                 else timer = fallTimerFast;
             }
             else timer -= Time.deltaTime;
         }
+        else
+        {
+            foreach (blockTileController tl in tile) tl.blockControllerRemoved = true;
+            managerBlocks.pushBlock();
+            Destroy(GetComponent<blockController>());
+        }
     }
 
-    virtual public void rotate() { }
-    virtual public void turnLeft() { }
-    virtual public void turnRight() { }
+    virtual public void rotate()
+    {
+        if (detector.canRotate())
+        {
+            transform.Rotate(0, 0, 90f);
+            int rot = (int)transform.eulerAngles.z / 90;
+            actitveRotation = (rotation)rot;
+        }
+    }
+
+    virtual public void turnLeft()
+    {
+        if (detector.canChangeDirectionHOR(actitveRotation, -1)) moveTilesHorizontal(-1);
+    }
+
+    virtual public void turnRight()
+    {
+        if (detector.canChangeDirectionHOR(actitveRotation, 1)) moveTilesHorizontal(1);
+    }
+
+
     virtual protected void fallDown() { }
 
     virtual public void randColor()

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class blockController_T : blockController
 {
-    override public void rotate()
+    /*override public void rotate()
     {
         if (actitveRotation == rotation.DOWN && tile[0].arenaTile.posX == 9) moveTilesHorizontal(-1);
         else if (actitveRotation == rotation.DOWN && tile[0].arenaTile.posY == 0) moveTilesVertical(1);
@@ -17,23 +17,23 @@ public class blockController_T : blockController
             int rot = (int)transform.eulerAngles.z / 90;
             actitveRotation = (rotation)rot;
         }
-    }
+    }*/
 
-    override public void turnLeft()
+    /*override public void turnLeft()
     {
         if (actitveRotation == rotation.DOWN && canTurn(new int[1] { 2 }, -1)) moveTilesHorizontal(-1);
         else if (actitveRotation == rotation.RIGHT && canTurn(new int[1] { 0 }, -1)) moveTilesHorizontal(-1);
         else if (actitveRotation == rotation.UP && canTurn(new int[1] { 3 }, -1)) moveTilesHorizontal(-1);
         else if (actitveRotation == rotation.LEFT && canTurn(new int[3] { 1, 2, 3 }, -1)) moveTilesHorizontal(-1);
-    }
+    }*/
 
-    override public void turnRight()
+    /*override public void turnRight()
     {
         if (actitveRotation == rotation.DOWN && canTurn(new int[1] { 3 }, 1)) moveTilesHorizontal(1);
         else if (actitveRotation == rotation.RIGHT && canTurn(new int[3] { 1, 2, 3 }, 1)) moveTilesHorizontal(1);
         else if (actitveRotation == rotation.UP && canTurn(new int[1] { 2 }, 1)) moveTilesHorizontal(1);
         else if (actitveRotation == rotation.LEFT && canTurn(new int[1] { 0 }, 1)) moveTilesHorizontal(1);
-    }
+    }*/
 
     override protected void fallDown()
     {
