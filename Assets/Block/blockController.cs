@@ -7,6 +7,7 @@ public class blockController : MonoBehaviour
     public rotation actitveRotation = rotation.DOWN;
     public bool canFall = false;
     public bool speedUp = false;
+    public bool lockRotation = false;
 
     protected blockTileController[] tile = new blockTileController[4];
     protected blockRotationCheck[] rotationTile;
@@ -31,9 +32,6 @@ public class blockController : MonoBehaviour
 
     virtual protected void Update()
     {
-        canFall = detector.canChangeDirectionVERT(actitveRotation);
-
-        //if (canFall)
         if(detector.canChangeDirectionVERT(actitveRotation))
         {
             if (timer < 0)
@@ -54,7 +52,7 @@ public class blockController : MonoBehaviour
 
     virtual public void rotate()
     {
-        if (detector.canRotate())
+        if (detector.canRotate() && !lockRotation)
         {
             transform.Rotate(0, 0, 90f);
             int rot = (int)transform.eulerAngles.z / 90;
@@ -72,9 +70,6 @@ public class blockController : MonoBehaviour
         if (detector.canChangeDirectionHOR(actitveRotation, 1)) moveTilesHorizontal(1);
     }
 
-
-    virtual protected void fallDown() { }
-
     virtual public void randColor()
     {
         blockTileController.blockColor col = (blockTileController.blockColor)Random.Range(0, 7);
@@ -89,37 +84,5 @@ public class blockController : MonoBehaviour
     protected void moveTilesVertical(int direction = 1)
     {
         transform.position = managerArena.tile[tile[0].arenaTile.posX, tile[0].arenaTile.posY + direction].transform.position;
-    }
-
-    protected bool canTurn(int[] tileIndex, int direction)
-    {
-        foreach(int i in tileIndex)
-        {
-            if (tile[i].arenaTile.posX + direction > 9 || tile[i].arenaTile.posX + direction < 0 || !managerArena.tile[tile[i].arenaTile.posX + direction, tile[i].arenaTile.posY].isEmpty) return false;
-        }
-        return true;
-    }
-
-    protected bool canFallDown(int[] tileIndex, int tileDown)
-    {
-        if (tile[tileDown].arenaTile.posY < 19)
-        {
-            foreach(int i in tileIndex)
-            {
-                if (!managerArena.tile[tile[i].arenaTile.posX, tile[i].arenaTile.posY + 1].isEmpty) return false;
-            }
-        }
-        else return false;
-        return true;
-    }
-
-    protected bool canRotate()
-    {
-        foreach(blockRotationCheck tl in rotationTile)
-        {
-            if (tl.activeBlock == null || !tl.activeBlock.isEmpty) return false;
-        }
-
-        return true;
     }
 }
