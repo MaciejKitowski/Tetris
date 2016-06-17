@@ -19,20 +19,20 @@ public class detectorController : MonoBehaviour
         switch(rot)
         {
             case blockController.rotation.DOWN:
-                if(direction == 1) return checkDetectorArray(down);
-                else return checkDetectorArray(up);
+                if (direction == 1) return checkDetectorArray(down, true);
+                else return checkDetectorArray(up, true);
 
             case blockController.rotation.RIGHT:
-                if (direction == 1) return checkDetectorArray(left);
-                else return checkDetectorArray(right);
+                if (direction == 1) return checkDetectorArray(left, true);
+                else return checkDetectorArray(right, true);
 
             case blockController.rotation.UP:
-                if (direction == 1) return checkDetectorArray(up);
-                else return checkDetectorArray(down);
+                if (direction == 1) return checkDetectorArray(up, true);
+                else return checkDetectorArray(down, true);
 
             case blockController.rotation.LEFT:
-                if (direction == 1) return checkDetectorArray(right);
-                else return checkDetectorArray(left);
+                if (direction == 1) return checkDetectorArray(right, true);
+                else return checkDetectorArray(left, true);
         }
         return false;
     }
@@ -68,13 +68,15 @@ public class detectorController : MonoBehaviour
         for (int i = 0; i < transform.GetChild(childIndex).childCount; ++i) det[i] = transform.GetChild(childIndex).transform.GetChild(i).GetComponent<detectorTile>();
     }
 
-    private bool checkDetectorArray(detectorTile[] ar)
+    private bool checkDetectorArray(detectorTile[] ar, bool vertical = false)
     {
         foreach (detectorTile tl in ar)
         {
             if (tl.detectedObj == null) return false;
             else if (tl.detectedObj.tag == "Game_arenaTile" && !tl.detectedObj.GetComponent<arenaTileController>().isEmpty) return false;
             else if (tl.detectedObj.tag == "Game_blockTile") return false;
+            else if (tl.detectedObj.tag == "Game_border" && !vertical) return false;
+            else if (tl.detectedObj.tag == "Game_border" && vertical && tl.detectedObj.name == "Down") return false;
         }
         return true;
     }

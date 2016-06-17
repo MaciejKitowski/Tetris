@@ -8,6 +8,6 @@ public class detectorTile : MonoBehaviour
     void OnCollisionEnter2D(Collision2D obj)
     {
         if (obj.transform.tag != "Game_detector") detectedObj = obj.gameObject;
-        if (detectedObj != null && detectedObj.tag == "Game_border") detectedObj = null;
+        //if (detectedObj != null && detectedObj.tag == "Game_border") detectedObj = null;
     }
 }

@@ -78,7 +78,7 @@ public class blockController : MonoBehaviour
     virtual public void randColor()
     {
         blockTileController.blockColor col = (blockTileController.blockColor)Random.Range(0, 7);
-        for(int i = 0; i < 4; ++i) transform.GetChild(i).GetComponent<blockTileController>().setColor(col);
+        for (int i = 0; i < 4; ++i) transform.GetChild(i).GetComponent<blockTileController>().setColor(col);
     }
 
     protected void moveTilesHorizontal(int direction)

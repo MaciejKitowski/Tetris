@@ -26,7 +26,7 @@ public class nextBlockController : MonoBehaviour
     {
         if(transform.childCount > 0) foreach (Transform obj in transform) Destroy(obj.gameObject);
         if (index == 9) index = Random.Range(0, 7);
-        index = 4;
+        index = 5;
 
         GameObject buffer = Instantiate(blockPrefabs[index]) as GameObject;
         buffer.transform.SetParent(transform);
