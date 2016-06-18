@@ -1,17 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class nextBlockController : MonoBehaviour
-{
+public class nextBlockController : MonoBehaviour {
     public GameObject[] blockPrefabs;
 
-    void Awake()
-    {
-        if (transform.childCount == 0) randNew();
-    }
+    void Awake() { if (transform.childCount == 0) randNew(); }
 
-	void Update ()
-    {
+	void Update () {
         if (Input.GetKeyDown(KeyCode.F)) randNew();
         if (Input.GetKeyDown(KeyCode.Alpha1)) randNew(0);
         if (Input.GetKeyDown(KeyCode.Alpha2)) randNew(1);
@@ -22,8 +17,7 @@ public class nextBlockController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha7)) randNew(6);
     }
 
-    public void randNew(int index = 9)
-    {
+    public void randNew(int index = 9) {
         if(transform.childCount > 0) foreach (Transform obj in transform) Destroy(obj.gameObject);
         if (index == 9) index = Random.Range(0, 7);
 
@@ -35,8 +29,5 @@ public class nextBlockController : MonoBehaviour
         buffer.GetComponent<blockController>().enabled = false;
     }
 
-    public GameObject getBlock()
-    {
-        return transform.GetChild(0).gameObject;
-    }
+    public GameObject getBlock() { return transform.GetChild(0).gameObject; }
 }

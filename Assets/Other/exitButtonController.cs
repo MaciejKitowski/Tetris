@@ -1,14 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class exitButtonController : MonoBehaviour
-{
+public class exitButtonController : MonoBehaviour {
     private GameObject game;
     private GameObject menu;
     private GameObject settings;
 
-    void Awake()
-    {
+    void Awake() {
         game = GameObject.FindGameObjectWithTag("Game");
         menu = GameObject.FindGameObjectWithTag("MainMenu");
         settings = GameObject.FindGameObjectWithTag("Settings");
@@ -16,18 +14,14 @@ public class exitButtonController : MonoBehaviour
         settings.SetActive(false);
     }
 
-	void Update ()
-    {
-	    if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (game.activeInHierarchy)
-            {
+	void Update () {
+	    if(Input.GetKeyDown(KeyCode.Escape)) {
+            if (game.activeInHierarchy) {
                 game.SetActive(false);
                 menu.SetActive(true);
             }
             else if (menu.activeInHierarchy) Application.Quit();
-            else if(settings.activeInHierarchy)
-            {
+            else if(settings.activeInHierarchy) {
                 menu.SetActive(true);
                 settings.GetComponent<settingsController>().saveSettings();
                 settings.SetActive(false);

@@ -2,25 +2,21 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class pointsCounter : MonoBehaviour
-{
+public class pointsCounter : MonoBehaviour {
     private int pointsVal = 0;
     private Text text;
 
-    void Awake()
-    {
+    void Awake() {
         text = GetComponent<Text>();
         text.text = pointsVal.ToString();
     }
 
-    public void addPoints(int val)
-    {
+    public void addPoints(int val) {
         pointsVal += val;
         text.text = pointsVal.ToString();
     }
 
-    public void resetPoints()
-    {
+    public void resetPoints() {
         pointsVal = 0;
         text.text = pointsVal.ToString();
     }
