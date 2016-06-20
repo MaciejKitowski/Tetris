@@ -23,7 +23,8 @@ public class exitButtonController : MonoBehaviour {
                 settings.SetActive(false);
             }
             else if (menu.activeInHierarchy) Application.Quit();
-            else if(game.activeInHierarchy) {
+            else if (endGame.activeInHierarchy) endGame.GetComponent<endGameController>().buttonBack();
+            else if (game.activeInHierarchy) {
                 endGame.GetComponent<endGameController>().activate(game.GetComponent<gameController>().getPoints());
             }
         }
