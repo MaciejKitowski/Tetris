@@ -6,8 +6,12 @@ public class settingsController : MonoBehaviour {
     public Toggle[] inputMode = new Toggle[3];
 
     private Settings settings;
+    private gameController game;
 
-    void Awake() { settings = FindObjectOfType<Settings>(); }
+    void Awake() {
+        settings = FindObjectOfType<Settings>();
+        game = FindObjectOfType<gameController>();
+    }
 	
 	public void setInputModeButtons() { settings.selectedInput = Settings.InputMode.BUTTONS; }
     public void setInputModeTap() { settings.selectedInput = Settings.InputMode.TOUCH_TAP; }
@@ -15,9 +19,13 @@ public class settingsController : MonoBehaviour {
     public void saveSettings() { settings.saveSettings(); }
 
     public void buttonSettings() {
-        if(gameObject.activeInHierarchy) gameObject.SetActive(false);
+        if(gameObject.activeInHierarchy) {
+            gameObject.SetActive(false);
+            game.deactivatePause();
+        }
         else {
             gameObject.SetActive(true);
+            game.activatePause();
             updateSettings();
         }
     }

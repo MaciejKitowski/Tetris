@@ -10,8 +10,6 @@ public class exitButtonController : MonoBehaviour {
         game = GameObject.FindGameObjectWithTag("Game");
         menu = GameObject.FindGameObjectWithTag("MainMenu");
         settings = GameObject.FindGameObjectWithTag("Settings");
-        game.SetActive(false);
-        settings.SetActive(false);
     }
 
 	void Update () {
@@ -19,6 +17,7 @@ public class exitButtonController : MonoBehaviour {
 
             if(settings.activeInHierarchy) {
                 settings.GetComponent<settingsController>().saveSettings();
+                game.GetComponent<gameController>().deactivatePause();
                 settings.SetActive(false);
             }
             else if (menu.activeInHierarchy) Application.Quit();

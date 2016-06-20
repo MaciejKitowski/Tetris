@@ -11,6 +11,7 @@ public class blockController : MonoBehaviour {
     protected arenaManager managerArena;
     protected blocksManager managerBlocks;
     protected detectorController detector;
+    protected gameController game;
 
     protected float fallTimer = 0.6f;
     protected float fallTimerFast = 0.02f;
@@ -21,20 +22,23 @@ public class blockController : MonoBehaviour {
         managerArena = FindObjectOfType<arenaManager>();
         managerBlocks = FindObjectOfType<blocksManager>();
         detector = transform.GetComponentInChildren<detectorController>();
+        game = FindObjectOfType<gameController>();
     }
 
     virtual protected void Update() {
-        if(detector.canChangeDirectionVERT(actitveRotation)) {
-            if (timer < 0) {
-                moveTilesVertical();
-                if (!speedUp) timer = fallTimer;
-                else timer = fallTimerFast;
+        if(!game.paused) {
+            if (detector.canChangeDirectionVERT(actitveRotation)) {
+                if (timer < 0) {
+                    moveTilesVertical();
+                    if (!speedUp) timer = fallTimer;
+                    else timer = fallTimerFast;
+                }
+                else timer -= Time.deltaTime;
             }
-            else timer -= Time.deltaTime;
-        }
-        else {
-            managerBlocks.pushBlock();
-            destroy();
+            else {
+                managerBlocks.pushBlock();
+                destroy();
+            }
         }
     }
 

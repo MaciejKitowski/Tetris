@@ -3,10 +3,16 @@ using System.Collections;
 
 public class blocksManager : MonoBehaviour {
     public GameObject startTile;
-    private nextBlockController nextBlock;
 
-	void Awake() { nextBlock = FindObjectOfType<nextBlockController>(); }
-	void Update () { if (transform.childCount == 0) pushBlock(); }
+    private nextBlockController nextBlock;
+    private gameController game;
+
+	void Awake() {
+        nextBlock = FindObjectOfType<nextBlockController>();
+        game = FindObjectOfType<gameController>();
+    }
+
+	void Update () { if (!game.paused && transform.childCount == 0) pushBlock(); }
 
     public void pushBlock() {
         GameObject buffer = Instantiate(nextBlock.getBlock()) as GameObject;

@@ -8,6 +8,7 @@ public class menuController : MonoBehaviour {
 
     public void buttonStartGame() {
         game.SetActive(true);
+        game.GetComponent<gameController>().activatePause();
         game.GetComponent<gameController>().newGame();
         gameObject.SetActive(false);
     }
