@@ -20,4 +20,6 @@ public class pointsCounter : MonoBehaviour {
         pointsVal = 0;
         text.text = pointsVal.ToString();
     }
+
+    public int getPoints() { return pointsVal; }
 }

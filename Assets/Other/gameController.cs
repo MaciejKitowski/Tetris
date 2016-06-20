@@ -13,6 +13,7 @@ public class gameController : MonoBehaviour {
     private Settings settings;
     private GameObject pauseTxt;
     private GameObject controllerSettings;
+    private endGameController endGame;
 
     //Touch input (swipe)
     private Vector2 touchStartPos = new Vector2(0, 0);
@@ -26,8 +27,10 @@ public class gameController : MonoBehaviour {
         settings = FindObjectOfType<Settings>();
         controllerSettings = GameObject.FindGameObjectWithTag("Settings");
         pauseTxt = GameObject.FindGameObjectWithTag("Game_pause");
+        endGame = FindObjectOfType<endGameController>();
         gameObject.SetActive(false);
         controllerSettings.SetActive(false);
+        endGame.gameObject.SetActive(false);
     }
 
     void Update() {
@@ -52,25 +55,26 @@ public class gameController : MonoBehaviour {
         managerBlocks.removeAllBlocks();
         managerArena.resetArena();
         nextBlock.randNew();
+        endGame.gameObject.SetActive(false);
     }
 
     public void buttonTurnLeft() {
-        if (!paused) managerBlocks.getBlock().GetComponent<blockController>().turnLeft();
+        if (!paused && !endGame.gameObject.activeInHierarchy) managerBlocks.getBlock().GetComponent<blockController>().turnLeft();
         else if(paused && !controllerSettings.activeInHierarchy) deactivatePause();
     }
 
     public void buttonTurnRight() {
-        if (!paused) managerBlocks.getBlock().GetComponent<blockController>().turnRight();
+        if (!paused && !endGame.gameObject.activeInHierarchy) managerBlocks.getBlock().GetComponent<blockController>().turnRight();
         else if (paused && !controllerSettings.activeInHierarchy) deactivatePause();
     }
 
     public void buttonRotate() {
-        if (!paused) managerBlocks.getBlock().GetComponent<blockController>().rotate();
+        if (!paused && !endGame.gameObject.activeInHierarchy) managerBlocks.getBlock().GetComponent<blockController>().rotate();
         else if (paused && !controllerSettings.activeInHierarchy) deactivatePause();
     }
 
     public void buttonSpeedUp() {
-        if (!paused) managerBlocks.getBlock().GetComponent<blockController>().speedUp = true;
+        if (!paused && !endGame.gameObject.activeInHierarchy) managerBlocks.getBlock().GetComponent<blockController>().speedUp = true;
         else if (paused && !controllerSettings.activeInHierarchy) deactivatePause();
     }
 
@@ -84,6 +88,8 @@ public class gameController : MonoBehaviour {
         pauseTxt.SetActive(false);
     }
 
+    public int getPoints() { return points.getPoints(); }
+
     private void selectedInputButtons() {
         if (!inputButtons[0].activeInHierarchy) foreach (GameObject obj in inputButtons) obj.SetActive(true);
     }
@@ -92,7 +98,7 @@ public class gameController : MonoBehaviour {
         if (inputButtons[0].activeInHierarchy) foreach (GameObject obj in inputButtons) obj.SetActive(false);
 
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
-            if (!paused && !controllerSettings.activeInHierarchy)
+            if (!paused && !controllerSettings.activeInHierarchy && !endGame.gameObject.activeInHierarchy)
             {
                 Vector3 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
 
@@ -111,7 +117,7 @@ public class gameController : MonoBehaviour {
         if (inputButtons[0].activeInHierarchy) foreach (GameObject obj in inputButtons) obj.SetActive(false);
 
         if (Input.touchCount > 0) {
-            if (!paused && !controllerSettings.activeInHierarchy) {
+            if (!paused && !controllerSettings.activeInHierarchy && !endGame.gameObject.activeInHierarchy) {
                 if (Input.GetTouch(0).phase == TouchPhase.Began) touchStartPos = Input.GetTouch(0).position;
                 else if (Input.GetTouch(0).phase == TouchPhase.Ended) {
                     touchEndPos = Input.GetTouch(0).position;
