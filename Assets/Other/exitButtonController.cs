@@ -16,15 +16,15 @@ public class exitButtonController : MonoBehaviour {
 
 	void Update () {
 	    if(Input.GetKeyDown(KeyCode.Escape)) {
-            if (game.activeInHierarchy) {
-                game.SetActive(false);
-                menu.SetActive(true);
-            }
-            else if (menu.activeInHierarchy) Application.Quit();
-            else if(settings.activeInHierarchy) {
-                menu.SetActive(true);
+
+            if(settings.activeInHierarchy) {
                 settings.GetComponent<settingsController>().saveSettings();
                 settings.SetActive(false);
+            }
+            else if (menu.activeInHierarchy) Application.Quit();
+            else if(game.activeInHierarchy) {
+                game.SetActive(false);
+                menu.SetActive(true);
             }
         }
 	}
