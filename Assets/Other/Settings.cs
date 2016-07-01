@@ -5,8 +5,9 @@ using System;
 public class Settings : MonoBehaviour {
     public enum InputMode { TOUCH_TAP, TOUCH_SWIPE, BUTTONS }
 
-    public InputMode selectedInput = InputMode.BUTTONS;
-    public bool music, sounds;
+    public static InputMode selectedInput = InputMode.BUTTONS;
+    public static bool music, sounds;
+
     public Toggle[] inputMode = new Toggle[3];
     public Toggle musicCheckmark, soundsCheckmark;
 

@@ -10,7 +10,6 @@ public class Game : MonoBehaviour {
     private blocksManager managerBlocks;
     private nextBlockController nextBlock;
     private arenaManager managerArena;
-    private Settings settings;
     private GameObject pauseTxt;
     private GameObject controllerSettings;
     private EndGame endGame;
@@ -24,7 +23,6 @@ public class Game : MonoBehaviour {
         managerBlocks = FindObjectOfType<blocksManager>();
         nextBlock = FindObjectOfType<nextBlockController>();
         managerArena = FindObjectOfType<arenaManager>();
-        settings = FindObjectOfType<Settings>();
         controllerSettings = GameObject.FindGameObjectWithTag("Settings");
         pauseTxt = GameObject.FindGameObjectWithTag("Game_pause");
         endGame = FindObjectOfType<EndGame>();
@@ -35,7 +33,7 @@ public class Game : MonoBehaviour {
 
     void Update() {
         //Input
-        switch (settings.selectedInput) {
+        switch (Settings.selectedInput) {
             case Settings.InputMode.BUTTONS:
                 selectedInputButtons();
                 break;
