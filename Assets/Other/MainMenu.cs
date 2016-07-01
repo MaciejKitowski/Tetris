@@ -8,7 +8,7 @@ public class MainMenu : MonoBehaviour {
 
     public void buttonStartGame() {
         game.SetActive(true);
-        game.GetComponent<Game>().activatePause();
+        GamePause.activate();
         game.GetComponent<Game>().newGame();
         gameObject.SetActive(false);
     }

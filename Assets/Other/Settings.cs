@@ -11,12 +11,7 @@ public class Settings : MonoBehaviour {
     public Toggle[] inputMode = new Toggle[3];
     public Toggle musicCheckmark, soundsCheckmark;
 
-    private Game game;
-
-    void Awake() {
-        load();
-        game = FindObjectOfType<Game>();
-    }
+    void Awake() { load(); }
 
     public void buttonSettings() {
         if (gameObject.activeInHierarchy) deactivate();
@@ -31,13 +26,13 @@ public class Settings : MonoBehaviour {
 
     public void activate() {
         gameObject.SetActive(true);
-        game.activatePause();
+        GamePause.activate();
         updateCheckmarks();
     }
 
     public void deactivate() {
         gameObject.SetActive(false);
-        game.deactivatePause();
+        GamePause.deactivate();
         save();
     }
 

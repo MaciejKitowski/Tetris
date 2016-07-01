@@ -14,7 +14,7 @@ public class blocksManager : MonoBehaviour {
         endGame = FindObjectOfType<EndGame>();
     }
 
-	void Update () { if (!game.paused && transform.childCount == 0) pushBlock(); }
+	void Update () { if (!GamePause.isPaused() && transform.childCount == 0) pushBlock(); }
 
     public void pushBlock() {
         if (!startTile.GetComponent<arenaTileController>().isEmpty) endGame.activate(game.getPoints()); //Game lost condition

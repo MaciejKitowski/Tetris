@@ -15,7 +15,7 @@ public class EndGame : MonoBehaviour {
 
     public void activate(int points) {
         gameObject.SetActive(true);
-        game.activatePause();
+        GamePause.activate();
         pointsValue.text = points.ToString();
     }
 

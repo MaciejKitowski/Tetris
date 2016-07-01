@@ -11,7 +11,6 @@ public class Block : MonoBehaviour {
     protected arenaManager managerArena;
     protected blocksManager managerBlocks;
     protected detectorController detector;
-    protected Game game;
 
     protected float fallTimer = 0.6f;
     protected float fallTimerFast = 0.02f;
@@ -22,11 +21,10 @@ public class Block : MonoBehaviour {
         managerArena = FindObjectOfType<arenaManager>();
         managerBlocks = FindObjectOfType<blocksManager>();
         detector = transform.GetComponentInChildren<detectorController>();
-        game = FindObjectOfType<Game>();
     }
 
     virtual protected void Update() {
-        if(!game.paused) {
+        if(!GamePause.isPaused()) {
             if (detector.canChangeDirectionVERT(actitveRotation)) {
                 if (timer < 0) {
                     moveTilesVertical();
