@@ -5,13 +5,13 @@ public class blocksManager : MonoBehaviour {
     public GameObject startTile;
 
     private nextBlockController nextBlock;
-    private gameController game;
-    private endGameController endGame;
+    private Game game;
+    private EndGame endGame;
 
 	void Awake() {
         nextBlock = FindObjectOfType<nextBlockController>();
-        game = FindObjectOfType<gameController>();
-        endGame = FindObjectOfType<endGameController>();
+        game = FindObjectOfType<Game>();
+        endGame = FindObjectOfType<EndGame>();
     }
 
 	void Update () { if (!game.paused && transform.childCount == 0) pushBlock(); }
@@ -24,7 +24,7 @@ public class blocksManager : MonoBehaviour {
             buffer.transform.SetAsLastSibling();
             buffer.transform.localPosition = startTile.transform.localPosition;
 
-            buffer.GetComponent<blockController>().enabled = true;
+            buffer.GetComponent<Block>().enabled = true;
             nextBlock.randNew();
         }
     }

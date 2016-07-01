@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class blockController : MonoBehaviour {
+public class Block : MonoBehaviour {
     public enum rotation { DOWN, RIGHT, UP, LEFT };
     public rotation actitveRotation = rotation.DOWN;
     public bool speedUp = false;
@@ -11,7 +11,7 @@ public class blockController : MonoBehaviour {
     protected arenaManager managerArena;
     protected blocksManager managerBlocks;
     protected detectorController detector;
-    protected gameController game;
+    protected Game game;
 
     protected float fallTimer = 0.6f;
     protected float fallTimerFast = 0.02f;
@@ -22,7 +22,7 @@ public class blockController : MonoBehaviour {
         managerArena = FindObjectOfType<arenaManager>();
         managerBlocks = FindObjectOfType<blocksManager>();
         detector = transform.GetComponentInChildren<detectorController>();
-        game = FindObjectOfType<gameController>();
+        game = FindObjectOfType<Game>();
     }
 
     virtual protected void Update() {
@@ -64,6 +64,6 @@ public class blockController : MonoBehaviour {
     protected void destroy() {
         foreach (blockTileController tl in tile) tl.blockControllerRemoved = true;
         Destroy(detector.gameObject);
-        Destroy(GetComponent<blockController>());
+        Destroy(GetComponent<Block>());
     }
 }

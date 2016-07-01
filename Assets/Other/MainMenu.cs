@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class menuController : MonoBehaviour {
+public class MainMenu : MonoBehaviour {
     private GameObject game;
 
     void Awake() { game = GameObject.FindGameObjectWithTag("Game"); }
 
     public void buttonStartGame() {
         game.SetActive(true);
-        game.GetComponent<gameController>().activatePause();
-        game.GetComponent<gameController>().newGame();
+        game.GetComponent<Game>().activatePause();
+        game.GetComponent<Game>().newGame();
         gameObject.SetActive(false);
     }
 

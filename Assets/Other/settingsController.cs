@@ -6,11 +6,11 @@ public class settingsController : MonoBehaviour {
     public Toggle[] inputMode = new Toggle[3];
 
     private Settings settings;
-    private gameController game;
+    private Game game;
 
     void Awake() {
         settings = FindObjectOfType<Settings>();
-        game = FindObjectOfType<gameController>();
+        game = FindObjectOfType<Game>();
     }
 	
 	public void setInputModeButtons() { settings.selectedInput = Settings.InputMode.BUTTONS; }

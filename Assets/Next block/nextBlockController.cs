@@ -25,8 +25,8 @@ public class nextBlockController : MonoBehaviour {
         buffer.transform.SetParent(transform);
         buffer.transform.localPosition = new Vector2(0, 0);
         
-        buffer.GetComponent<blockController>().randColor();
-        buffer.GetComponent<blockController>().enabled = false;
+        buffer.GetComponent<Block>().randColor();
+        buffer.GetComponent<Block>().enabled = false;
     }
 
     public GameObject getBlock() { return transform.GetChild(0).gameObject; }

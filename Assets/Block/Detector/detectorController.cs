@@ -12,42 +12,42 @@ public class detectorController : MonoBehaviour {
         load(ref rotation, 4);
     }
 
-    public bool canChangeDirectionVERT(blockController.rotation rot, int direction = 1) {
+    public bool canChangeDirectionVERT(Block.rotation rot, int direction = 1) {
         switch(rot) {
-            case blockController.rotation.DOWN:
+            case Block.rotation.DOWN:
                 if (direction == 1) return checkDetectorArray(down, true);
                 else return checkDetectorArray(up, true);
 
-            case blockController.rotation.RIGHT:
+            case Block.rotation.RIGHT:
                 if (direction == 1) return checkDetectorArray(left, true);
                 else return checkDetectorArray(right, true);
 
-            case blockController.rotation.UP:
+            case Block.rotation.UP:
                 if (direction == 1) return checkDetectorArray(up, true);
                 else return checkDetectorArray(down, true);
 
-            case blockController.rotation.LEFT:
+            case Block.rotation.LEFT:
                 if (direction == 1) return checkDetectorArray(right, true);
                 else return checkDetectorArray(left, true);
         }
         return false;
     }
 
-    public bool canChangeDirectionHOR(blockController.rotation rot, int direction) {
+    public bool canChangeDirectionHOR(Block.rotation rot, int direction) {
         switch (rot) {
-            case blockController.rotation.DOWN:
+            case Block.rotation.DOWN:
                 if(direction == -1) return checkDetectorArray(left);
                 else return checkDetectorArray(right);
 
-            case blockController.rotation.RIGHT:
+            case Block.rotation.RIGHT:
                 if (direction == -1) return checkDetectorArray(up);
                 else return checkDetectorArray(down);
 
-            case blockController.rotation.UP:
+            case Block.rotation.UP:
                 if (direction == -1) return checkDetectorArray(right);
                 else return checkDetectorArray(left);
 
-            case blockController.rotation.LEFT:
+            case Block.rotation.LEFT:
                 if (direction == -1) return checkDetectorArray(down);
                 else return checkDetectorArray(up);
         }

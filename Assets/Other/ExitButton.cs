@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class exitButtonController : MonoBehaviour {
+public class Exitbutton : MonoBehaviour {
     private GameObject game;
     private GameObject menu;
     private GameObject settings;
@@ -19,13 +19,13 @@ public class exitButtonController : MonoBehaviour {
 
             if(settings.activeInHierarchy) {
                 settings.GetComponent<settingsController>().saveSettings();
-                game.GetComponent<gameController>().deactivatePause();
+                game.GetComponent<Game>().deactivatePause();
                 settings.SetActive(false);
             }
             else if (menu.activeInHierarchy) Application.Quit();
-            else if (endGame.activeInHierarchy) endGame.GetComponent<endGameController>().buttonBack();
+            else if (endGame.activeInHierarchy) endGame.GetComponent<EndGame>().buttonBack();
             else if (game.activeInHierarchy) {
-                endGame.GetComponent<endGameController>().activate(game.GetComponent<gameController>().getPoints());
+                endGame.GetComponent<EndGame>().activate(game.GetComponent<Game>().getPoints());
             }
         }
 	}

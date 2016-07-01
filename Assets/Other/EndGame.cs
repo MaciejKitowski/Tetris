@@ -2,15 +2,15 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class endGameController : MonoBehaviour {
+public class EndGame : MonoBehaviour {
     public Text pointsValue;
 
-    private gameController game;
-    private menuController menu;
+    private Game game;
+    private MainMenu menu;
 
     void Awake() {
-        game = FindObjectOfType<gameController>();
-        menu = FindObjectOfType<menuController>();
+        game = FindObjectOfType<Game>();
+        menu = FindObjectOfType<MainMenu>();
     }
 
     public void activate(int points) {

@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class gameController : MonoBehaviour {
+public class Game : MonoBehaviour {
     public GameObject[] inputButtons = new GameObject[4];
     public bool paused = true;
 
@@ -13,7 +13,7 @@ public class gameController : MonoBehaviour {
     private Settings settings;
     private GameObject pauseTxt;
     private GameObject controllerSettings;
-    private endGameController endGame;
+    private EndGame endGame;
 
     //Touch input (swipe)
     private Vector2 touchStartPos = new Vector2(0, 0);
@@ -27,7 +27,7 @@ public class gameController : MonoBehaviour {
         settings = FindObjectOfType<Settings>();
         controllerSettings = GameObject.FindGameObjectWithTag("Settings");
         pauseTxt = GameObject.FindGameObjectWithTag("Game_pause");
-        endGame = FindObjectOfType<endGameController>();
+        endGame = FindObjectOfType<EndGame>();
         gameObject.SetActive(false);
         controllerSettings.SetActive(false);
         endGame.gameObject.SetActive(false);
@@ -59,22 +59,22 @@ public class gameController : MonoBehaviour {
     }
 
     public void buttonTurnLeft() {
-        if (!paused && !endGame.gameObject.activeInHierarchy) managerBlocks.getBlock().GetComponent<blockController>().turnLeft();
+        if (!paused && !endGame.gameObject.activeInHierarchy) managerBlocks.getBlock().GetComponent<Block>().turnLeft();
         else if(paused && !controllerSettings.activeInHierarchy) deactivatePause();
     }
 
     public void buttonTurnRight() {
-        if (!paused && !endGame.gameObject.activeInHierarchy) managerBlocks.getBlock().GetComponent<blockController>().turnRight();
+        if (!paused && !endGame.gameObject.activeInHierarchy) managerBlocks.getBlock().GetComponent<Block>().turnRight();
         else if (paused && !controllerSettings.activeInHierarchy) deactivatePause();
     }
 
     public void buttonRotate() {
-        if (!paused && !endGame.gameObject.activeInHierarchy) managerBlocks.getBlock().GetComponent<blockController>().rotate();
+        if (!paused && !endGame.gameObject.activeInHierarchy) managerBlocks.getBlock().GetComponent<Block>().rotate();
         else if (paused && !controllerSettings.activeInHierarchy) deactivatePause();
     }
 
     public void buttonSpeedUp() {
-        if (!paused && !endGame.gameObject.activeInHierarchy) managerBlocks.getBlock().GetComponent<blockController>().speedUp = true;
+        if (!paused && !endGame.gameObject.activeInHierarchy) managerBlocks.getBlock().GetComponent<Block>().speedUp = true;
         else if (paused && !controllerSettings.activeInHierarchy) deactivatePause();
     }
 
@@ -102,11 +102,11 @@ public class gameController : MonoBehaviour {
             {
                 Vector3 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
 
-                if (touchPos.y < -3.3225f) managerBlocks.getBlock().GetComponent<blockController>().rotate();
+                if (touchPos.y < -3.3225f) managerBlocks.getBlock().GetComponent<Block>().rotate();
                 else {
-                    if (touchPos.x > -0.95f && touchPos.x < 0.95f) managerBlocks.getBlock().GetComponent<blockController>().speedUp = true;
-                    else if (touchPos.x < -0.95f) managerBlocks.getBlock().GetComponent<blockController>().turnLeft();
-                    else if (touchPos.x > 0.95f) managerBlocks.getBlock().GetComponent<blockController>().turnRight();
+                    if (touchPos.x > -0.95f && touchPos.x < 0.95f) managerBlocks.getBlock().GetComponent<Block>().speedUp = true;
+                    else if (touchPos.x < -0.95f) managerBlocks.getBlock().GetComponent<Block>().turnLeft();
+                    else if (touchPos.x > 0.95f) managerBlocks.getBlock().GetComponent<Block>().turnRight();
                 }
             }
             else if (paused && !controllerSettings.activeInHierarchy) deactivatePause();
@@ -123,12 +123,12 @@ public class gameController : MonoBehaviour {
                     touchEndPos = Input.GetTouch(0).position;
 
                     if (Mathf.Abs(touchEndPos.x - touchStartPos.x) > Mathf.Abs(touchEndPos.y - touchStartPos.y)) {
-                        if (touchEndPos.x > touchStartPos.x) managerBlocks.getBlock().GetComponent<blockController>().turnRight();
-                        else managerBlocks.getBlock().GetComponent<blockController>().turnLeft();
+                        if (touchEndPos.x > touchStartPos.x) managerBlocks.getBlock().GetComponent<Block>().turnRight();
+                        else managerBlocks.getBlock().GetComponent<Block>().turnLeft();
                     }
                     else {
-                        if (touchEndPos.y > touchStartPos.y) managerBlocks.getBlock().GetComponent<blockController>().rotate();
-                        else managerBlocks.getBlock().GetComponent<blockController>().speedUp = true;
+                        if (touchEndPos.y > touchStartPos.y) managerBlocks.getBlock().GetComponent<Block>().rotate();
+                        else managerBlocks.getBlock().GetComponent<Block>().speedUp = true;
                     }
                 }
             }
