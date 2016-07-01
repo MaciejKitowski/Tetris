@@ -20,6 +20,7 @@ public class EndGame : MonoBehaviour {
     }
 
 	public void buttonAgain() { game.newGame(); }
+    public bool isActive() { return gameObject.activeInHierarchy; }
 
     public void buttonBack() {
         gameObject.SetActive(false);

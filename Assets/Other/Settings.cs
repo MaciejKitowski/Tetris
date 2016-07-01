@@ -11,7 +11,17 @@ public class Settings : MonoBehaviour {
     public Toggle[] inputMode = new Toggle[3];
     public Toggle musicCheckmark, soundsCheckmark;
 
-    void Awake() { load(); }
+    private InputButton buttonsInput;
+    private InputTap tapInput;
+    private InputSwipe swipeInput;
+
+    void Awake() {
+        load();
+        buttonsInput = FindObjectOfType<InputButton>();
+        tapInput = FindObjectOfType<InputTap>();
+        swipeInput = FindObjectOfType<InputSwipe>();
+        updateInputMode();
+    }
 
     public void buttonSettings() {
         if (gameObject.activeInHierarchy) deactivate();
@@ -33,6 +43,8 @@ public class Settings : MonoBehaviour {
     public void deactivate() {
         gameObject.SetActive(false);
         GamePause.deactivate();
+        updateCheckmarks();
+        updateInputMode();
         save();
     }
 
@@ -54,5 +66,19 @@ public class Settings : MonoBehaviour {
         else if (selectedInput == Settings.InputMode.TOUCH_SWIPE) inputMode[2].isOn = true;
         musicCheckmark.isOn = music;
         soundsCheckmark.isOn = sounds;
+    }
+
+    private void updateInputMode() {
+        switch(selectedInput) {
+            case InputMode.BUTTONS:
+                buttonsInput.displayButtons();
+                break;
+            case InputMode.TOUCH_TAP:
+                buttonsInput.hideButtons();
+                break;
+            case InputMode.TOUCH_SWIPE:
+                buttonsInput.hideButtons();
+                break;
+        }
     }
 }
