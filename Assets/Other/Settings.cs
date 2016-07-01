@@ -13,33 +13,13 @@ public class Settings : MonoBehaviour {
     private Game game;
 
     void Awake() {
-        loadSettings();
+        load();
         game = FindObjectOfType<Game>();
     }
 
-    public void loadSettings() {
-        selectedInput = (InputMode)PlayerPrefs.GetInt("Input_mode");
-        music = Convert.ToBoolean(PlayerPrefs.GetInt("Music"));
-        sounds = Convert.ToBoolean(PlayerPrefs.GetInt("Sounds"));
-    }
-
-    public void saveSettings() {
-        PlayerPrefs.SetInt("Input_mode", (int)selectedInput);
-        PlayerPrefs.SetInt("Music", Convert.ToInt16(music));
-        PlayerPrefs.SetInt("Sounds", Convert.ToInt16(sounds));
-    }
-
     public void buttonSettings() {
-        if (gameObject.activeInHierarchy) {
-            gameObject.SetActive(false);
-            game.deactivatePause();
-            saveSettings();
-        }
-        else {
-            gameObject.SetActive(true);
-            game.activatePause();
-            updateSettings();
-        }
+        if (gameObject.activeInHierarchy) deactivate();
+        else activate();
     }
 
     public void setInputModeButtons() { selectedInput = Settings.InputMode.BUTTONS; }
@@ -48,7 +28,31 @@ public class Settings : MonoBehaviour {
     public void setMusic() { music = musicCheckmark.isOn; }
     public void setSounds() { sounds = soundsCheckmark.isOn; }
 
-    private void updateSettings() {
+    public void activate() {
+        gameObject.SetActive(true);
+        game.activatePause();
+        updateCheckmarks();
+    }
+
+    public void deactivate() {
+        gameObject.SetActive(false);
+        game.deactivatePause();
+        save();
+    }
+
+    private void save() {
+        PlayerPrefs.SetInt("Input_mode", (int)selectedInput);
+        PlayerPrefs.SetInt("Music", Convert.ToInt16(music));
+        PlayerPrefs.SetInt("Sounds", Convert.ToInt16(sounds));
+    }
+
+    private void load() {
+        selectedInput = (InputMode)PlayerPrefs.GetInt("Input_mode");
+        music = Convert.ToBoolean(PlayerPrefs.GetInt("Music"));
+        sounds = Convert.ToBoolean(PlayerPrefs.GetInt("Sounds"));
+    }
+
+    private void updateCheckmarks() {
         if (selectedInput == Settings.InputMode.BUTTONS) inputMode[0].isOn = true;
         else if (selectedInput == Settings.InputMode.TOUCH_TAP) inputMode[1].isOn = true;
         else if (selectedInput == Settings.InputMode.TOUCH_SWIPE) inputMode[2].isOn = true;
