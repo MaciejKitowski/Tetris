@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Exitbutton : MonoBehaviour {
+public class ExitButton : MonoBehaviour {
     private GameObject game;
     private GameObject menu;
     private GameObject settings;
@@ -18,7 +18,7 @@ public class Exitbutton : MonoBehaviour {
 	    if(Input.GetKeyDown(KeyCode.Escape)) {
 
             if(settings.activeInHierarchy) {
-                settings.GetComponent<settingsController>().saveSettings();
+                settings.GetComponent<Settings>().saveSettings();
                 game.GetComponent<Game>().deactivatePause();
                 settings.SetActive(false);
             }
