@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
 
 public class InputTap : MonoBehaviour {
     public float rotateTouchBorder = -3.3225f;
