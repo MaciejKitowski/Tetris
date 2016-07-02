@@ -12,26 +12,26 @@ public class InputButton : MonoBehaviour {
         blocks = FindObjectOfType<blocksManager>();
     }
 
-    public void displayButtons() { foreach (GameObject obj in button) obj.SetActive(true); }
-    public void hideButtons() { foreach (GameObject obj in button) obj.SetActive(false); }
+    public void actvate() { foreach (GameObject obj in button) obj.SetActive(true); }
+    public void deactivate() { foreach (GameObject obj in button) obj.SetActive(false); }
 
     public void moveLeft() {
         if (!GamePause.isPaused() && !endgame.isActive()) blocks.getBlock().GetComponent<Block>().turnLeft();
-        else GamePause.deactivate();
+        else if(GamePause.isPaused() && !endgame.isActive()) GamePause.deactivate();
     }
 
     public void moveRight() {
         if (!GamePause.isPaused() && !endgame.isActive()) blocks.getBlock().GetComponent<Block>().turnRight();
-        else GamePause.deactivate();
+        else if (GamePause.isPaused() && !endgame.isActive()) GamePause.deactivate();
     }
 
     public void moveDown() {
         if (!GamePause.isPaused() && !endgame.isActive()) blocks.getBlock().GetComponent<Block>().speedUp = true;
-        else GamePause.deactivate();
+        else if (GamePause.isPaused() && !endgame.isActive()) GamePause.deactivate();
     }
 
     public void rotate() {
         if (!GamePause.isPaused() && !endgame.isActive()) blocks.getBlock().GetComponent<Block>().rotate();
-        else GamePause.deactivate();
+        else if (GamePause.isPaused() && !endgame.isActive()) GamePause.deactivate();
     }
 }

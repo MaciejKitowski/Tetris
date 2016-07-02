@@ -71,13 +71,19 @@ public class Settings : MonoBehaviour {
     private void updateInputMode() {
         switch(selectedInput) {
             case InputMode.BUTTONS:
-                buttonsInput.displayButtons();
+                buttonsInput.actvate();
+                tapInput.deactivate();
+                swipeInput.deactivate();
                 break;
             case InputMode.TOUCH_TAP:
-                buttonsInput.hideButtons();
+                tapInput.activate();
+                buttonsInput.deactivate();
+                swipeInput.deactivate();
                 break;
             case InputMode.TOUCH_SWIPE:
-                buttonsInput.hideButtons();
+                swipeInput.activate();
+                buttonsInput.deactivate();
+                tapInput.deactivate();
                 break;
         }
     }

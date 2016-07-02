@@ -22,7 +22,6 @@ public class Game : MonoBehaviour {
         controllerSettings = GameObject.FindGameObjectWithTag("Settings");
         endGame = FindObjectOfType<EndGame>();
         gameObject.SetActive(false);
-        controllerSettings.SetActive(false);
     }
 
     void Update() {
@@ -33,7 +32,7 @@ public class Game : MonoBehaviour {
                 break;
 
             case Settings.InputMode.TOUCH_TAP:
-                selectedInputTap();
+                //selectedInputTap();
                 break;
 
             case Settings.InputMode.TOUCH_SWIPE:
@@ -45,33 +44,13 @@ public class Game : MonoBehaviour {
 	public void newGame() {
         points.resetPoints();
         managerBlocks.removeAllBlocks();
+        controllerSettings.SetActive(false);
         managerArena.resetArena();
         nextBlock.randNew();
         endGame.gameObject.SetActive(false);
     }
 
     public int getPoints() { return points.getPoints(); }
-
-    private void selectedInputButtons() {
-        if (!inputButtons[0].activeInHierarchy) foreach (GameObject obj in inputButtons) obj.SetActive(true);
-    }
-
-    private void selectedInputTap() {
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
-            if (!GamePause.isPaused() && !controllerSettings.activeInHierarchy && !endGame.gameObject.activeInHierarchy)
-            {
-                Vector3 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-
-                if (touchPos.y < -3.3225f) managerBlocks.getBlock().GetComponent<Block>().rotate();
-                else {
-                    if (touchPos.x > -0.95f && touchPos.x < 0.95f) managerBlocks.getBlock().GetComponent<Block>().speedUp = true;
-                    else if (touchPos.x < -0.95f) managerBlocks.getBlock().GetComponent<Block>().turnLeft();
-                    else if (touchPos.x > 0.95f) managerBlocks.getBlock().GetComponent<Block>().turnRight();
-                }
-            }
-            else if (GamePause.isPaused() && !controllerSettings.activeInHierarchy) GamePause.deactivate();
-        }
-    }
 
     private void selectedInputSwipe() {
         if (Input.touchCount > 0) {
