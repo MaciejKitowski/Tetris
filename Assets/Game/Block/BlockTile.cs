@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class blockTileController : MonoBehaviour {
+public class BlockTile : MonoBehaviour {
     public enum blockColor { GREEN, RED, BLUE, MAGENTA, YELLOW, ORANGE, CYAN };
 
     public bool blockControllerRemoved = false;
-    public arenaTileController arenaTile;
+    public ArenaTile arenaTile;
     public blockColor color = blockColor.GREEN;
 
-    private arenaManager managerArena;
+    private Arena managerArena;
 
-    void Start() { managerArena = FindObjectOfType<arenaManager>(); }
+    void Start() { managerArena = FindObjectOfType<Arena>(); }
 
     void Update() {
         if(blockControllerRemoved && arenaTile.posY < 19 && managerArena.tile[arenaTile.posX,arenaTile.posY + 1].isEmpty) {
@@ -19,7 +19,7 @@ public class blockTileController : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D obj) {
-        if (obj.transform.tag == "Game_arenaTile") arenaTile = obj.gameObject.GetComponent<arenaTileController>();
+        if (obj.transform.tag == "Game_arenaTile") arenaTile = obj.gameObject.GetComponent<ArenaTile>();
     }
 
     public void setColor(blockColor col) {

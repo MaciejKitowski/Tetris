@@ -5,14 +5,14 @@ public class Game : MonoBehaviour {
 
     private blocksManager managerBlocks;
     private nextBlockController nextBlock;
-    private arenaManager managerArena;
+    private Arena managerArena;
     private GameObject controllerSettings;
     private EndGame endGame;
 
     void Awake() {
         managerBlocks = FindObjectOfType<blocksManager>();
         nextBlock = FindObjectOfType<nextBlockController>();
-        managerArena = FindObjectOfType<arenaManager>();
+        managerArena = FindObjectOfType<Arena>();
         controllerSettings = GameObject.FindGameObjectWithTag("Settings");
         endGame = FindObjectOfType<EndGame>();
         gameObject.SetActive(false);

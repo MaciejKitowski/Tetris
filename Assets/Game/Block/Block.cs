@@ -7,25 +7,25 @@ public class Block : MonoBehaviour {
     public bool speedUp = false;
     public bool lockRotation = false;
 
-    protected blockTileController[] tile = new blockTileController[4];
-    protected arenaManager managerArena;
-    protected blocksManager managerBlocks;
-    protected detectorController detector;
+    private BlockTile[] tile = new BlockTile[4];
+    private Arena managerArena;
+    private blocksManager managerBlocks;
+    private Detector detector;
 
-    protected float fallTimer = 0.6f;
-    protected float fallTimerFast = 0.02f;
-    protected float timer = 0;
+    private float fallTimer = 0.6f;
+    private float fallTimerFast = 0.02f;
+    private float timer = 0;
 
-    virtual protected void Start() {
-        for (int i = 0; i < 4; ++i) tile[i] = transform.GetChild(i).GetComponent<blockTileController>();
-        managerArena = FindObjectOfType<arenaManager>();
+    void Start() {
+        for (int i = 0; i < 4; ++i) tile[i] = transform.GetChild(i).GetComponent<BlockTile>();
+        managerArena = FindObjectOfType<Arena>();
         managerBlocks = FindObjectOfType<blocksManager>();
-        detector = transform.GetComponentInChildren<detectorController>();
+        detector = transform.GetComponentInChildren<Detector>();
     }
 
-    virtual protected void Update() {
+    void Update() {
         if(!GamePause.isPaused()) {
-            if (detector.canChangeDirectionVERT(actitveRotation)) {
+            if (detector.canMoveVertical(actitveRotation)) {
                 if (timer < 0) {
                     moveTilesVertical();
                     if (!speedUp) timer = fallTimer;
@@ -48,19 +48,19 @@ public class Block : MonoBehaviour {
         }
     }
 
-    public void turnLeft() { if (detector.canChangeDirectionHOR(actitveRotation, -1)) moveTilesHorizontal(-1); }
-    public void turnRight() { if (detector.canChangeDirectionHOR(actitveRotation, 1)) moveTilesHorizontal(1); }
+    public void turnLeft() { if (detector.canMoveHorizontal(actitveRotation, -1)) moveTilesHorizontal(-1); }
+    public void turnRight() { if (detector.canMoveHorizontal(actitveRotation, 1)) moveTilesHorizontal(1); }
 
     public void randColor() {
-        blockTileController.blockColor col = (blockTileController.blockColor)Random.Range(0, 7);
-        for (int i = 0; i < 4; ++i) transform.GetChild(i).GetComponent<blockTileController>().setColor(col);
+        BlockTile.blockColor col = (BlockTile.blockColor)Random.Range(0, 7);
+        for (int i = 0; i < 4; ++i) transform.GetChild(i).GetComponent<BlockTile>().setColor(col);
     }
 
-    protected void moveTilesHorizontal(int direction) { transform.position = managerArena.tile[tile[0].arenaTile.posX + direction, tile[0].arenaTile.posY].transform.position; }
-    protected void moveTilesVertical(int direction = 1) { transform.position = managerArena.tile[tile[0].arenaTile.posX, tile[0].arenaTile.posY + direction].transform.position; }
+    private void moveTilesHorizontal(int direction) { transform.position = managerArena.tile[tile[0].arenaTile.posX + direction, tile[0].arenaTile.posY].transform.position; }
+    private void moveTilesVertical(int direction = 1) { transform.position = managerArena.tile[tile[0].arenaTile.posX, tile[0].arenaTile.posY + direction].transform.position; }
 
-    protected void destroy() {
-        foreach (blockTileController tl in tile) tl.blockControllerRemoved = true;
+    private void destroy() {
+        foreach (BlockTile tl in tile) tl.blockControllerRemoved = true;
         Destroy(detector.gameObject);
         Destroy(GetComponent<Block>());
     }

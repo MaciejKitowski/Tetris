@@ -5,7 +5,6 @@ public class GamePause : MonoBehaviour {
     private static bool paused = true;
     private static GameObject pauseInfo;
 
-
 	void Awake() {
         pauseInfo = GameObject.FindGameObjectWithTag("Game_pause");
     }
