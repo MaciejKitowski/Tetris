@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public class InputSwipe : MonoBehaviour {
-    public float minimumSwipeLength = 0.65f;
+    public float minimumSwipeDistance = 0.65f;
 
     private bool activated = false;
     private EndGame endgame;
@@ -17,29 +17,61 @@ public class InputSwipe : MonoBehaviour {
     }
 
     void Update() {
-        if(activated && Input.touchCount > 0) {
-            if (!GamePause.isPaused() && !settings.gameObject.activeInHierarchy && !endgame.gameObject.activeInHierarchy) {
-                if (Input.GetTouch(0).phase == TouchPhase.Began) touchStartPos = Input.GetTouch(0).position;
-                else if (Input.GetTouch(0).phase == TouchPhase.Ended) {
-                    touchEndPos = Input.GetTouch(0).position;
-                    float movedDistance = Vector2.Distance(Camera.main.ScreenToWorldPoint(touchEndPos), Camera.main.ScreenToWorldPoint(touchStartPos));
-
-                    if(movedDistance > minimumSwipeLength) {
-                        if (Mathf.Abs(touchEndPos.x - touchStartPos.x) > Mathf.Abs(touchEndPos.y - touchStartPos.y)) {
-                            if (touchEndPos.x > touchStartPos.x) blocks.getBlock().GetComponent<Block>().turnRight();
-                            else blocks.getBlock().GetComponent<Block>().turnLeft();
-                        }
-                        else {
-                            if (touchEndPos.y > touchStartPos.y) blocks.getBlock().GetComponent<Block>().rotate();
-                            else blocks.getBlock().GetComponent<Block>().speedUp = true;
-                        }
-                    }
+        if(activated && Input.touchCount > 0 && isExtraWindowsDisabled()) {
+            if (!GamePause.isPaused()) {
+                if (isSwipeEnd() && isMovedMinimumDistance()) {
+                    if (isSwpiedHorizontal()) swipeHorizontal();
+                    else swipeVertical();
                 }
             }
-            else if (GamePause.isPaused() && !settings.gameObject.activeInHierarchy && !endgame.gameObject.activeInHierarchy) GamePause.deactivate();
+            else GamePause.deactivate();
         }
     }
 
     public void activate() { activated = true; }
     public void deactivate() { activated = false; }
+
+    private bool isExtraWindowsDisabled() {
+        if (!settings.isActive() && !endgame.isActive()) return true;
+        else return false;
+    }
+
+    private bool isSwipeEnd(){
+        if (Input.GetTouch(0).phase == TouchPhase.Began) {
+            updatePositionVector(ref touchStartPos);
+            return false;
+        }
+        else if(Input.GetTouch(0).phase == TouchPhase.Ended) {
+            updatePositionVector(ref touchEndPos);
+            return true;
+        }
+        return false;
+    }
+
+    private bool isMovedMinimumDistance() {
+        float movedDistance = Vector2.Distance(Camera.main.ScreenToWorldPoint(touchStartPos), Camera.main.ScreenToWorldPoint(touchEndPos));
+
+        if (movedDistance > minimumSwipeDistance) return true;
+        else return false;
+    }
+
+    private bool isSwpiedHorizontal() {
+        float distanceHorizontal = Mathf.Abs(touchEndPos.x - touchStartPos.x);
+        float distanceVertical = Mathf.Abs(touchEndPos.y - touchStartPos.y);
+
+        if (distanceHorizontal > distanceVertical) return true;
+        else return false;
+    }
+
+    private void swipeHorizontal() {
+        if (touchEndPos.x > touchStartPos.x) blocks.getBlock().GetComponent<Block>().turnRight();
+        else blocks.getBlock().GetComponent<Block>().turnLeft();
+    }
+
+    private void swipeVertical() {
+        if (touchEndPos.y > touchStartPos.y) blocks.getBlock().GetComponent<Block>().rotate();
+        else blocks.getBlock().GetComponent<Block>().speedUp = true;
+    }
+
+    private void updatePositionVector(ref Vector2 toUpdate) { toUpdate = Input.GetTouch(0).position; }
 }

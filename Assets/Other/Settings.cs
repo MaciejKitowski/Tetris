@@ -33,6 +33,7 @@ public class Settings : MonoBehaviour {
     public void setInputModeSwipe() { selectedInput = Settings.InputMode.TOUCH_SWIPE; }
     public void setMusic() { music = musicCheckmark.isOn; }
     public void setSounds() { sounds = soundsCheckmark.isOn; }
+    public bool isActive() { return gameObject.activeInHierarchy; }
 
     public void activate() {
         gameObject.SetActive(true);
