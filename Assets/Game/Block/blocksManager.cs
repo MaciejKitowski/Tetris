@@ -5,19 +5,17 @@ public class blocksManager : MonoBehaviour {
     public GameObject startTile;
 
     private nextBlockController nextBlock;
-    private Game game;
     private EndGame endGame;
 
 	void Awake() {
         nextBlock = FindObjectOfType<nextBlockController>();
-        game = FindObjectOfType<Game>();
         endGame = FindObjectOfType<EndGame>();
     }
 
 	void Update () { if (!GamePause.isPaused() && transform.childCount == 0) pushBlock(); }
 
     public void pushBlock() {
-        if (!startTile.GetComponent<arenaTileController>().isEmpty) endGame.activate(game.getPoints()); //Game lost condition
+        if (!startTile.GetComponent<arenaTileController>().isEmpty) endGame.activate(Points.getPoints()); //Game lost condition
         else {
             GameObject buffer = Instantiate(nextBlock.getBlock()) as GameObject;
             buffer.transform.SetParent(transform);

@@ -3,7 +3,6 @@
 public class Game : MonoBehaviour {
     public GameObject[] inputButtons = new GameObject[4];
 
-    private pointsCounter points;
     private blocksManager managerBlocks;
     private nextBlockController nextBlock;
     private arenaManager managerArena;
@@ -11,7 +10,6 @@ public class Game : MonoBehaviour {
     private EndGame endGame;
 
     void Awake() {
-        points = FindObjectOfType<pointsCounter>();
         managerBlocks = FindObjectOfType<blocksManager>();
         nextBlock = FindObjectOfType<nextBlockController>();
         managerArena = FindObjectOfType<arenaManager>();
@@ -21,13 +19,11 @@ public class Game : MonoBehaviour {
     }
 
 	public void newGame() {
-        points.resetPoints();
+        Points.resetPoints();
         managerBlocks.removeAllBlocks();
         controllerSettings.SetActive(false);
         managerArena.resetArena();
         nextBlock.randNew();
         endGame.gameObject.SetActive(false);
     }
-
-    public int getPoints() { return points.getPoints(); }
 }
