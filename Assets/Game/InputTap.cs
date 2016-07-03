@@ -8,6 +8,7 @@ public class InputTap : MonoBehaviour {
     private EndGame endgame;
     private blocksManager blocks;
     private Settings settings;
+    private Vector2 touchPos;
 
     void Awake() {
         endgame = FindObjectOfType<EndGame>();
@@ -16,23 +17,28 @@ public class InputTap : MonoBehaviour {
     }
 
     void Update() {
-        if(activated) {
-            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
-                if(!GamePause.isPaused() && !settings.gameObject.activeInHierarchy && !endgame.isActive()) {
-                    Vector3 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+        if(activated && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
+            if (!GamePause.isPaused() && isExtraWindowsDisabled()) {
+                touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
 
-                    if (touchPos.y < rotateTouchBorder) blocks.getBlock().GetComponent<Block>().rotate();
-                    else {
-                        if (touchPos.x > -moveDownTouchBorder && touchPos.x < moveDownTouchBorder) blocks.getBlock().GetComponent<Block>().speedUp = true;
-                        else if (touchPos.x < -moveDownTouchBorder) blocks.getBlock().GetComponent<Block>().turnLeft();
-                        else if (touchPos.x > moveDownTouchBorder) blocks.getBlock().GetComponent<Block>().turnRight();
-                    }
-                }
-                else if (GamePause.isPaused() && !settings.gameObject.activeInHierarchy && !endgame.gameObject.activeInHierarchy) GamePause.deactivate();
+                if (toRotate()) blocks.getBlock().GetComponent<Block>().rotate();
+                else if (toMoveDown()) blocks.getBlock().GetComponent<Block>().speedUp = true;
+                else if (toTurnLeft()) blocks.getBlock().GetComponent<Block>().turnLeft();
+                else blocks.getBlock().GetComponent<Block>().turnRight();
             }
+            else GamePause.deactivate();
         }
     }
 
     public void activate() { activated = true; }
     public void deactivate() { activated = false; }
+
+    private bool toRotate() { return (touchPos.y < rotateTouchBorder); }
+    private bool toTurnLeft() { return (touchPos.x < -moveDownTouchBorder); }
+    private bool toMoveDown() { return (touchPos.x > -moveDownTouchBorder && touchPos.x < moveDownTouchBorder); }
+
+    private bool isExtraWindowsDisabled() {
+        if (!settings.isActive() && !endgame.isActive()) return true;
+        else return false;
+    }
 }
