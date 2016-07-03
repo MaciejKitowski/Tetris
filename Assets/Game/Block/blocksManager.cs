@@ -5,26 +5,24 @@ public class blocksManager : MonoBehaviour {
     public GameObject startTile;
 
     private nextBlockController nextBlock;
-    private gameController game;
-    private endGameController endGame;
+    private EndGame endGame;
 
 	void Awake() {
         nextBlock = FindObjectOfType<nextBlockController>();
-        game = FindObjectOfType<gameController>();
-        endGame = FindObjectOfType<endGameController>();
+        endGame = FindObjectOfType<EndGame>();
     }
 
-	void Update () { if (!game.paused && transform.childCount == 0) pushBlock(); }
+	void Update () { if (!GamePause.isPaused() && transform.childCount == 0) pushBlock(); }
 
     public void pushBlock() {
-        if (!startTile.GetComponent<arenaTileController>().isEmpty) endGame.activate(game.getPoints()); //Game lost condition
+        if (!startTile.GetComponent<ArenaTile>().isEmpty) endGame.activate(Points.getPoints()); //Game lost condition
         else {
             GameObject buffer = Instantiate(nextBlock.getBlock()) as GameObject;
             buffer.transform.SetParent(transform);
             buffer.transform.SetAsLastSibling();
             buffer.transform.localPosition = startTile.transform.localPosition;
 
-            buffer.GetComponent<blockController>().enabled = true;
+            buffer.GetComponent<Block>().enabled = true;
             nextBlock.randNew();
         }
     }

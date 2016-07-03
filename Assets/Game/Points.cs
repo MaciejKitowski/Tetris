@@ -2,24 +2,24 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class pointsCounter : MonoBehaviour {
-    private int pointsVal = 0;
-    private Text text;
+public class Points : MonoBehaviour {
+    private static int pointsVal = 0;
+    private static Text text;
 
     void Awake() {
         text = GetComponent<Text>();
         text.text = pointsVal.ToString();
     }
 
-    public void addPoints(int val) {
+    public static void addPoints(int val) {
         pointsVal += val;
         text.text = pointsVal.ToString();
     }
 
-    public void resetPoints() {
+    public static void resetPoints() {
         pointsVal = 0;
         text.text = pointsVal.ToString();
     }
 
-    public int getPoints() { return pointsVal; }
+    public static int getPoints() { return pointsVal; }
 }

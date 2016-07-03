@@ -1,16 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class arenaTileController : MonoBehaviour {
+public class ArenaTile : MonoBehaviour {
     public int posX, posY;
     public bool isEmpty = true;
     public GameObject blockTile;
 
-    void Awake() {
-        char[] splitChars = { '(', ',', ')' };
-        string[] buffer = transform.name.Split(splitChars);
-        posX = int.Parse(buffer[1]);
-        posY = int.Parse(buffer[2]);
+    public void setPosition(int x, int y) {
+        posX = x;
+        posY = y;
     }
 
     void OnCollisionEnter2D(Collision2D obj) {

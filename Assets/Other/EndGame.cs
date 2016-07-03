@@ -2,24 +2,25 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class endGameController : MonoBehaviour {
+public class EndGame : MonoBehaviour {
     public Text pointsValue;
 
-    private gameController game;
-    private menuController menu;
+    private Game game;
+    private MainMenu menu;
 
     void Awake() {
-        game = FindObjectOfType<gameController>();
-        menu = FindObjectOfType<menuController>();
+        game = FindObjectOfType<Game>();
+        menu = FindObjectOfType<MainMenu>();
     }
 
     public void activate(int points) {
         gameObject.SetActive(true);
-        game.activatePause();
+        GamePause.activate();
         pointsValue.text = points.ToString();
     }
 
 	public void buttonAgain() { game.newGame(); }
+    public bool isActive() { return gameObject.activeInHierarchy; }
 
     public void buttonBack() {
         gameObject.SetActive(false);
