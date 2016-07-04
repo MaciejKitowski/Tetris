@@ -12,8 +12,8 @@ public class Block : MonoBehaviour {
     private blocksManager managerBlocks;
     private Detector detector;
 
-    private float fallTimer = 0.6f;
-    private float fallTimerFast = 0.02f;
+    private float fallTimer = 0f;
+    private float moveDownMultiplier = 0f;
     private float timer = 0;
 
     void Start() {
@@ -26,10 +26,10 @@ public class Block : MonoBehaviour {
     void Update() {
         if(!GamePause.isPaused()) {
             if (detector.canMoveVertical(actitveRotation)) {
-                if (timer < 0) {
+                if (timer <= 0) {
                     moveTilesVertical();
                     if (!speedUp) timer = fallTimer;
-                    else timer = fallTimerFast;
+                    else timer = fallTimer / moveDownMultiplier;
                 }
                 else timer -= Time.deltaTime;
             }
@@ -54,6 +54,11 @@ public class Block : MonoBehaviour {
     public void randColor() {
         BlockTile.blockColor col = (BlockTile.blockColor)Random.Range(0, 7);
         for (int i = 0; i < 4; ++i) transform.GetChild(i).GetComponent<BlockTile>().setColor(col);
+    }
+
+    public void setSpeed(float fall, float multiplier) {
+        fallTimer = fall;
+        moveDownMultiplier = multiplier;
     }
 
     private void moveTilesHorizontal(int direction) { transform.position = managerArena.tile[tile[0].arenaTile.posX + direction, tile[0].arenaTile.posY].transform.position; }

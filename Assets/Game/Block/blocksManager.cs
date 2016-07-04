@@ -6,8 +6,10 @@ public class blocksManager : MonoBehaviour {
 
     private nextBlockController nextBlock;
     private EndGame endGame;
+    private float fallTimer = 0.6f;
+    private const float moveDownMultiplier = 10f;
 
-	void Awake() {
+    void Awake() {
         nextBlock = FindObjectOfType<nextBlockController>();
         endGame = FindObjectOfType<EndGame>();
     }
@@ -23,6 +25,7 @@ public class blocksManager : MonoBehaviour {
             buffer.transform.localPosition = startTile.transform.localPosition;
 
             buffer.GetComponent<Block>().enabled = true;
+            buffer.GetComponent<Block>().setSpeed(fallTimer, moveDownMultiplier);
             nextBlock.randNew();
         }
     }
