@@ -7,16 +7,19 @@ public class EndGame : MonoBehaviour {
 
     private Game game;
     private MainMenu menu;
+    private Animation anim;
 
     void Awake() {
         game = FindObjectOfType<Game>();
         menu = FindObjectOfType<MainMenu>();
+        anim = GetComponent<Animation>();
     }
 
     public void activate(int points) {
         gameObject.SetActive(true);
         GamePause.activate();
         pointsValue.text = points.ToString();
+        anim.Play("EndGameDisplay");
     }
 
 	public void buttonAgain() { game.newGame(); }
