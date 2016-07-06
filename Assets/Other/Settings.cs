@@ -43,7 +43,8 @@ public class Settings : MonoBehaviour {
 
     public void deactivate() {
         gameObject.SetActive(false);
-        GamePause.deactivate();
+        GamePause.deactivateAnimated();
+        //GamePause.deactivate();
         updateCheckmarks();
         updateInputMode();
         save();

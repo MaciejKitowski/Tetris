@@ -26,7 +26,7 @@ public class InputTap : MonoBehaviour {
                 else if (toTurnLeft()) blocks.getBlock().GetComponent<Block>().turnLeft();
                 else blocks.getBlock().GetComponent<Block>().turnRight();
             }
-            else GamePause.deactivate();
+            else GamePause.deactivateAnimated();
         }
     }
 

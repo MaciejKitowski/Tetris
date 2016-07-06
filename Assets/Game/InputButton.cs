@@ -17,21 +17,21 @@ public class InputButton : MonoBehaviour {
 
     public void moveLeft() {
         if (!GamePause.isPaused() && !endgame.isActive()) blocks.getBlock().GetComponent<Block>().turnLeft();
-        else if(GamePause.isPaused() && !endgame.isActive()) GamePause.deactivate();
+        else if (GamePause.isPaused() && !endgame.isActive()) GamePause.deactivateAnimated();
     }
 
     public void moveRight() {
         if (!GamePause.isPaused() && !endgame.isActive()) blocks.getBlock().GetComponent<Block>().turnRight();
-        else if (GamePause.isPaused() && !endgame.isActive()) GamePause.deactivate();
+        else if (GamePause.isPaused() && !endgame.isActive()) GamePause.deactivateAnimated();
     }
 
     public void moveDown() {
         if (!GamePause.isPaused() && !endgame.isActive()) blocks.getBlock().GetComponent<Block>().speedUp = true;
-        else if (GamePause.isPaused() && !endgame.isActive()) GamePause.deactivate();
+        else if (GamePause.isPaused() && !endgame.isActive()) GamePause.deactivateAnimated();
     }
 
     public void rotate() {
         if (!GamePause.isPaused() && !endgame.isActive()) blocks.getBlock().GetComponent<Block>().rotate();
-        else if (GamePause.isPaused() && !endgame.isActive()) GamePause.deactivate();
+        else if (GamePause.isPaused() && !endgame.isActive()) GamePause.deactivateAnimated();
     }
 }

@@ -24,7 +24,7 @@ public class InputSwipe : MonoBehaviour {
                     else swipeVertical();
                 }
             }
-            else GamePause.deactivate();
+            else GamePause.deactivateAnimated();
         }
     }
 

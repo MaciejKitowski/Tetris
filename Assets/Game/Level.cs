@@ -10,8 +10,10 @@ public class Level : MonoBehaviour {
 
     void Awake() { txt = transform.GetChild(1).GetComponent<Text>(); }
 
-    public static void updateText() {
-        txt.text = activeLevel.ToString();
+    public static void newLevel() {
+        activeLevel += 1;
+        pointsToChangeLevel = 3;
+        updateText();
     }
 
     public static void reset() {
@@ -20,10 +22,8 @@ public class Level : MonoBehaviour {
         updateText();
     }
 
-    public static void newLevel() {
-        activeLevel += 1;
-        pointsToChangeLevel = 3;
-        updateText();
+    public static void updateText() {
+        txt.text = activeLevel.ToString();
     }
 
     public static void achievedPoints() {
