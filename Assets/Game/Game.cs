@@ -24,6 +24,7 @@ public class Game : MonoBehaviour {
         controllerSettings.SetActive(false);
         managerArena.resetArena();
         nextBlock.randNew();
+        Level.reset();
         endGame.gameObject.SetActive(false);
     }
 }

@@ -12,8 +12,9 @@ public class Points : MonoBehaviour {
     }
 
     public static void addPoints(int val) {
-        pointsVal += val;
+        pointsVal += val * Level.activeLevel;
         text.text = pointsVal.ToString();
+        Level.achievedPoints();
     }
 
     public static void resetPoints() {

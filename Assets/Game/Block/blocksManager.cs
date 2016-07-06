@@ -25,7 +25,7 @@ public class blocksManager : MonoBehaviour {
             buffer.transform.localPosition = startTile.transform.localPosition;
 
             buffer.GetComponent<Block>().enabled = true;
-            buffer.GetComponent<Block>().setSpeed(fallTimer, moveDownMultiplier);
+            buffer.GetComponent<Block>().setSpeed(fallTimer - Level.getSpeedChange(), moveDownMultiplier);
             nextBlock.randNew();
         }
     }
