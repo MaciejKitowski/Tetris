@@ -15,7 +15,7 @@ public class ExitButton : MonoBehaviour {
 
 	void Update () {
 	    if(Input.GetKeyDown(KeyCode.Escape)) {
-            if (settings.activeInHierarchy) settings.GetComponent<Settings>().deactivate();
+            if (settings.activeInHierarchy) settings.GetComponent<Settings>().deactivateAnimated();
             else if (menu.activeInHierarchy) Application.Quit();
             else if (endGame.activeInHierarchy) endGame.GetComponent<EndGame>().buttonBack();
             else if (game.activeInHierarchy) endGame.GetComponent<EndGame>().activate(Points.getPoints());

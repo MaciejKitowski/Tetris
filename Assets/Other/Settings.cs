@@ -14,17 +14,19 @@ public class Settings : MonoBehaviour {
     private InputButton buttonsInput;
     private InputTap tapInput;
     private InputSwipe swipeInput;
+    private Animation anim;
 
     void Awake() {
         load();
         buttonsInput = FindObjectOfType<InputButton>();
         tapInput = FindObjectOfType<InputTap>();
         swipeInput = FindObjectOfType<InputSwipe>();
+        anim = GetComponent<Animation>();
         updateInputMode();
     }
 
     public void buttonSettings() {
-        if (gameObject.activeInHierarchy) deactivate();
+        if (gameObject.activeInHierarchy) deactivateAnimated();
         else activate();
     }
 
@@ -38,16 +40,20 @@ public class Settings : MonoBehaviour {
     public void activate() {
         gameObject.SetActive(true);
         GamePause.activate();
+        anim.Play("SettingsDisplay");
         updateCheckmarks();
     }
 
-    public void deactivate() {
+    public void deactivate() { //Used in SettingsHide animation
         gameObject.SetActive(false);
-        GamePause.deactivateAnimated();
-        //GamePause.deactivate();
         updateCheckmarks();
         updateInputMode();
         save();
+    }
+
+    public void deactivateAnimated() {
+        anim.Play("SettingsHide");
+        GamePause.deactivateAnimated();
     }
 
     private void save() {
