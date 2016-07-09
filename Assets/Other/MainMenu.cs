@@ -13,5 +13,7 @@ public class MainMenu : MonoBehaviour {
         gameObject.SetActive(false);
     }
 
+    public void buttonBlocksCreator() { }
+
     public void buttonExitGame() { Application.Quit(); }
 }
