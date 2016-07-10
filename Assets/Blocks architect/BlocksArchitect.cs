@@ -29,6 +29,7 @@ public class BlocksArchitect : MonoBehaviour {
         float posX = 0;
         float posY = 0;
 
+        //Create tiles
         for (int y = 0; y < 6; ++y, posY -= 0.38382f, posX = 0)
         {
             for (int x = 0; x < 6; ++x, posX += 0.38382f)
@@ -37,6 +38,7 @@ public class BlocksArchitect : MonoBehaviour {
                 {
                     GameObject obj = new GameObject();
                     obj.transform.SetParent(parent.transform);
+                    obj.name = "Tile";
 
                     obj.AddComponent<SpriteRenderer>();
                     obj.GetComponent<SpriteRenderer>().sprite = spr;
@@ -48,6 +50,29 @@ public class BlocksArchitect : MonoBehaviour {
                 }
             }
         }
+
+        //Fix tiles position in parent
+        if(parent.transform.GetChild(0).transform.localPosition.x > 0)
+        {
+            float positionToChange = parent.transform.GetChild(0).transform.localPosition.x;
+
+            foreach (Transform tl in parent.transform)
+            {
+                tl.transform.localPosition = new Vector3(tl.transform.localPosition.x - positionToChange, tl.transform.localPosition.y);
+            }
+        }
+
+        if (parent.transform.GetChild(0).transform.localPosition.y < 0)
+        {
+            float positionToChange = parent.transform.GetChild(0).transform.localPosition.y;
+
+            foreach (Transform tl in parent.transform)
+            {
+                tl.transform.localPosition = new Vector3(tl.transform.localPosition.x, tl.transform.localPosition.y - positionToChange);
+            }
+        }
+
+
     }
 
     // **************************************************** END ****************************************************
