@@ -19,6 +19,10 @@ public class CreatorTile : MonoBehaviour {
             pressed = true;
             sprite.color = Color.green;
         }
+    }
 
+    public void reset() {
+        sprite.color = Color.gray;
+        pressed = false;
     }
 }

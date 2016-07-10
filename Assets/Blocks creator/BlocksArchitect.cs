@@ -28,9 +28,7 @@ public class BlocksArchitect : MonoBehaviour {
         Debug.Log("Blocks list");
     }
 
-    public void reset() {
-        Debug.Log("Reset");
-    }
+    public void reset() { foreach (CreatorTile tl in tile) tl.reset(); }
 
     private void loadTiles() {
         for(int y = 0; y < 6; ++y) {
