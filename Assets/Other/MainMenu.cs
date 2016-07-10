@@ -3,11 +3,11 @@ using System.Collections;
 
 public class MainMenu : MonoBehaviour {
     private GameObject game;
-    private BlockCreator blockCreator;
+    private BlocksArchitect blockCreator;
 
     void Awake() {
         game = GameObject.FindGameObjectWithTag("Game");
-        blockCreator = FindObjectOfType<BlockCreator>();
+        blockCreator = FindObjectOfType<BlocksArchitect>();
     }
 
     public void buttonStartGame() {

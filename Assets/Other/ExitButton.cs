@@ -5,14 +5,14 @@ public class ExitButton : MonoBehaviour {
     private GameObject menu;
     private GameObject settings;
     private GameObject endGame;
-    private BlockCreator blockCreator;
+    private BlocksArchitect blockCreator;
 
     void Awake() {
         game = GameObject.FindGameObjectWithTag("Game");
         menu = GameObject.FindGameObjectWithTag("MainMenu");
         settings = GameObject.FindGameObjectWithTag("Settings");
         endGame = GameObject.FindGameObjectWithTag("Game_end");
-        blockCreator = FindObjectOfType<BlockCreator>();
+        blockCreator = FindObjectOfType<BlocksArchitect>();
     }
 
 	void Update () {

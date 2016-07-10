@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BlockCreator : MonoBehaviour {
+public class BlocksArchitect : MonoBehaviour {
     private MainMenu mainMenu;
     private CreatorTile[,] tile = new CreatorTile[6, 6];
 
