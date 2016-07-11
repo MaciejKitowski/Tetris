@@ -18,42 +18,7 @@ public class BlocksArchitect : MonoBehaviour {
     // Create new block based on pressed tiles
     void add()
     {
-        /*GameObject parent = new GameObject();
-        parent.name = "Block";
-        parent.transform.position = new Vector3(0, -2.7f);*/
 
-
-
-
-
-
-
-
-
-        /*float posX = 0;
-        float posY = 0;*/
-
-        //Create tiles
-        /*for (int y = 0; y < 6; ++y, posY -= 0.38382f, posX = 0)
-        {
-            for (int x = 0; x < 6; ++x, posX += 0.38382f)
-            {
-                if(tile[x,y].pressed)
-                {
-                    GameObject obj = new GameObject();
-                    obj.transform.SetParent(parent.transform);
-                    obj.name = "Tile";
-
-                    obj.AddComponent<SpriteRenderer>();
-                    obj.GetComponent<SpriteRenderer>().sprite = spr;
-                    obj.GetComponent<SpriteRenderer>().sortingOrder = 10;
-                    obj.GetComponent<SpriteRenderer>().color = Color.green;
-
-                    obj.transform.localScale = new Vector3(0.3f, 0.3f);
-                    obj.transform.localPosition = new Vector3(posX, posY);
-                }
-            }
-        }*/
 
         //Fix tiles position in parent
         /*if(parent.transform.GetChild(0).transform.localPosition.x > 0)
@@ -75,57 +40,6 @@ public class BlocksArchitect : MonoBehaviour {
                 tl.transform.localPosition = new Vector3(tl.transform.localPosition.x, tl.transform.localPosition.y - positionToChange);
             }
         }*/
-
-
-
-
-
-
-        //Create detectors
-
-        /*GameObject detectors = new GameObject();
-        detectors.transform.SetParent(parent.transform);
-        detectors.transform.SetAsLastSibling();
-        detectors.name = "Detectors";
-        detectors.transform.localPosition = new Vector3(0, 0);*/
-
-
-
-        //Down
-        /*GameObject detectorsDown = new GameObject();
-        detectorsDown.transform.SetParent(detectors.transform);
-        detectorsDown.transform.SetAsLastSibling();
-        detectorsDown.name = "Down";
-        detectorsDown.transform.localPosition = new Vector3(0, 0);
-
-        posX = 0;
-        posY = 0;*/
-
-        /*for (int y = 0; y < 6; ++y, posY -= 0.38382f, posX = 0)
-        {
-            for (int x = 0; x < 6; ++x, posX += 0.38382f)
-            {
-                if (tile[x, y].pressed)
-                {
-                    if((y + 1) >= 6 || !tile[x, y + 1].pressed)
-                    {
-                        GameObject obj = new GameObject();
-                        obj.transform.SetParent(detectorsDown.transform);
-                        obj.name = "detector";
-
-                        obj.AddComponent<SpriteRenderer>();
-                        obj.GetComponent<SpriteRenderer>().sprite = spr;
-                        obj.GetComponent<SpriteRenderer>().sortingOrder = 10;
-                        obj.GetComponent<SpriteRenderer>().color = Color.red;
-
-                        obj.transform.localScale = new Vector3(0.3f, 0.3f);
-                        obj.transform.localPosition = new Vector3(posX, posY - 0.38382f);
-                    }
-                }
-            }
-        }*/
-
-
     }
 
     // **************************************************** END ****************************************************
