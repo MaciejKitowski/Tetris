@@ -24,6 +24,8 @@ public class DebugBlockSpawner : MonoBehaviour {
         createDetectorsLeft();
         createDetectorsRight();
         fixPosition();
+        if (architectBlock.canRotate) createDetectorsRotation();
+        else createGameObjectAsChildren(detector, "Rotation");
 
         parent.GetComponent<Block>().enabled = false;
         detector.GetComponent<Detector>().enabled = false;
@@ -93,6 +95,16 @@ public class DebugBlockSpawner : MonoBehaviour {
                 if (architectBlock.tile[x, y].pressed && ((x + 1) >= 6 || !architectBlock.tile[x + 1, y].pressed)) createDetector(detectorRight, posX + 0.38382f, posY);
             }
         }
+    }
+
+    private void createDetectorsRotation() {
+        GameObject detectorRotation = createGameObjectAsChildren(detector, "Rotation");
+
+        GameObject[] blockTiles = new GameObject[parent.transform.childCount - 1];
+        for (int i = 0; i < parent.transform.childCount - 1; ++i) blockTiles[i] = parent.transform.GetChild(i).gameObject;
+
+        for (int i = 1; i < blockTiles.Length; ++i) createDetector(detectorRotation, blockTiles[i].transform.localPosition.x, blockTiles[i].transform.localPosition.y);
+        detectorRotation.transform.Rotate(new Vector3(0, 0, 90f));
     }
 
     private void fixPosition() {
