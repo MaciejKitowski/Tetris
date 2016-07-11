@@ -23,6 +23,7 @@ public class DebugBlockSpawner : MonoBehaviour {
         createDetectorsUp();
         createDetectorsLeft();
         createDetectorsRight();
+        fixPosition();
 
         parent.GetComponent<Block>().enabled = false;
         detector.GetComponent<Detector>().enabled = false;
@@ -90,6 +91,38 @@ public class DebugBlockSpawner : MonoBehaviour {
         for (int y = 0; y < 6; ++y, posY -= 0.38382f, posX = 0) {
             for (int x = 0; x < 6; ++x, posX += 0.38382f) {
                 if (architectBlock.tile[x, y].pressed && ((x + 1) >= 6 || !architectBlock.tile[x + 1, y].pressed)) createDetector(detectorRight, posX + 0.38382f, posY);
+            }
+        }
+    }
+
+    private void fixPosition() {
+        if(parent.transform.GetChild(0).transform.localPosition.x > 0) {
+            float positionChangeX = parent.transform.GetChild(0).transform.localPosition.x;
+
+            //Tiles
+            foreach (Transform tl in parent.transform) {
+                if (tl.name == "Tile") tl.transform.localPosition = new Vector3(tl.transform.localPosition.x - positionChangeX, tl.transform.localPosition.y);
+                else break;
+            }
+
+            //Detector
+            foreach (Transform detect in detector.transform) {
+                foreach (Transform tl in detect) tl.transform.localPosition = new Vector3(tl.transform.localPosition.x - positionChangeX, tl.transform.localPosition.y);
+            }
+        }
+
+        if (parent.transform.GetChild(0).transform.localPosition.y < 0) {
+            float positionChangeY = parent.transform.GetChild(0).transform.localPosition.y;
+
+            //Tiles
+            foreach (Transform tl in parent.transform) {
+                if (tl.name == "Tile") tl.transform.localPosition = new Vector3(tl.transform.localPosition.x, tl.transform.localPosition.y - positionChangeY);
+                else break;
+            }
+
+            //Detector
+            foreach (Transform detect in detector.transform) {
+                foreach (Transform tl in detect) tl.transform.localPosition = new Vector3(tl.transform.localPosition.x, tl.transform.localPosition.y - positionChangeY);
             }
         }
     }

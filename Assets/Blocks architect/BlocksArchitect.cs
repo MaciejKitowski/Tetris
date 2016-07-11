@@ -1,48 +1,17 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
 
 public class BlocksArchitect : MonoBehaviour {
     public CreatorTile[,] tile = new CreatorTile[6, 6];
+    public bool canRotate = true;
+    public Toggle rotationCheckmark;
 
     private MainMenu mainMenu;
-    
-
-    public Sprite spr;
 
     void Awake() {
         mainMenu = FindObjectOfType<MainMenu>();
         loadTiles();
     }
-
-    // *************************************************** TEST ****************************************************
-    // Create new block based on pressed tiles
-    void add()
-    {
-
-
-        //Fix tiles position in parent
-        /*if(parent.transform.GetChild(0).transform.localPosition.x > 0)
-        {
-            float positionToChange = parent.transform.GetChild(0).transform.localPosition.x;
-
-            foreach (Transform tl in parent.transform)
-            {
-                tl.transform.localPosition = new Vector3(tl.transform.localPosition.x - positionToChange, tl.transform.localPosition.y);
-            }
-        }
-
-        if (parent.transform.GetChild(0).transform.localPosition.y < 0)
-        {
-            float positionToChange = parent.transform.GetChild(0).transform.localPosition.y;
-
-            foreach (Transform tl in parent.transform)
-            {
-                tl.transform.localPosition = new Vector3(tl.transform.localPosition.x, tl.transform.localPosition.y - positionToChange);
-            }
-        }*/
-    }
-
-    // **************************************************** END ****************************************************
 
     public void activate() {
         gameObject.SetActive(true);
@@ -52,6 +21,11 @@ public class BlocksArchitect : MonoBehaviour {
     public void buttonBack() {
         gameObject.SetActive(false);
         mainMenu.gameObject.SetActive(true);
+    }
+
+    public void toggleRotation() {
+        canRotate = !canRotate;
+        rotationCheckmark.isOn = canRotate;
     }
 
     public void buttonSave() {
