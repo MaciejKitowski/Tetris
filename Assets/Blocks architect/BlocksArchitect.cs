@@ -33,7 +33,7 @@ public class BlocksArchitect : MonoBehaviour {
 
     public void buttonSave() {
         serialization.addNewBlock();
-        Debug.Log("Save block");
+        reset();
     }
 
     public void buttonList() {
