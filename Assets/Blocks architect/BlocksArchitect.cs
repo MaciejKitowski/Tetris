@@ -7,9 +7,11 @@ public class BlocksArchitect : MonoBehaviour {
     public Toggle rotationCheckmark;
 
     private MainMenu mainMenu;
+    private BlocksSerialization serialization;
 
     void Awake() {
         mainMenu = FindObjectOfType<MainMenu>();
+        serialization = GetComponent<BlocksSerialization>();
         loadTiles();
     }
 
@@ -19,6 +21,7 @@ public class BlocksArchitect : MonoBehaviour {
     }
 
     public void buttonBack() {
+        serialization.save();
         gameObject.SetActive(false);
         mainMenu.gameObject.SetActive(true);
     }
@@ -29,6 +32,7 @@ public class BlocksArchitect : MonoBehaviour {
     }
 
     public void buttonSave() {
+        serialization.addNewBlock();
         Debug.Log("Save block");
     }
 
@@ -37,6 +41,11 @@ public class BlocksArchitect : MonoBehaviour {
     }
 
     public void reset() { foreach (CreatorTile tl in tile) tl.reset(); }
+
+    public bool isTilePressed() {
+        foreach (CreatorTile tl in tile) if (tl.pressed) return true;
+        return false;
+    }
 
     private void loadTiles() {
         for(int y = 0; y < 6; ++y) {
