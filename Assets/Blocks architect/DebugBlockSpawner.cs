@@ -5,13 +5,27 @@ public class DebugBlockSpawner : MonoBehaviour {
     public Sprite blockSprite;
 
     private BlocksArchitect architectBlock;
+    private BlocksSerialization serialization;
     private GameObject parent;
     private GameObject detector;
 
-    void Awake() { architectBlock = FindObjectOfType<BlocksArchitect>(); }
+    void Awake() {
+        architectBlock = FindObjectOfType<BlocksArchitect>();
+        serialization = FindObjectOfType<BlocksSerialization>();
+    }
 
     public void createBlock() {
-        parent = createGameObject("Block", 0, -2.7f);
+        for(int i = 0; i < serialization.blocks.Capacity - 1; ++i)
+        {
+            parent = createGameObject("Block" + i.ToString(), -2.47f + i, -2.7f);
+            parent.AddComponent<Block>();
+
+            createTiles(i);
+        }
+
+
+        //FROM BLOCK ARCHITECT
+        /*parent = createGameObject("Block", 0, -2.7f);
         parent.AddComponent<Block>();
 
         createTiles();
@@ -28,11 +42,32 @@ public class DebugBlockSpawner : MonoBehaviour {
         else createGameObjectAsChildren(detector, "Rotation");
 
         parent.GetComponent<Block>().enabled = false;
-        detector.GetComponent<Detector>().enabled = false;
+        detector.GetComponent<Detector>().enabled = false;*/
     }
 
-    private void createTiles() {
+    private void createTiles(int index) {
         float posX = 0;
+        float posY = 0;
+        bool[,] block = serialization.getConvertedTiles(index);
+
+        for (int y = 0; y < 6; ++y, posY -= 0.38382f, posX = 0)
+        {
+            for (int x = 0; x < 6; ++x, posX += 0.38382f)
+            {
+                if(block[x,y] == true)
+                {
+                    GameObject buffer = createGameObjectAsChildren(parent, "Tile", posX, posY, 0.3f);
+                    buffer.transform.tag = "Game_blockTile";
+                    addSprite(buffer);
+                    addPhysics(buffer);
+                    buffer.AddComponent<BlockTile>();
+                    buffer.GetComponent<BlockTile>().enabled = false;
+                }
+            }
+        }
+
+
+        /*float posX = 0;
         float posY = 0;
 
         for (int y = 0; y < 6; ++y, posY -= 0.38382f, posX = 0) {
@@ -46,7 +81,7 @@ public class DebugBlockSpawner : MonoBehaviour {
                     buffer.GetComponent<BlockTile>().enabled = false;
                 }
             }
-        }
+        }*/
     }
 
     private void createDetectorsDown() {
@@ -162,7 +197,7 @@ public class DebugBlockSpawner : MonoBehaviour {
     private GameObject createGameObject(string name, float posX = 0, float posY = 0) {
         GameObject buffer = new GameObject();
         buffer.name = name;
-        buffer.transform.position = new Vector3(0, posY);
+        buffer.transform.position = new Vector3(posX, posY);
 
         return buffer;
     }

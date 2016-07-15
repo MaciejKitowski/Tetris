@@ -43,6 +43,21 @@ public class BlocksSerialization : MonoBehaviour {
         stream.Close();
     }
 
+    public bool[,] getConvertedTiles(int index) {
+        bool[,] buffer = new bool[6, 6];
+
+        for (int y = 0; y < 6; ++y) {
+            char[] line = blocks[index].line[y].ToCharArray();
+
+            for (int x = 0; x < 6; ++x) {
+                if (line[x] == '1') buffer[x, y] = true;
+                else buffer[x, y] = false;
+            }
+        }
+
+        return buffer;
+    }
+
     private void load() {
         try {
             XmlSerializer serializer = new XmlSerializer(blocks.GetType());
