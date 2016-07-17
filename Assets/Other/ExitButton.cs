@@ -6,6 +6,7 @@ public class ExitButton : MonoBehaviour {
     private GameObject settings;
     private GameObject endGame;
     private BlocksArchitect blockCreator;
+    private BlocksList blockList;
 
     void Awake() {
         game = GameObject.FindGameObjectWithTag("Game");
@@ -13,6 +14,7 @@ public class ExitButton : MonoBehaviour {
         settings = GameObject.FindGameObjectWithTag("Settings");
         endGame = GameObject.FindGameObjectWithTag("Game_end");
         blockCreator = FindObjectOfType<BlocksArchitect>();
+        blockList = FindObjectOfType<BlocksList>();
     }
 
 	void Update () {
@@ -21,6 +23,7 @@ public class ExitButton : MonoBehaviour {
             else if (menu.activeInHierarchy) Application.Quit();
             else if (endGame.activeInHierarchy) endGame.GetComponent<EndGame>().buttonBack();
             else if (game.activeInHierarchy) endGame.GetComponent<EndGame>().activate(Points.getPoints());
+            else if (blockList.gameObject.activeInHierarchy) blockList.buttonBack();
             else if (blockCreator.gameObject.activeInHierarchy) blockCreator.buttonBack();
         }
 	}

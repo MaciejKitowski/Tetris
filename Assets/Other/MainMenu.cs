@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour {
     }
 
     public void buttonStartGame() {
-        blockCreator.gameObject.SetActive(false);
+        blockCreator.buttonBack();
         game.SetActive(true);
         GamePause.activate();
         game.GetComponent<Game>().newGame();

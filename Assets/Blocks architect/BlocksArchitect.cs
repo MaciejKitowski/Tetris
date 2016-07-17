@@ -8,20 +8,24 @@ public class BlocksArchitect : MonoBehaviour {
 
     private MainMenu mainMenu;
     private BlocksSerialization serialization;
+    private BlocksList blockList;
 
     void Awake() {
         mainMenu = FindObjectOfType<MainMenu>();
         serialization = GetComponent<BlocksSerialization>();
+        blockList = FindObjectOfType<BlocksList>();
         loadTiles();
     }
 
     public void activate() {
         gameObject.SetActive(true);
+        blockList.buttonBack();
         reset();
     }
 
     public void buttonBack() {
         serialization.save();
+        blockList.buttonBack();
         gameObject.SetActive(false);
         mainMenu.gameObject.SetActive(true);
     }
@@ -37,7 +41,8 @@ public class BlocksArchitect : MonoBehaviour {
     }
 
     public void buttonList() {
-        Debug.Log("Blocks list");
+        blockList.gameObject.SetActive(true);
+        blockList.loadAll();
     }
 
     public void reset() { foreach (CreatorTile tl in tile) tl.reset(); }

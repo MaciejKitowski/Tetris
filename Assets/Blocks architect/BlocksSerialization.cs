@@ -4,16 +4,18 @@ using System.Xml.Serialization;
 using System.IO;
 
 public class BlocksSerialization : MonoBehaviour {
-    public BlocksArchitect architect;
-
     public struct serializedBlock {
+        public bool deletable;
         public bool canRotate;
 
         [XmlArray("ArenaLines"), XmlArrayItem("line")]
         public string[] line;
     }
 
+    public Sprite blockSprite;
     public List<serializedBlock> blocks = new List<serializedBlock>();
+
+    private BlocksArchitect architect;
 
     void Awake() {
         architect = FindObjectOfType<BlocksArchitect>();
@@ -23,6 +25,7 @@ public class BlocksSerialization : MonoBehaviour {
     public void addNewBlock() {
         serializedBlock block = new serializedBlock();
 
+        block.deletable = true;
         block.canRotate = architect.canRotate;
         block.line = new string[6];
         for (int i = 0; i < 6; ++i) block.line[i] = "000000";

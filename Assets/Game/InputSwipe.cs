@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class InputSwipe : MonoBehaviour {
     public float minimumSwipeDistance = 0.65f;
@@ -17,7 +18,7 @@ public class InputSwipe : MonoBehaviour {
     }
 
     void Update() {
-        if(activated && Input.touchCount > 0 && isExtraWindowsDisabled()) {
+        if (activated && Input.touchCount > 0 && isExtraWindowsDisabled()) {
             if (!GamePause.isPaused()) {
                 if (isSwipeEnd() && isMovedMinimumDistance()) {
                     if (isSwpiedHorizontal()) swipeHorizontal();
