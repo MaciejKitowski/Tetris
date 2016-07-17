@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class BlockOnList : MonoBehaviour {
     private GameObject block;
@@ -21,6 +22,7 @@ public class BlockOnList : MonoBehaviour {
         float posX = 0;
         float posY = 0;
         bool[,] blockTile = serialization.getConvertedTiles(index);
+        if (!serialization.blocks[index].deletable) transform.GetChild(1).GetComponent<Button>().interactable = false;
 
         for (int y = 0; y < 6; ++y, posY -= 0.38382f, posX = 0) {
             for (int x = 0; x < 6; ++x, posX += 0.38382f) {
