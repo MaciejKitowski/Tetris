@@ -25,6 +25,7 @@ public class BlocksArchitect : MonoBehaviour {
 
     public void buttonBack() {
         serialization.save();
+        blockList.buttonBack();
         gameObject.SetActive(false);
         mainMenu.gameObject.SetActive(true);
     }
