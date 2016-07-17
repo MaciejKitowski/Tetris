@@ -41,6 +41,7 @@ public class BlocksArchitect : MonoBehaviour {
 
     public void buttonList() {
         blockList.gameObject.SetActive(true);
+        blockList.loadAll();
     }
 
     public void reset() { foreach (CreatorTile tl in tile) tl.reset(); }
