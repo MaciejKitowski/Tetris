@@ -28,7 +28,7 @@ public class BlocksList : MonoBehaviour {
     private void deleteList() { for (int i = transform.GetChild(0).transform.childCount - 1; i > 1; --i) Destroy(transform.GetChild(0).transform.GetChild(i).gameObject); }
 
     private void swipeMovement() {
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) {
+        if (isActiveAndEnabled && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) {
             Vector2 positon = Input.GetTouch(0).deltaPosition;
             if (positon.y > 1) swipeUp();
             else if (positon.y < -1) swipeDown();
