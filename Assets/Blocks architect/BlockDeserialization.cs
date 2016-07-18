@@ -8,22 +8,40 @@ public class BlockDeserialization : MonoBehaviour {
     private static bool[,] blockSerialized;
 
     private static GameObject block;
+    private static GameObject detectors;
 
     void Awake() {
         serialization = FindObjectOfType<BlocksSerialization>();
         blockSprite = Resources.Load<Sprite>("blockSprite");
     }
 
-    public static GameObject CreateBlock(int index) {
+    public static GameObject CreateBlock(int index, bool complete = false) {
         blockIndex = index;
         blockSerialized = serialization.getConvertedTiles(blockIndex);
         block = createGameObject("Block");
-        createTiles();
+        createTiles(complete);
+
+        if(complete) {
+            block.AddComponent<Block>();
+            detectors = createGameObjectAsChildren(block, "Detectors");
+            detectors.AddComponent<Detector>();
+
+            createDetectorsDown();
+            createDetectorsUp();
+            createDetectorsLeft();
+            createDetectorsRight();
+
+            if (serialization.blocks[blockIndex].canRotate) createDetectorsRotation();
+            else createGameObjectAsChildren(detectors, "Rotation");
+
+            block.GetComponent<Block>().enabled = false;
+            detectors.GetComponent<Detector>().enabled = false;
+        }
 
         return block;
     }
 
-    private static void createTiles() {
+    private static void createTiles(bool complete) {
         Vector2 pos = new Vector2();
 
         for (int y = 0; y < 6; ++y, pos.y -= 0.38382f, pos.x = 0) {
@@ -32,9 +50,71 @@ public class BlockDeserialization : MonoBehaviour {
                     GameObject buffer = createGameObjectAsChildren(block, "Tile", pos, 0.3f);
                     buffer.transform.tag = "Game_blockTile";
                     addSprite(buffer);
+
+                    if (complete) {
+                        addPhysics(buffer);
+                        buffer.AddComponent<BlockTile>();
+                        buffer.GetComponent<BlockTile>().enabled = false;
+                    }
                 }
             }
         }
+    }
+
+    private static void createDetectorsDown() {
+        GameObject detectorTiles = createGameObjectAsChildren(detectors, "Down");
+        Vector2 pos = new Vector2();
+
+        for (int y = 0; y < 6; ++y, pos.y -= 0.38382f, pos.x = 0) {
+            for (int x = 0; x < 6; ++x, pos.x += 0.38382f) {
+                if (blockSerialized[x, y] && ((y + 1) >= 6 || !blockSerialized[x, y + 1])) createDetector(detectorTiles, new Vector2(pos.x, pos.y - 0.38382f));
+            }
+        }
+    }
+
+    private static void createDetectorsUp() {
+        GameObject detectorTiles = createGameObjectAsChildren(detectors, "Up");
+        Vector2 pos = new Vector2();
+
+        for (int y = 0; y < 6; ++y, pos.y -= 0.38382f, pos.x = 0) {
+            for (int x = 0; x < 6; ++x, pos.x += 0.38382f) {
+                if (blockSerialized[x, y] && ((y - 1) <= 0 || !blockSerialized[x, y - 1])) createDetector(detectorTiles, new Vector2(pos.x, pos.y + 0.38382f));
+            }
+        }
+    }
+
+    private static void createDetectorsLeft() {
+        GameObject detectorTiles = createGameObjectAsChildren(detectors, "Left");
+        Vector2 pos = new Vector2();
+
+        for (int y = 0; y < 6; ++y, pos.y -= 0.38382f, pos.x = 0) {
+            for (int x = 0; x < 6; ++x, pos.x += 0.38382f) {
+                if (blockSerialized[x, y] && ((x - 1) <= 0 || !blockSerialized[x - 1, y])) createDetector(detectorTiles, new Vector2(pos.x - 0.38382f, pos.y));
+            }
+        }
+    }
+
+    private static void createDetectorsRight() {
+        GameObject detectorTiles = createGameObjectAsChildren(detectors, "Right");
+        Vector2 pos = new Vector2();
+
+        for (int y = 0; y < 6; ++y, pos.y -= 0.38382f, pos.x = 0) {
+            for (int x = 0; x < 6; ++x, pos.x += 0.38382f) {
+                if (blockSerialized[x, y] && ((x + 1) >= 6 || !blockSerialized[x + 1, y])) createDetector(detectorTiles, new Vector2(pos.x + 0.38382f, pos.y));
+            }
+        }
+    }
+
+
+
+    private static void createDetectorsRotation() {
+        GameObject detectorRotation = createGameObjectAsChildren(detectors, "Rotation");
+
+        GameObject[] blockTiles = new GameObject[block.transform.childCount - 1];
+        for (int i = 0; i < block.transform.childCount - 1; ++i) blockTiles[i] = block.transform.GetChild(i).gameObject;
+
+        for (int i = 0; i < blockTiles.Length; ++i) createDetector(detectorRotation, blockTiles[i].transform.localPosition);
+        detectorRotation.transform.Rotate(new Vector3(0, 0, 90f));
     }
 
     private static void addSprite(GameObject obj) {
@@ -42,6 +122,19 @@ public class BlockDeserialization : MonoBehaviour {
         obj.GetComponent<SpriteRenderer>().sprite = blockSprite;
         obj.GetComponent<SpriteRenderer>().sortingOrder = 4;
         obj.GetComponent<SpriteRenderer>().color = Color.green;
+    }
+
+    private static void addPhysics(GameObject obj) {
+        obj.AddComponent<BoxCollider2D>();
+        obj.AddComponent<Rigidbody2D>();
+        obj.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    private static void createDetector(GameObject parent, Vector2 pos = default(Vector2)) {
+        GameObject buffer = createGameObjectAsChildren(parent, "Detector", pos, 0.3f);
+        buffer.tag = "Game_detector";
+        addPhysics(buffer);
+        buffer.AddComponent<DetectorTile>();
     }
 
     private static GameObject createGameObject(string name, Vector2 pos = default(Vector2)) {
