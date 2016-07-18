@@ -19,27 +19,11 @@ public class BlockOnList : MonoBehaviour {
 
     public void load(int index) {
         blockIndex = index;
-        float posX = 0;
-        float posY = 0;
-        bool[,] blockTile = serialization.getConvertedTiles(index);
         if (!serialization.blocks[index].deletable) transform.GetChild(1).GetComponent<Button>().interactable = false;
 
-        for (int y = 0; y < 6; ++y, posY -= 0.38382f, posX = 0) {
-            for (int x = 0; x < 6; ++x, posX += 0.38382f) {
-                if (blockTile[x, y] == true) {
-                    GameObject buffer = new GameObject();
-                    buffer.name = "Tile";
-                    buffer.transform.SetParent(block.transform);
-                    buffer.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-                    buffer.transform.localPosition = new Vector3(posX, posY);
-
-                    buffer.AddComponent<SpriteRenderer>();
-                    buffer.GetComponent<SpriteRenderer>().sprite = serialization.blockSprite;
-                    buffer.GetComponent<SpriteRenderer>().sortingOrder = 10;
-                }
-            }
-        }
+        GameObject buffer = BlockDeserialization.CreateBlock(blockIndex);
+        buffer.transform.SetParent(block.transform);
+        buffer.transform.localPosition = new Vector3();
+        buffer.transform.localScale = new Vector3(1, 1, 1);
     }
-
-
 }
