@@ -23,6 +23,7 @@ public class BlockDeserialization : MonoBehaviour {
 
         if(complete) {
             block.AddComponent<Block>();
+            block.GetComponent<Block>().lockRotation = !serialization.blocks[index].canRotate;
             detectors = createGameObjectAsChildren(block, "Detectors");
             detectors.AddComponent<Detector>();
 

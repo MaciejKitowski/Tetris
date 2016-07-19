@@ -64,7 +64,10 @@ public class Detector : MonoBehaviour {
     private bool checkDetectorArray(DetectorTile[] ar, bool vertical = false) {
         foreach (DetectorTile tl in ar) {
             if (tl.detectedObj == null) return false;
-            else if (tl.detectedObj.tag == "Game_arenaTile" && !tl.detectedObj.GetComponent<ArenaTile>().isEmpty) return false;
+            else if (tl.detectedObj.tag == "Game_arenaTile" && !tl.detectedObj.GetComponent<ArenaTile>().isEmpty) {
+                if (tl.detectedObj.GetComponent<ArenaTile>().blockTile.transform.IsChildOf(transform.parent)) continue;
+                else return false;
+            }
             else if (tl.detectedObj.tag == "Game_blockTile") return false;
             else if (tl.detectedObj.tag == "Game_border" && !vertical) return false;
             else if (tl.detectedObj.tag == "Game_border" && vertical && tl.detectedObj.name == "Down") return false;
