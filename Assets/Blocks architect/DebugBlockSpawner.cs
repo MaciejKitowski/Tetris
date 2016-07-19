@@ -11,7 +11,7 @@ public class DebugBlockSpawner : MonoBehaviour {
     void Awake() { serialization = FindObjectOfType<BlocksSerialization>(); }
 
     public void createBlock() {
-        for(int i = 0; i < serialization.blocks.Count - 1; ++i) {
+        for(int i = 0; i < serialization.blocks.Count; ++i) {
             parent = createGameObject("Block" + i.ToString(), -2.47f + i * 1.2f, -2.7f);
             parent.AddComponent<Block>();
 

@@ -7,7 +7,7 @@ public class Block : MonoBehaviour {
     public bool speedUp = false;
     public bool lockRotation = false;
 
-    private BlockTile[] tile = new BlockTile[4];
+    private BlockTile[] tile;
     private Arena managerArena;
     private blocksManager managerBlocks;
     private Detector detector;
@@ -17,7 +17,9 @@ public class Block : MonoBehaviour {
     private float timer = 0;
 
     void Start() {
-        for (int i = 0; i < 4; ++i) tile[i] = transform.GetChild(i).GetComponent<BlockTile>();
+        tile = new BlockTile[transform.childCount - 1];
+
+        for (int i = 0; i < transform.childCount - 1; ++i) tile[i] = transform.GetChild(i).GetComponent<BlockTile>();
         managerArena = FindObjectOfType<Arena>();
         managerBlocks = FindObjectOfType<blocksManager>();
         detector = transform.GetComponentInChildren<Detector>();
@@ -53,10 +55,8 @@ public class Block : MonoBehaviour {
 
     public void randColor() {
         BlockTile.blockColor col = (BlockTile.blockColor)Random.Range(0, 7);
-        //for (int i = 0; i < 4; ++i) transform.GetChild(i).GetComponent<BlockTile>().setColor(col);
 
-        foreach(Transform tile in transform)
-        {
+        foreach(Transform tile in transform) {
             if (tile.GetComponent<BlockTile>() == null) return;
             else tile.GetComponent<BlockTile>().setColor(col);
         }
