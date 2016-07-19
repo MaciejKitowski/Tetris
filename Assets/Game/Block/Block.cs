@@ -53,7 +53,13 @@ public class Block : MonoBehaviour {
 
     public void randColor() {
         BlockTile.blockColor col = (BlockTile.blockColor)Random.Range(0, 7);
-        for (int i = 0; i < 4; ++i) transform.GetChild(i).GetComponent<BlockTile>().setColor(col);
+        //for (int i = 0; i < 4; ++i) transform.GetChild(i).GetComponent<BlockTile>().setColor(col);
+
+        foreach(Transform tile in transform)
+        {
+            if (tile.GetComponent<BlockTile>() == null) return;
+            else tile.GetComponent<BlockTile>().setColor(col);
+        }
     }
 
     public void setSpeed(float fall, float multiplier) {
