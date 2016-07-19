@@ -23,6 +23,7 @@ public class BlockDeserialization : MonoBehaviour {
 
         if(complete) {
             block.AddComponent<Block>();
+            block.GetComponent<Block>().lockRotation = !serialization.blocks[index].canRotate;
             detectors = createGameObjectAsChildren(block, "Detectors");
             detectors.AddComponent<Detector>();
 
@@ -34,10 +35,11 @@ public class BlockDeserialization : MonoBehaviour {
             if (serialization.blocks[blockIndex].canRotate) createDetectorsRotation();
             else createGameObjectAsChildren(detectors, "Rotation");
 
-            block.GetComponent<Block>().enabled = false;
-            detectors.GetComponent<Detector>().enabled = false;
+            //block.GetComponent<Block>().enabled = false;
+            //detectors.GetComponent<Detector>().enabled = false;
         }
 
+        fixPosition();
         return block;
     }
 
@@ -54,7 +56,7 @@ public class BlockDeserialization : MonoBehaviour {
                     if (complete) {
                         addPhysics(buffer);
                         buffer.AddComponent<BlockTile>();
-                        buffer.GetComponent<BlockTile>().enabled = false;
+                        //buffer.GetComponent<BlockTile>().enabled = false;
                     }
                 }
             }
@@ -78,7 +80,7 @@ public class BlockDeserialization : MonoBehaviour {
 
         for (int y = 0; y < 6; ++y, pos.y -= 0.38382f, pos.x = 0) {
             for (int x = 0; x < 6; ++x, pos.x += 0.38382f) {
-                if (blockSerialized[x, y] && ((y - 1) <= 0 || !blockSerialized[x, y - 1])) createDetector(detectorTiles, new Vector2(pos.x, pos.y + 0.38382f));
+                if (blockSerialized[x, y] && ((y - 1) < 0 || !blockSerialized[x, y - 1])) createDetector(detectorTiles, new Vector2(pos.x, pos.y + 0.38382f));
             }
         }
     }
@@ -89,7 +91,7 @@ public class BlockDeserialization : MonoBehaviour {
 
         for (int y = 0; y < 6; ++y, pos.y -= 0.38382f, pos.x = 0) {
             for (int x = 0; x < 6; ++x, pos.x += 0.38382f) {
-                if (blockSerialized[x, y] && ((x - 1) <= 0 || !blockSerialized[x - 1, y])) createDetector(detectorTiles, new Vector2(pos.x - 0.38382f, pos.y));
+                if (blockSerialized[x, y] && ((x - 1) < 0 || !blockSerialized[x - 1, y])) createDetector(detectorTiles, new Vector2(pos.x - 0.38382f, pos.y));
             }
         }
     }
@@ -105,8 +107,6 @@ public class BlockDeserialization : MonoBehaviour {
         }
     }
 
-
-
     private static void createDetectorsRotation() {
         GameObject detectorRotation = createGameObjectAsChildren(detectors, "Rotation");
 
@@ -115,6 +115,38 @@ public class BlockDeserialization : MonoBehaviour {
 
         for (int i = 0; i < blockTiles.Length; ++i) createDetector(detectorRotation, blockTiles[i].transform.localPosition);
         detectorRotation.transform.Rotate(new Vector3(0, 0, 90f));
+    }
+
+    private static void fixPosition() {
+        if (block.transform.GetChild(0).transform.localPosition.x > 0) {
+            float positionChangeX = block.transform.GetChild(0).transform.localPosition.x;
+
+            //Tiles
+            foreach (Transform tl in block.transform) {
+                if (tl.name == "Tile") tl.transform.localPosition = new Vector3(tl.transform.localPosition.x - positionChangeX, tl.transform.localPosition.y);
+                else break;
+            }
+
+            //Detector
+            foreach (Transform detect in detectors.transform) {
+                foreach (Transform tl in detect) tl.transform.localPosition = new Vector3(tl.transform.localPosition.x - positionChangeX, tl.transform.localPosition.y);
+            }
+        }
+
+        if (block.transform.GetChild(0).transform.localPosition.y < 0) {
+            float positionChangeY = block.transform.GetChild(0).transform.localPosition.y;
+
+            //Tiles
+            foreach (Transform tl in block.transform) {
+                if (tl.name == "Tile") tl.transform.localPosition = new Vector3(tl.transform.localPosition.x, tl.transform.localPosition.y - positionChangeY);
+                else break;
+            }
+
+            //Detector
+            foreach (Transform detect in detectors.transform) {
+                foreach (Transform tl in detect) tl.transform.localPosition = new Vector3(tl.transform.localPosition.x, tl.transform.localPosition.y - positionChangeY);
+            }
+        }
     }
 
     private static void addSprite(GameObject obj) {
@@ -128,6 +160,7 @@ public class BlockDeserialization : MonoBehaviour {
         obj.AddComponent<BoxCollider2D>();
         obj.AddComponent<Rigidbody2D>();
         obj.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        obj.GetComponent<BoxCollider2D>().size = new Vector2(1, 1);
     }
 
     private static void createDetector(GameObject parent, Vector2 pos = default(Vector2)) {

@@ -22,6 +22,7 @@ public class blocksManager : MonoBehaviour {
             GameObject buffer = Instantiate(nextBlock.getBlock()) as GameObject;
             buffer.transform.SetParent(transform);
             buffer.transform.SetAsLastSibling();
+            buffer.transform.localScale = new Vector3(1, 1, 1);
             buffer.transform.localPosition = startTile.transform.localPosition;
 
             buffer.GetComponent<Block>().enabled = true;
