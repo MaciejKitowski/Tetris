@@ -9,7 +9,7 @@ public class nextBlockController : MonoBehaviour {
         if(transform.childCount > 0) foreach (Transform obj in transform) Destroy(obj.gameObject);
         int index = Random.Range(0, serialization.blocks.Count);
 
-        GameObject buffer = BlockDeserialization.CreateBlock(index, true);
+        GameObject buffer = BlockDeserialization.CreateBlock(index, BlockDeserialization.createMode.STANDARD);
         buffer.transform.SetParent(transform);
         buffer.transform.localPosition = new Vector2(0, 0);
         buffer.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);

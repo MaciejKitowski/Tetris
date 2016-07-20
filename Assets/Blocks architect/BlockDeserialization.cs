@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
 public class BlockDeserialization : MonoBehaviour {
+    public enum createMode { STANDARD, NOSCRIPT }
+
     private static BlocksSerialization serialization;
     private static Sprite blockSprite;
 
-    private static int blockIndex;
     private static bool[,] blockSerialized;
-
     private static GameObject block;
     private static GameObject detectors;
 
@@ -15,35 +15,26 @@ public class BlockDeserialization : MonoBehaviour {
         blockSprite = Resources.Load<Sprite>("blockSprite");
     }
 
-    public static GameObject CreateBlock(int index, bool complete = false) {
-        blockIndex = index;
-        blockSerialized = serialization.getConvertedTiles(blockIndex);
+    public static GameObject CreateBlock(int index, createMode mode) {
+        blockSerialized = serialization.getConvertedTiles(index);
         block = createGameObject("Block");
-        createTiles(complete);
+        createTiles(mode);
 
-        if(complete) {
+        if(mode == createMode.STANDARD) {
             block.AddComponent<Block>();
             block.GetComponent<Block>().lockRotation = !serialization.blocks[index].canRotate;
             detectors = createGameObjectAsChildren(block, "Detectors");
             detectors.AddComponent<Detector>();
+            createDetectors();
 
-            createDetectorsDown();
-            createDetectorsUp();
-            createDetectorsLeft();
-            createDetectorsRight();
-
-            if (serialization.blocks[blockIndex].canRotate) createDetectorsRotation();
+            if (serialization.blocks[index].canRotate) createDetectorsRotation();
             else createGameObjectAsChildren(detectors, "Rotation");
-
-            //block.GetComponent<Block>().enabled = false;
-            //detectors.GetComponent<Detector>().enabled = false;
         }
-
         fixPosition();
         return block;
     }
 
-    private static void createTiles(bool complete) {
+    private static void createTiles(createMode mode) {
         Vector2 pos = new Vector2();
 
         for (int y = 0; y < 6; ++y, pos.y -= 0.38382f, pos.x = 0) {
@@ -53,56 +44,30 @@ public class BlockDeserialization : MonoBehaviour {
                     buffer.transform.tag = "Game_blockTile";
                     addSprite(buffer);
 
-                    if (complete) {
+                    if(mode == createMode.STANDARD) {
                         addPhysics(buffer);
                         buffer.AddComponent<BlockTile>();
-                        //buffer.GetComponent<BlockTile>().enabled = false;
                     }
                 }
             }
         }
     }
 
-    private static void createDetectorsDown() {
-        GameObject detectorTiles = createGameObjectAsChildren(detectors, "Down");
+    private static void createDetectors() {
         Vector2 pos = new Vector2();
+        GameObject detectorDown = createGameObjectAsChildren(detectors, "Down");
+        GameObject detectorUp = createGameObjectAsChildren(detectors, "Up");
+        GameObject detectorLeft = createGameObjectAsChildren(detectors, "Left");
+        GameObject detectorRight = createGameObjectAsChildren(detectors, "Right");
 
         for (int y = 0; y < 6; ++y, pos.y -= 0.38382f, pos.x = 0) {
             for (int x = 0; x < 6; ++x, pos.x += 0.38382f) {
-                if (blockSerialized[x, y] && ((y + 1) >= 6 || !blockSerialized[x, y + 1])) createDetector(detectorTiles, new Vector2(pos.x, pos.y - 0.38382f));
-            }
-        }
-    }
-
-    private static void createDetectorsUp() {
-        GameObject detectorTiles = createGameObjectAsChildren(detectors, "Up");
-        Vector2 pos = new Vector2();
-
-        for (int y = 0; y < 6; ++y, pos.y -= 0.38382f, pos.x = 0) {
-            for (int x = 0; x < 6; ++x, pos.x += 0.38382f) {
-                if (blockSerialized[x, y] && ((y - 1) < 0 || !blockSerialized[x, y - 1])) createDetector(detectorTiles, new Vector2(pos.x, pos.y + 0.38382f));
-            }
-        }
-    }
-
-    private static void createDetectorsLeft() {
-        GameObject detectorTiles = createGameObjectAsChildren(detectors, "Left");
-        Vector2 pos = new Vector2();
-
-        for (int y = 0; y < 6; ++y, pos.y -= 0.38382f, pos.x = 0) {
-            for (int x = 0; x < 6; ++x, pos.x += 0.38382f) {
-                if (blockSerialized[x, y] && ((x - 1) < 0 || !blockSerialized[x - 1, y])) createDetector(detectorTiles, new Vector2(pos.x - 0.38382f, pos.y));
-            }
-        }
-    }
-
-    private static void createDetectorsRight() {
-        GameObject detectorTiles = createGameObjectAsChildren(detectors, "Right");
-        Vector2 pos = new Vector2();
-
-        for (int y = 0; y < 6; ++y, pos.y -= 0.38382f, pos.x = 0) {
-            for (int x = 0; x < 6; ++x, pos.x += 0.38382f) {
-                if (blockSerialized[x, y] && ((x + 1) >= 6 || !blockSerialized[x + 1, y])) createDetector(detectorTiles, new Vector2(pos.x + 0.38382f, pos.y));
+                if (blockSerialized[x, y]) {
+                    if ((y + 1) >= 6 || !blockSerialized[x, y + 1]) createDetector(detectorDown, new Vector2(pos.x, pos.y - 0.38382f)); //Down
+                    if ((y - 1) < 0 || !blockSerialized[x, y - 1]) createDetector(detectorUp, new Vector2(pos.x, pos.y + 0.38382f)); //Up
+                    if ((x - 1) < 0 || !blockSerialized[x - 1, y]) createDetector(detectorLeft, new Vector2(pos.x - 0.38382f, pos.y)); //Left
+                    if ((x + 1) >= 6 || !blockSerialized[x + 1, y]) createDetector(detectorRight, new Vector2(pos.x + 0.38382f, pos.y)); //Right
+                }
             }
         }
     }

@@ -20,7 +20,8 @@ public class BlockOnList : MonoBehaviour {
         blockIndex = index;
         if (!serialization.blocks[index].deletable) transform.GetChild(1).GetComponent<Button>().interactable = false;
 
-        GameObject buffer = BlockDeserialization.CreateBlock(blockIndex);
+        //GameObject buffer = BlockDeserialization.CreateBlock(blockIndex);
+        GameObject buffer = BlockDeserialization.CreateBlock(blockIndex, BlockDeserialization.createMode.NOSCRIPT);
         buffer.transform.SetParent(block.transform);
         buffer.transform.localPosition = new Vector3();
         buffer.transform.localScale = new Vector3(1, 1, 1);
