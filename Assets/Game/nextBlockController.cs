@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class nextBlockController : MonoBehaviour {
-    public GameObject[] blockPrefabs;
     private BlocksSerialization serialization;
 
     void Awake() { serialization = FindObjectOfType<BlocksSerialization>(); }

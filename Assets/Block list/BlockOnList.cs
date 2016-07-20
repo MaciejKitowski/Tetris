@@ -12,7 +12,6 @@ public class BlockOnList : MonoBehaviour {
     }
 
 	public void buttonDelete() {
-        Debug.Log("Delete block with index - " + blockIndex);
         serialization.blocks.RemoveAt(blockIndex);
         Destroy(gameObject);
     }

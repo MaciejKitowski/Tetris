@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class Points : MonoBehaviour {
     private static int pointsVal = 0;
