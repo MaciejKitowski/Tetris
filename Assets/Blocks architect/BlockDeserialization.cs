@@ -22,12 +22,12 @@ public class BlockDeserialization : MonoBehaviour {
 
         if(mode == createMode.STANDARD) {
             block.AddComponent<Block>();
-            block.GetComponent<Block>().lockRotation = !serialization.blocks[index].canRotate;
+            block.GetComponent<Block>().lockRotation = !serialization.isRotatable(index);
             detectors = createGameObjectAsChildren(block, "Detectors");
             detectors.AddComponent<Detector>();
             createDetectors();
 
-            if (serialization.blocks[index].canRotate) createDetectorsRotation();
+            if (serialization.isRotatable(index)) createDetectorsRotation();
             else createGameObjectAsChildren(detectors, "Rotation");
         }
         fixPosition();

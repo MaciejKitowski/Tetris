@@ -7,7 +7,7 @@ public class nextBlockController : MonoBehaviour {
 
     public void randNew() {
         if(transform.childCount > 0) foreach (Transform obj in transform) Destroy(obj.gameObject);
-        int index = Random.Range(0, serialization.blocks.Count);
+        int index = Random.Range(0, serialization.blockCount());
 
         GameObject buffer = BlockDeserialization.CreateBlock(index, BlockDeserialization.createMode.STANDARD);
         buffer.transform.SetParent(transform);

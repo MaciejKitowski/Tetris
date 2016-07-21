@@ -12,9 +12,7 @@ public class BlocksSerialization : MonoBehaviour {
         public string[] line;
     }
 
-    public Sprite blockSprite;
-    public List<serializedBlock> blocks = new List<serializedBlock>();
-
+    private List<serializedBlock> blocks = new List<serializedBlock>();
     private BlocksArchitect architect;
 
     void Awake() {
@@ -57,9 +55,13 @@ public class BlocksSerialization : MonoBehaviour {
                 else buffer[x, y] = false;
             }
         }
-
         return buffer;
     }
+
+    public int blockCount() { return blocks.Count; }
+    public bool isDeletable(int blockIndex) { return blocks[blockIndex].deletable; }
+    public bool isRotatable(int blockIndex) { return blocks[blockIndex].canRotate; }
+    public void delete(int blockIndex) { blocks.RemoveAt(blockIndex); }
 
     private void load() {
         try {
