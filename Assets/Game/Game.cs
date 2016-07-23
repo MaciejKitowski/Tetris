@@ -15,6 +15,9 @@ public class Game : MonoBehaviour {
         managerArena = FindObjectOfType<Arena>();
         controllerSettings = GameObject.FindGameObjectWithTag("Settings");
         endGame = FindObjectOfType<EndGame>();
+        GetComponent<InputButton>().initiate(endGame, managerBlocks);
+        GetComponent<InputSwipe>().initiate(endGame, managerBlocks, controllerSettings.GetComponent<Settings>());
+        GetComponent<InputTap>().initiate(endGame, managerBlocks, controllerSettings.GetComponent<Settings>());
         gameObject.SetActive(false);
     }
 
