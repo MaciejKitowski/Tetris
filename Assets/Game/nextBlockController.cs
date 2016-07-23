@@ -3,7 +3,7 @@
 public class nextBlockController : MonoBehaviour {
     private BlocksSerialization serialization;
 
-    void Awake() { serialization = FindObjectOfType<BlocksSerialization>(); }
+    void Awake() { serialization = GameObject.FindGameObjectWithTag("BlockArchitect").GetComponent<BlocksSerialization>(); }
 
     public void randNew() {
         if(transform.childCount > 0) foreach (Transform obj in transform) Destroy(obj.gameObject);

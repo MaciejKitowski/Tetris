@@ -9,7 +9,7 @@ public class BlockOnList : MonoBehaviour {
 
     void Awake() {
         block = transform.GetChild(0).gameObject;
-        serialization = FindObjectOfType<BlocksSerialization>();
+        serialization = GameObject.FindGameObjectWithTag("BlockArchitect").GetComponent<BlocksSerialization>();
         deleteButton = transform.GetChild(1).GetComponent<Button>();
     }
 

@@ -11,9 +11,9 @@ public class BlocksArchitect : MonoBehaviour {
     private BlocksList blockList;
 
     void Awake() {
-        mainMenu = FindObjectOfType<MainMenu>();
+        mainMenu = GameObject.FindGameObjectWithTag("MainMenu").GetComponent<MainMenu>();
         serialization = GetComponent<BlocksSerialization>();
-        blockList = FindObjectOfType<BlocksList>();
+        blockList = GameObject.FindGameObjectWithTag("BlockList").GetComponent<BlocksList>();
         loadTiles();
     }
 

@@ -10,8 +10,8 @@ public class blocksManager : MonoBehaviour {
     private const float moveDownMultiplier = 10f;
 
     void Awake() {
-        nextBlock = FindObjectOfType<nextBlockController>();
-        endGame = FindObjectOfType<EndGame>();
+        nextBlock = GameObject.FindGameObjectWithTag("Game_nextBlocks").GetComponent<nextBlockController>();
+        endGame = GameObject.FindGameObjectWithTag("Game_end").GetComponent<EndGame>();
     }
 
 	void Update () { if (!GamePause.isPaused() && transform.childCount == 0) pushBlock(); }

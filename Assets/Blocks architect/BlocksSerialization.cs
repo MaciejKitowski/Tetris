@@ -16,7 +16,7 @@ public class BlocksSerialization : MonoBehaviour {
     private BlocksArchitect architect;
 
     void Awake() {
-        architect = FindObjectOfType<BlocksArchitect>();
+        architect = GameObject.FindGameObjectWithTag("BlockArchitect").GetComponent<BlocksArchitect>();
         load();
     }
 

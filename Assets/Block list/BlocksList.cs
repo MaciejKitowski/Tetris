@@ -8,7 +8,7 @@ public class BlocksList : MonoBehaviour {
     private Transform blocksContainer;
 
     void Awake() {
-        serialization = FindObjectOfType<BlocksSerialization>();
+        serialization = GameObject.FindGameObjectWithTag("BlockArchitect").GetComponent<BlocksSerialization>();
         blocksContainer = transform.GetChild(0).transform.GetChild(2);
     }
 

@@ -11,7 +11,7 @@ public class BlockDeserialization : MonoBehaviour {
     private static GameObject detectors;
 
     void Awake() {
-        serialization = FindObjectOfType<BlocksSerialization>();
+        serialization = GameObject.FindGameObjectWithTag("BlockArchitect").GetComponent<BlocksSerialization>();
         blockSprite = Resources.Load<Sprite>("blockSprite");
     }
 

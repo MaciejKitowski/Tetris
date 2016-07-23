@@ -20,8 +20,8 @@ public class Block : MonoBehaviour {
         tile = new BlockTile[transform.childCount - 1];
 
         for (int i = 0; i < transform.childCount - 1; ++i) tile[i] = transform.GetChild(i).GetComponent<BlockTile>();
-        managerArena = FindObjectOfType<Arena>();
-        managerBlocks = FindObjectOfType<blocksManager>();
+        managerArena = GameObject.FindGameObjectWithTag("Game_arena").GetComponent<Arena>();
+        managerBlocks = GameObject.FindGameObjectWithTag("Game_blocks").GetComponent<blocksManager>();
         detector = transform.GetComponentInChildren<Detector>();
     }
 

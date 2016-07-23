@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour {
 
     void Awake() {
         game = GameObject.FindGameObjectWithTag("Game");
-        blockCreator = FindObjectOfType<BlocksArchitect>();
+        blockCreator = GameObject.FindGameObjectWithTag("BlockArchitect").GetComponent<BlocksArchitect>();
     }
 
     public void buttonStartGame() {

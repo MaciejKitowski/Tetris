@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class BlockTile : MonoBehaviour {
     public enum blockColor { GREEN, RED, BLUE, MAGENTA, YELLOW, ORANGE, CYAN };
@@ -10,7 +9,7 @@ public class BlockTile : MonoBehaviour {
 
     private Arena managerArena;
 
-    void Start() { managerArena = FindObjectOfType<Arena>(); }
+    void Start() { managerArena = GameObject.FindGameObjectWithTag("Game_arena").GetComponent<Arena>(); }
 
     void Update() {
         if(blockControllerRemoved && arenaTile.posY < 19 && managerArena.tile[arenaTile.posX,arenaTile.posY + 1].isEmpty) {
