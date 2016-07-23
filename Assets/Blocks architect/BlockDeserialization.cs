@@ -83,33 +83,22 @@ public class BlockDeserialization : MonoBehaviour {
     }
 
     private static void fixPosition() {
-        if (block.transform.GetChild(0).transform.localPosition.x > 0) {
-            float positionChangeX = block.transform.GetChild(0).transform.localPosition.x;
+        Vector2 firstBlockPos = block.transform.GetChild(0).localPosition;
+        bool moveX = (firstBlockPos.x > 0);
+        bool moveY = (firstBlockPos.y < 0);
 
-            //Tiles
-            foreach (Transform tl in block.transform) {
-                if (tl.name == "Tile") tl.transform.localPosition = new Vector3(tl.transform.localPosition.x - positionChangeX, tl.transform.localPosition.y);
-                else break;
+        foreach (Transform tile in block.transform) {
+            if (tile.tag == "Game_blockTile") {
+                if (moveX) tile.transform.localPosition = new Vector3(tile.transform.localPosition.x - firstBlockPos.x, tile.transform.localPosition.y);
+                if (moveY) tile.transform.localPosition = new Vector3(tile.transform.localPosition.x, tile.transform.localPosition.y - firstBlockPos.y);
             }
-
-            //Detector
-            foreach (Transform detect in detectors.transform) {
-                foreach (Transform tl in detect) tl.transform.localPosition = new Vector3(tl.transform.localPosition.x - positionChangeX, tl.transform.localPosition.y);
-            }
+            else break;
         }
 
-        if (block.transform.GetChild(0).transform.localPosition.y < 0) {
-            float positionChangeY = block.transform.GetChild(0).transform.localPosition.y;
-
-            //Tiles
-            foreach (Transform tl in block.transform) {
-                if (tl.name == "Tile") tl.transform.localPosition = new Vector3(tl.transform.localPosition.x, tl.transform.localPosition.y - positionChangeY);
-                else break;
-            }
-
-            //Detector
-            foreach (Transform detect in detectors.transform) {
-                foreach (Transform tl in detect) tl.transform.localPosition = new Vector3(tl.transform.localPosition.x, tl.transform.localPosition.y - positionChangeY);
+        foreach (Transform detect in detectors.transform) {
+            foreach (Transform tile in detect) {
+                if (moveX) tile.transform.localPosition = new Vector3(tile.transform.localPosition.x - firstBlockPos.x, tile.transform.localPosition.y);
+                if (moveY) tile.transform.localPosition = new Vector3(tile.transform.localPosition.x, tile.transform.localPosition.y - firstBlockPos.y);
             }
         }
     }
