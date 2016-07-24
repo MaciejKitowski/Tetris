@@ -7,9 +7,14 @@ public class InputButton : MonoBehaviour {
     private EndGame endgame;
     private blocksManager blocks;
 
-    void Awake() {
+    /*void Awake() {
         endgame = FindObjectOfType<EndGame>();
         blocks = FindObjectOfType<blocksManager>();
+    }*/
+
+    public void initiate(EndGame end, blocksManager block) {
+        endgame = end;
+        blocks = block;
     }
 
     public void actvate() { foreach (GameObject obj in button) obj.SetActive(true); }

@@ -18,9 +18,10 @@ public class Settings : MonoBehaviour {
 
     void Awake() {
         load();
-        buttonsInput = FindObjectOfType<InputButton>();
-        tapInput = FindObjectOfType<InputTap>();
-        swipeInput = FindObjectOfType<InputSwipe>();
+
+        buttonsInput = GameObject.FindGameObjectWithTag("Game").GetComponent<InputButton>();
+        tapInput = GameObject.FindGameObjectWithTag("Game").GetComponent<InputTap>();
+        swipeInput = GameObject.FindGameObjectWithTag("Game").GetComponent<InputSwipe>();
         anim = GetComponent<Animation>();
         updateInputMode();
     }

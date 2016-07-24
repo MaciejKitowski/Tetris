@@ -13,8 +13,9 @@ public class ExitButton : MonoBehaviour {
         menu = GameObject.FindGameObjectWithTag("MainMenu");
         settings = GameObject.FindGameObjectWithTag("Settings");
         endGame = GameObject.FindGameObjectWithTag("Game_end");
-        blockCreator = FindObjectOfType<BlocksArchitect>();
-        blockList = FindObjectOfType<BlocksList>();
+
+        blockCreator = GameObject.FindGameObjectWithTag("BlockArchitect").GetComponent<BlocksArchitect>();
+        blockList = GameObject.FindGameObjectWithTag("BlockList").GetComponent<BlocksList>();
     }
 
 	void Update () {

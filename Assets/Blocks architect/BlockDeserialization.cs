@@ -1,49 +1,40 @@
 ﻿using UnityEngine;
 
 public class BlockDeserialization : MonoBehaviour {
+    public enum createMode { STANDARD, NOSCRIPT }
+
     private static BlocksSerialization serialization;
     private static Sprite blockSprite;
 
-    private static int blockIndex;
     private static bool[,] blockSerialized;
-
     private static GameObject block;
     private static GameObject detectors;
 
     void Awake() {
-        serialization = FindObjectOfType<BlocksSerialization>();
+        serialization = GameObject.FindGameObjectWithTag("BlockArchitect").GetComponent<BlocksSerialization>();
         blockSprite = Resources.Load<Sprite>("blockSprite");
     }
 
-    public static GameObject CreateBlock(int index, bool complete = false) {
-        blockIndex = index;
-        blockSerialized = serialization.getConvertedTiles(blockIndex);
+    public static GameObject CreateBlock(int index, createMode mode) {
+        blockSerialized = serialization.getConvertedTiles(index);
         block = createGameObject("Block");
-        createTiles(complete);
+        createTiles(mode);
 
-        if(complete) {
+        if(mode == createMode.STANDARD) {
             block.AddComponent<Block>();
-            block.GetComponent<Block>().lockRotation = !serialization.blocks[index].canRotate;
+            block.GetComponent<Block>().lockRotation = !serialization.isRotatable(index);
             detectors = createGameObjectAsChildren(block, "Detectors");
             detectors.AddComponent<Detector>();
+            createDetectors();
 
-            createDetectorsDown();
-            createDetectorsUp();
-            createDetectorsLeft();
-            createDetectorsRight();
-
-            if (serialization.blocks[blockIndex].canRotate) createDetectorsRotation();
+            if (serialization.isRotatable(index)) createDetectorsRotation();
             else createGameObjectAsChildren(detectors, "Rotation");
-
-            //block.GetComponent<Block>().enabled = false;
-            //detectors.GetComponent<Detector>().enabled = false;
         }
-
         fixPosition();
         return block;
     }
 
-    private static void createTiles(bool complete) {
+    private static void createTiles(createMode mode) {
         Vector2 pos = new Vector2();
 
         for (int y = 0; y < 6; ++y, pos.y -= 0.38382f, pos.x = 0) {
@@ -53,56 +44,30 @@ public class BlockDeserialization : MonoBehaviour {
                     buffer.transform.tag = "Game_blockTile";
                     addSprite(buffer);
 
-                    if (complete) {
+                    if(mode == createMode.STANDARD) {
                         addPhysics(buffer);
                         buffer.AddComponent<BlockTile>();
-                        //buffer.GetComponent<BlockTile>().enabled = false;
                     }
                 }
             }
         }
     }
 
-    private static void createDetectorsDown() {
-        GameObject detectorTiles = createGameObjectAsChildren(detectors, "Down");
+    private static void createDetectors() {
         Vector2 pos = new Vector2();
+        GameObject detectorDown = createGameObjectAsChildren(detectors, "Down");
+        GameObject detectorUp = createGameObjectAsChildren(detectors, "Up");
+        GameObject detectorLeft = createGameObjectAsChildren(detectors, "Left");
+        GameObject detectorRight = createGameObjectAsChildren(detectors, "Right");
 
         for (int y = 0; y < 6; ++y, pos.y -= 0.38382f, pos.x = 0) {
             for (int x = 0; x < 6; ++x, pos.x += 0.38382f) {
-                if (blockSerialized[x, y] && ((y + 1) >= 6 || !blockSerialized[x, y + 1])) createDetector(detectorTiles, new Vector2(pos.x, pos.y - 0.38382f));
-            }
-        }
-    }
-
-    private static void createDetectorsUp() {
-        GameObject detectorTiles = createGameObjectAsChildren(detectors, "Up");
-        Vector2 pos = new Vector2();
-
-        for (int y = 0; y < 6; ++y, pos.y -= 0.38382f, pos.x = 0) {
-            for (int x = 0; x < 6; ++x, pos.x += 0.38382f) {
-                if (blockSerialized[x, y] && ((y - 1) < 0 || !blockSerialized[x, y - 1])) createDetector(detectorTiles, new Vector2(pos.x, pos.y + 0.38382f));
-            }
-        }
-    }
-
-    private static void createDetectorsLeft() {
-        GameObject detectorTiles = createGameObjectAsChildren(detectors, "Left");
-        Vector2 pos = new Vector2();
-
-        for (int y = 0; y < 6; ++y, pos.y -= 0.38382f, pos.x = 0) {
-            for (int x = 0; x < 6; ++x, pos.x += 0.38382f) {
-                if (blockSerialized[x, y] && ((x - 1) < 0 || !blockSerialized[x - 1, y])) createDetector(detectorTiles, new Vector2(pos.x - 0.38382f, pos.y));
-            }
-        }
-    }
-
-    private static void createDetectorsRight() {
-        GameObject detectorTiles = createGameObjectAsChildren(detectors, "Right");
-        Vector2 pos = new Vector2();
-
-        for (int y = 0; y < 6; ++y, pos.y -= 0.38382f, pos.x = 0) {
-            for (int x = 0; x < 6; ++x, pos.x += 0.38382f) {
-                if (blockSerialized[x, y] && ((x + 1) >= 6 || !blockSerialized[x + 1, y])) createDetector(detectorTiles, new Vector2(pos.x + 0.38382f, pos.y));
+                if (blockSerialized[x, y]) {
+                    if ((y + 1) >= 6 || !blockSerialized[x, y + 1]) createDetector(detectorDown, new Vector2(pos.x, pos.y - 0.38382f)); //Down
+                    if ((y - 1) < 0 || !blockSerialized[x, y - 1]) createDetector(detectorUp, new Vector2(pos.x, pos.y + 0.38382f)); //Up
+                    if ((x - 1) < 0 || !blockSerialized[x - 1, y]) createDetector(detectorLeft, new Vector2(pos.x - 0.38382f, pos.y)); //Left
+                    if ((x + 1) >= 6 || !blockSerialized[x + 1, y]) createDetector(detectorRight, new Vector2(pos.x + 0.38382f, pos.y)); //Right
+                }
             }
         }
     }
@@ -118,33 +83,22 @@ public class BlockDeserialization : MonoBehaviour {
     }
 
     private static void fixPosition() {
-        if (block.transform.GetChild(0).transform.localPosition.x > 0) {
-            float positionChangeX = block.transform.GetChild(0).transform.localPosition.x;
+        Vector2 firstBlockPos = block.transform.GetChild(0).localPosition;
+        bool moveX = (firstBlockPos.x > 0);
+        bool moveY = (firstBlockPos.y < 0);
 
-            //Tiles
-            foreach (Transform tl in block.transform) {
-                if (tl.name == "Tile") tl.transform.localPosition = new Vector3(tl.transform.localPosition.x - positionChangeX, tl.transform.localPosition.y);
-                else break;
+        foreach (Transform tile in block.transform) {
+            if (tile.tag == "Game_blockTile") {
+                if (moveX) tile.transform.localPosition = new Vector3(tile.transform.localPosition.x - firstBlockPos.x, tile.transform.localPosition.y);
+                if (moveY) tile.transform.localPosition = new Vector3(tile.transform.localPosition.x, tile.transform.localPosition.y - firstBlockPos.y);
             }
-
-            //Detector
-            foreach (Transform detect in detectors.transform) {
-                foreach (Transform tl in detect) tl.transform.localPosition = new Vector3(tl.transform.localPosition.x - positionChangeX, tl.transform.localPosition.y);
-            }
+            else break;
         }
 
-        if (block.transform.GetChild(0).transform.localPosition.y < 0) {
-            float positionChangeY = block.transform.GetChild(0).transform.localPosition.y;
-
-            //Tiles
-            foreach (Transform tl in block.transform) {
-                if (tl.name == "Tile") tl.transform.localPosition = new Vector3(tl.transform.localPosition.x, tl.transform.localPosition.y - positionChangeY);
-                else break;
-            }
-
-            //Detector
-            foreach (Transform detect in detectors.transform) {
-                foreach (Transform tl in detect) tl.transform.localPosition = new Vector3(tl.transform.localPosition.x, tl.transform.localPosition.y - positionChangeY);
+        foreach (Transform detect in detectors.transform) {
+            foreach (Transform tile in detect) {
+                if (moveX) tile.transform.localPosition = new Vector3(tile.transform.localPosition.x - firstBlockPos.x, tile.transform.localPosition.y);
+                if (moveY) tile.transform.localPosition = new Vector3(tile.transform.localPosition.x, tile.transform.localPosition.y - firstBlockPos.y);
             }
         }
     }

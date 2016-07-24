@@ -5,23 +5,24 @@ public class BlockOnList : MonoBehaviour {
     private GameObject block;
     private int blockIndex;
     private BlocksSerialization serialization;
+    private Button deleteButton;
 
     void Awake() {
         block = transform.GetChild(0).gameObject;
-        serialization = FindObjectOfType<BlocksSerialization>();
+        serialization = GameObject.FindGameObjectWithTag("BlockArchitect").GetComponent<BlocksSerialization>();
+        deleteButton = transform.GetChild(1).GetComponent<Button>();
     }
 
 	public void buttonDelete() {
-        Debug.Log("Delete block with index - " + blockIndex);
-        serialization.blocks.RemoveAt(blockIndex);
+        serialization.delete(blockIndex);
         Destroy(gameObject);
     }
 
     public void load(int index) {
         blockIndex = index;
-        if (!serialization.blocks[index].deletable) transform.GetChild(1).GetComponent<Button>().interactable = false;
+        if (!serialization.isDeletable(index)) deleteButton.interactable = false;
 
-        GameObject buffer = BlockDeserialization.CreateBlock(blockIndex);
+        GameObject buffer = BlockDeserialization.CreateBlock(blockIndex, BlockDeserialization.createMode.NOSCRIPT);
         buffer.transform.SetParent(block.transform);
         buffer.transform.localPosition = new Vector3();
         buffer.transform.localScale = new Vector3(1, 1, 1);

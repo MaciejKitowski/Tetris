@@ -10,10 +10,17 @@ public class InputTap : MonoBehaviour {
     private Settings settings;
     private Vector2 touchPos;
 
-    void Awake() {
+    /*void Awake() {
         endgame = FindObjectOfType<EndGame>();
         blocks = FindObjectOfType<blocksManager>();
         settings = FindObjectOfType<Settings>();
+    }*/
+
+    public void initiate(EndGame end, blocksManager block, Settings sett)
+    {
+        endgame = end;
+        blocks = block;
+        settings = sett;
     }
 
     void Update() {

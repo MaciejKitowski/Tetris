@@ -1,17 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class nextBlockController : MonoBehaviour {
-    public GameObject[] blockPrefabs;
     private BlocksSerialization serialization;
 
-    void Awake() { serialization = FindObjectOfType<BlocksSerialization>(); }
+    void Awake() { serialization = GameObject.FindGameObjectWithTag("BlockArchitect").GetComponent<BlocksSerialization>(); }
 
     public void randNew() {
         if(transform.childCount > 0) foreach (Transform obj in transform) Destroy(obj.gameObject);
-        int index = Random.Range(0, serialization.blocks.Count);
+        int index = Random.Range(0, serialization.blockCount());
 
-        GameObject buffer = BlockDeserialization.CreateBlock(index, true);
+        GameObject buffer = BlockDeserialization.CreateBlock(index, BlockDeserialization.createMode.STANDARD);
         buffer.transform.SetParent(transform);
         buffer.transform.localPosition = new Vector2(0, 0);
         buffer.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);

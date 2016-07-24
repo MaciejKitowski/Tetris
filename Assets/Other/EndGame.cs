@@ -10,8 +10,8 @@ public class EndGame : MonoBehaviour {
     private Animation anim;
 
     void Awake() {
-        game = FindObjectOfType<Game>();
-        menu = FindObjectOfType<MainMenu>();
+        game = GameObject.FindGameObjectWithTag("Game").GetComponent<Game>();
+        menu = GameObject.FindGameObjectWithTag("MainMenu").GetComponent<MainMenu>();
         anim = GetComponent<Animation>();
     }
 

@@ -11,10 +11,17 @@ public class InputSwipe : MonoBehaviour {
     private Vector2 touchStartPos = new Vector2(0, 0);
     private Vector2 touchEndPos = new Vector2(0, 0);
 
-    void Awake() {
+    /*void Awake() {
         endgame = FindObjectOfType<EndGame>();
         blocks = FindObjectOfType<blocksManager>();
         settings = FindObjectOfType<Settings>();
+    }*/
+
+    public void initiate(EndGame end, blocksManager block, Settings sett)
+    {
+        endgame = end;
+        blocks = block;
+        settings = sett;
     }
 
     void Update() {
