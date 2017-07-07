@@ -1,12 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Tetromino : MonoBehaviour {
     [SerializeField]
     private bool rotation = true;
     private TetrominoTile[] rotationColliders;
+    private Game game;
 
     void Start() {
         rotationColliders = transform.GetChild(0).GetComponentsInChildren<TetrominoTile>();
+        game = Camera.main.GetComponent<Game>();
+        StartCoroutine(fallingCoroutine());
     }
 
     void Update() {
@@ -22,5 +26,15 @@ public class Tetromino : MonoBehaviour {
             if (!obj.canRotate()) return false;
         }
         return true;
+    }
+
+    private IEnumerator fallingCoroutine() {
+        while(true) {
+            yield return new WaitForSeconds(game.tetrominoFallTime);
+            transform.position = new Vector3(transform.position.x, transform.position.y - 0.4096f, transform.position.z);
+
+            //TODO Check collision with arena border
+            //TODO Check collision with locked arena tiles
+        }
     }
 }
