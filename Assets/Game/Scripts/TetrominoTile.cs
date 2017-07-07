@@ -6,4 +6,8 @@ public class TetrominoTile : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision) {
         collidedObject = collision.gameObject;
     }
+
+    void OnCollisionExit2D(Collision2D collision) {
+        collidedObject = null;    
+    }
 }
