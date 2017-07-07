@@ -14,8 +14,8 @@ public class TetrominoTile : MonoBehaviour {
     public bool canRotate() {
         if (collidedObject == null) return false;
         else {
-            //TODO Check if collided arena tile is empty
-            return true;
+            if (!collidedObject.GetComponent<ArenaTile>().empty) return false;
+            else return true;
         }
     }
 }
