@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 public class TetrominoTile : MonoBehaviour {
+    static readonly string nullIngoreException = "Null reference to arena tile caused by collision detection speed, ignore that.";
     private ArenaTile arenaTile;
     private Arena arena;
 
@@ -26,6 +27,8 @@ public class TetrominoTile : MonoBehaviour {
     }
 
     public bool canFallDown() {
+        if (arenaTile == null) throw new System.NullReferenceException(nullIngoreException);
+
         if (arenaTile.y + 2 > arena.maxTileY) return false;
         if (!arena.tile[arenaTile.x - 1, arenaTile.y + 1].empty) return false;
 
@@ -33,6 +36,8 @@ public class TetrominoTile : MonoBehaviour {
     }
 
     public bool canMoveLeft() {
+        if (arenaTile == null) throw new System.NullReferenceException(nullIngoreException);
+
         if (arenaTile.x - 1 < 1) return false;
         if (!arena.tile[arenaTile.x - 2, arenaTile.y - 1].empty) return false;
 
@@ -40,6 +45,8 @@ public class TetrominoTile : MonoBehaviour {
     }
 
     public bool canMoveRight() {
+        if (arenaTile == null) throw new System.NullReferenceException(nullIngoreException);
+
         if (arenaTile.x + 1 > arena.maxTileX) return false;
         if (!arena.tile[arenaTile.x, arenaTile.y - 1].empty) return false;
 
