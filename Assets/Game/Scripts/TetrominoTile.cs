@@ -27,8 +27,7 @@ public class TetrominoTile : MonoBehaviour {
 
     public bool canFallDown() {
         if (arenaTile.y + 2 > arena.maxTileY) return false;
-        
-        //TODO Check collision with locked arena tiles
+        if (!arena.tile[arenaTile.x - 1, arenaTile.y + 1].empty) return false;
 
         return true;
     }
