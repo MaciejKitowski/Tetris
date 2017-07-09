@@ -31,12 +31,18 @@ public class Tetromino : MonoBehaviour {
     }
 
     private IEnumerator fallingCoroutine() {
-        while(true) {
+        bool falling = true;
+
+        while(falling) {
             yield return new WaitForSeconds(game.tetrominoFallTime);
             transform.position = new Vector3(transform.position.x, transform.position.y - 0.4096f, transform.position.z);
 
-            //TODO Check collision with arena border
-            //TODO Check collision with locked arena tiles
+            foreach(var tile in tetrominoTiles) {
+                if(!tile.canFallDown()) {
+                    falling = false;
+                    break;
+                }
+            }
         }
     }
 }
