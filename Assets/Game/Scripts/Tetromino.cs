@@ -44,5 +44,9 @@ public class Tetromino : MonoBehaviour {
                 }
             }
         }
+
+        if(!falling) {
+            //TODO delete Tetromino script, lock arena tile etc.
+        }
     }
 }

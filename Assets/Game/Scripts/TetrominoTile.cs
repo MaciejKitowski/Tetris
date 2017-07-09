@@ -1,27 +1,28 @@
 ﻿using UnityEngine;
 
 public class TetrominoTile : MonoBehaviour {
-    private ArenaTile collidedObject;
+    private ArenaTile arenaTile;
 
     void OnCollisionEnter2D(Collision2D collision) {
-        collidedObject = collision.gameObject.GetComponent<ArenaTile>();
+        arenaTile = collision.gameObject.GetComponent<ArenaTile>();
     }
 
     void OnCollisionStay2D(Collision2D collision) {
-        collidedObject = collision.gameObject.GetComponent<ArenaTile>();
+        arenaTile = collision.gameObject.GetComponent<ArenaTile>();
     }
 
     void OnCollisionExit2D(Collision2D collision) {
-        collidedObject = null;    
+        arenaTile = null;    
     }
 
     public bool canRotate() {
-        if (collidedObject == null) return false;
-        else return collidedObject.empty;
+        if (arenaTile == null) return false;
+        else return arenaTile.empty;
     }
 
     public bool canFallDown() {
-        //TODO Check collision with arena border
+        if (arenaTile.y + 2 > 20) return false;
+        
         //TODO Check collision with locked arena tiles
 
         return true;
