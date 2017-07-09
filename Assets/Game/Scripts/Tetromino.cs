@@ -57,13 +57,29 @@ public class Tetromino : MonoBehaviour {
     }
 
     private void moveLeft() {
-        //TODO check if can move left
-        transform.position = new Vector3(transform.position.x - tileSize, transform.position.y, transform.position.z);
+        bool canMove = true;
+
+        foreach (var tile in tetrominoTiles) {
+            if(!tile.canMoveLeft()) {
+                canMove = false;
+                break;
+            }
+        }
+
+        if(canMove) transform.position = new Vector3(transform.position.x - tileSize, transform.position.y, transform.position.z);
     }
 
     private void moveRight() {
-        //TODO check if can move right
-        transform.position = new Vector3(transform.position.x + tileSize, transform.position.y, transform.position.z);
+        bool canMove = true;
+
+        foreach (var tile in tetrominoTiles) {
+            if (!tile.canMoveRight()) {
+                canMove = false;
+                break;
+            }
+        }
+
+        if (canMove) transform.position = new Vector3(transform.position.x + tileSize, transform.position.y, transform.position.z);
     }
 
     private void speedUpFalling() {

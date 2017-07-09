@@ -31,4 +31,18 @@ public class TetrominoTile : MonoBehaviour {
 
         return true;
     }
+
+    public bool canMoveLeft() {
+        if (arenaTile.x - 1 < 1) return false;
+        if (!arena.tile[arenaTile.x - 2, arenaTile.y - 1].empty) return false;
+
+        return true;
+    }
+
+    public bool canMoveRight() {
+        if (arenaTile.x + 1 > arena.maxTileX) return false;
+        if (!arena.tile[arenaTile.x, arenaTile.y - 1].empty) return false;
+
+        return true;
+    }
 }
