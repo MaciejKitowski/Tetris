@@ -58,10 +58,12 @@ public class Tetromino : MonoBehaviour {
 
     private void moveLeft() {
         //TODO check if can move left
+        transform.position = new Vector3(transform.position.x - tileSize, transform.position.y, transform.position.z);
     }
 
     private void moveRight() {
         //TODO check if can move right
+        transform.position = new Vector3(transform.position.x + tileSize, transform.position.y, transform.position.z);
     }
 
     private void speedUpFalling() {
