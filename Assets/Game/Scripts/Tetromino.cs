@@ -4,19 +4,25 @@ using UnityEngine;
 public class Tetromino : MonoBehaviour {
     [SerializeField]
     private bool rotation = true;
+    private const float tileSize = 0.4096f;
     private TetrominoTile[] rotationColliders = new TetrominoTile[4];
     private TetrominoTile[] tetrominoTiles = new TetrominoTile[4];
     private Game game;
+    private float fallingTime;
 
     void Start() {
         rotationColliders = transform.GetChild(0).GetComponentsInChildren<TetrominoTile>();
         for (int i = 1; i < transform.childCount; ++i) tetrominoTiles[i - 1] = transform.GetChild(i).GetComponent<TetrominoTile>();
         game = Camera.main.GetComponent<Game>();
+        fallingTime = game.tetrominoFallTime;
         StartCoroutine(fallingCoroutine());
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.A)) rotate();
+        if (Input.GetKeyDown(KeyCode.W)) rotate();
+        if (Input.GetKeyDown(KeyCode.S)) speedUpFalling();
+        if (Input.GetKeyDown(KeyCode.A)) moveLeft();
+        if (Input.GetKeyDown(KeyCode.D)) moveRight();
     }
 
     private void rotate() {
@@ -34,8 +40,8 @@ public class Tetromino : MonoBehaviour {
         bool falling = true;
 
         while(falling) {
-            yield return new WaitForSeconds(game.tetrominoFallTime);
-            transform.position = new Vector3(transform.position.x, transform.position.y - 0.4096f, transform.position.z);
+            yield return new WaitForSeconds(fallingTime);
+            transform.position = new Vector3(transform.position.x, transform.position.y - tileSize, transform.position.z);
 
             foreach(var tile in tetrominoTiles) {
                 if(!tile.canFallDown()) {
@@ -46,7 +52,19 @@ public class Tetromino : MonoBehaviour {
         }
 
         if(!falling) {
-            //TODO delete Tetromino script, lock arena tile etc.
+            //TODO delete Tetromino script, spawn next block, lock arena tile etc.
         }
+    }
+
+    private void moveLeft() {
+        //TODO check if can move left
+    }
+
+    private void moveRight() {
+        //TODO check if can move right
+    }
+
+    private void speedUpFalling() {
+        fallingTime *= game.speedUpMultiplier;
     }
 }
