@@ -1,7 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+
+
 public class Tetromino : MonoBehaviour {
+    public enum TurnDirection { LEFT, RIGHT }
+
     [SerializeField]
     private bool rotation = true;
     private const float tileSize = 0.4096f;
@@ -21,8 +25,8 @@ public class Tetromino : MonoBehaviour {
     void Update() {
         if (Input.GetKeyDown(KeyCode.W)) rotate();
         if (Input.GetKeyDown(KeyCode.S)) speedUpFalling();
-        if (Input.GetKeyDown(KeyCode.A)) moveLeft();
-        if (Input.GetKeyDown(KeyCode.D)) moveRight();
+        if (Input.GetKeyDown(KeyCode.A)) turn(TurnDirection.LEFT);
+        if (Input.GetKeyDown(KeyCode.D)) turn(TurnDirection.RIGHT);
     }
 
     private void rotate() {
@@ -64,13 +68,13 @@ public class Tetromino : MonoBehaviour {
         }
     }
 
-    private void moveLeft() {
-        bool canMove = true;
+    private void turn(TurnDirection dir) {
+        bool canTurn = true;
 
         try {
             foreach (var tile in tetrominoTiles) {
-                if (!tile.canMoveLeft()) {
-                    canMove = false;
+                if(!tile.canTurn(dir)) {
+                    canTurn = false;
                     break;
                 }
             }
@@ -82,28 +86,10 @@ public class Tetromino : MonoBehaviour {
             Debug.LogError(string.Format("Unhandled exception: {0}", ex), gameObject);
         }
 
-        if (canMove) transform.position = new Vector3(transform.position.x - tileSize, transform.position.y, transform.position.z);
-    }
-
-    private void moveRight() {
-        bool canMove = true;
-
-        try {
-            foreach (var tile in tetrominoTiles) {
-                if (!tile.canMoveRight()) {
-                    canMove = false;
-                    break;
-                }
-            }
+        if(canTurn) {
+            if (dir == TurnDirection.LEFT) transform.position = new Vector3(transform.position.x - tileSize, transform.position.y, transform.position.z);
+            else transform.position = new Vector3(transform.position.x + tileSize, transform.position.y, transform.position.z);
         }
-        catch (System.NullReferenceException ex) {
-            Debug.LogWarning(ex, gameObject);
-        }
-        catch (System.Exception ex) {
-            Debug.LogError(string.Format("Unhandled exception: {0}", ex), gameObject);
-        }
-
-        if (canMove) transform.position = new Vector3(transform.position.x + tileSize, transform.position.y, transform.position.z);
     }
 
     private void speedUpFalling() {
