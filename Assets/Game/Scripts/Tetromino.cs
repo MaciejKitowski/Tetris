@@ -45,8 +45,7 @@ public class Tetromino : MonoBehaviour {
 
         while(falling) {
             yield return new WaitForSeconds(fallingTime);
-            transform.position = new Vector3(transform.position.x, transform.position.y - tileSize, transform.position.z);
-
+            
             try {
                 foreach (var tile in tetrominoTiles) {
                     if (!tile.canFallDown()) {
@@ -61,6 +60,8 @@ public class Tetromino : MonoBehaviour {
             catch (System.Exception ex) {
                 Debug.LogError(string.Format("Unhandled exception: {0}", ex), gameObject);
             }
+
+            transform.position = new Vector3(transform.position.x, transform.position.y - tileSize, transform.position.z);
         }
 
         if(!falling) {
