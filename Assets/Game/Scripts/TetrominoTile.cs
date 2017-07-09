@@ -2,6 +2,11 @@
 
 public class TetrominoTile : MonoBehaviour {
     private ArenaTile arenaTile;
+    private Arena arena;
+
+    void Start() {
+        arena = GameObject.FindGameObjectWithTag("Arena").GetComponent<Arena>();
+    }
 
     void OnCollisionEnter2D(Collision2D collision) {
         arenaTile = collision.gameObject.GetComponent<ArenaTile>();
@@ -21,7 +26,7 @@ public class TetrominoTile : MonoBehaviour {
     }
 
     public bool canFallDown() {
-        if (arenaTile.y + 2 > 20) return false;
+        if (arenaTile.y + 2 > arena.maxTileY) return false;
         
         //TODO Check collision with locked arena tiles
 
