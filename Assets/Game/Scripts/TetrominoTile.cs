@@ -51,6 +51,6 @@ public class TetrominoTile : MonoBehaviour {
     }
 
     public void endFalling() {
-        arenaTile.lockTile();
+        arenaTile.lockTile(this);
     }
 }

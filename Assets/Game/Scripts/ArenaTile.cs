@@ -4,6 +4,7 @@ public class ArenaTile : MonoBehaviour {
     [SerializeField]
     private bool _empty = true;
     private int _x, _y;
+    private TetrominoTile tile;
 
     public bool empty { get { return _empty; } private set { _empty = value; } }
     public int x { get { return _x; } private set { _x = value; } }
@@ -19,7 +20,13 @@ public class ArenaTile : MonoBehaviour {
         }
     }
 
-    public void lockTile() {
+    public void lockTile(TetrominoTile tile) {
         empty = false;
+        this.tile = tile;
+    }
+
+    public void unlockTile() {
+        empty = true;
+        tile = null;
     }
 }
