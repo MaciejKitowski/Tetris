@@ -64,10 +64,7 @@ public class Tetromino : MonoBehaviour {
             transform.position = new Vector3(transform.position.x, transform.position.y - tileSize, transform.position.z);
         }
 
-        if(!falling) {
-            endFalling();
-            //TODO delete Tetromino script, spawn next block, lock arena tile etc.
-        }
+        if(!falling) endFalling();
     }
 
     private void turn(TurnDirection dir) {
