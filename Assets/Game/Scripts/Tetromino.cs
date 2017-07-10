@@ -48,10 +48,8 @@ public class Tetromino : MonoBehaviour {
             
             try {
                 foreach (var tile in tetrominoTiles) {
-                    if (!tile.canFallDown()) {
-                        falling = false;
-                        break;
-                    }
+                    falling = tile.canFallDown();
+                    if (!falling) break;
                 }
             }
             catch (System.NullReferenceException ex) {
@@ -61,7 +59,7 @@ public class Tetromino : MonoBehaviour {
                 Debug.LogError(string.Format("Unhandled exception: {0}", ex), gameObject);
             }
 
-            transform.position = new Vector3(transform.position.x, transform.position.y - tileSize, transform.position.z);
+            if(falling) transform.position = new Vector3(transform.position.x, transform.position.y - tileSize, transform.position.z);
         }
 
         if(!falling) endFalling();
@@ -72,10 +70,8 @@ public class Tetromino : MonoBehaviour {
 
         try {
             foreach (var tile in tetrominoTiles) {
-                if(!tile.canTurn(dir)) {
-                    canTurn = false;
-                    break;
-                }
+                canTurn = tile.canTurn(dir);
+                if (!canTurn) break;
             }
         }
         catch (System.NullReferenceException ex) {
