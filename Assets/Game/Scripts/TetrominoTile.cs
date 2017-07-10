@@ -29,8 +29,8 @@ public class TetrominoTile : MonoBehaviour {
     public bool canFallDown() {
         if (arenaTile == null) throw new System.NullReferenceException(nullIngoreException);
 
-        if (arenaTile.y + 2 > arena.maxTileY) return false;
-        else if (!arena.tile[arenaTile.x - 1, arenaTile.y].empty) return false;
+        if (arenaTile.y + 2 >= arena.maxTileY) return false;
+        else if (!arena.tile[arenaTile.x, arenaTile.y + 1].empty) return false;
 
         return true;
     }
@@ -39,12 +39,12 @@ public class TetrominoTile : MonoBehaviour {
         if (arenaTile == null) throw new System.NullReferenceException(nullIngoreException);
 
         if(dir == Tetromino.TurnDirection.LEFT) {
-            if (arenaTile.x - 1 < 1) return false;
-            if (!arena.tile[arenaTile.x - 2, arenaTile.y - 1].empty) return false;
+            if (arenaTile.x <= 0) return false;
+            if (!arena.tile[arenaTile.x - 1, arenaTile.y].empty) return false;
         }
         else {
-            if (arenaTile.x + 1 > arena.maxTileX) return false;
-            if (!arena.tile[arenaTile.x, arenaTile.y - 1].empty) return false;
+            if (arenaTile.x + 1 >= arena.maxTileX) return false;
+            if (!arena.tile[arenaTile.x + 1, arenaTile.y].empty) return false;
         }
 
         return true;

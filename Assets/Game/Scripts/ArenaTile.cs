@@ -13,6 +13,10 @@ public class ArenaTile : MonoBehaviour {
         if(!int.TryParse(transform.name, out _x) || !int.TryParse(transform.parent.name, out _y)) {
             Debug.LogError(string.Format("Cannot parse arena position: x = {0}  y = {1}", transform.name, transform.parent.name), gameObject);
         }
+        else {
+            x -= 1;
+            y -= 1;
+        }
     }
 
     public void lockTile() {
