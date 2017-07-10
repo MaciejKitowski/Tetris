@@ -30,7 +30,7 @@ public class TetrominoTile : MonoBehaviour {
         if (arenaTile == null) throw new System.NullReferenceException(nullIngoreException);
 
         if (arenaTile.y + 2 > arena.maxTileY) return false;
-        if (!arena.tile[arenaTile.x - 1, arenaTile.y + 1].empty) return false;
+        else if (!arena.tile[arenaTile.x - 1, arenaTile.y].empty) return false;
 
         return true;
     }
@@ -48,5 +48,9 @@ public class TetrominoTile : MonoBehaviour {
         }
 
         return true;
+    }
+
+    public void endFalling() {
+        arenaTile.lockTile();
     }
 }

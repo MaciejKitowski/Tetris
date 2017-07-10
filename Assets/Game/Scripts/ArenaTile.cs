@@ -15,4 +15,8 @@ public class ArenaTile : MonoBehaviour {
             Debug.LogError(string.Format("Cannot parse arena position: x = {0}  y = {1}", transform.name, transform.parent.name), gameObject);
         }
     }
+
+    public void lockTile() {
+        empty = false;
+    }
 }

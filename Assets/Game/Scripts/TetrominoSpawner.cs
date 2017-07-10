@@ -37,10 +37,11 @@ public class TetrominoSpawner : MonoBehaviour {
         }
     }
 
-    private void spawn() {
+    public void spawn() {
         GameObject obj = Instantiate(tetrominoes[nextTetrominoID].prefab);
 
         var sprites = obj.GetComponentsInChildren<SpriteRenderer>();
         foreach(var spr in sprites) spr.color = nextTetrominoColor;
+        randNew();
     }
 }

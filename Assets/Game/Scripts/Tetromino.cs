@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-
-
 public class Tetromino : MonoBehaviour {
     public enum TurnDirection { LEFT, RIGHT }
 
@@ -13,11 +11,13 @@ public class Tetromino : MonoBehaviour {
     private TetrominoTile[] tetrominoTiles = new TetrominoTile[4];
     private Game game;
     private float fallingTime;
+    private TetrominoSpawner spawner;
 
     void Start() {
         rotationColliders = transform.GetChild(0).GetComponentsInChildren<TetrominoTile>();
         for (int i = 1; i < transform.childCount; ++i) tetrominoTiles[i - 1] = transform.GetChild(i).GetComponent<TetrominoTile>();
         game = Camera.main.GetComponent<Game>();
+        spawner = GameObject.FindGameObjectWithTag("TetrominoSpawner").GetComponent<TetrominoSpawner>();
         fallingTime = game.tetrominoFallTime;
         StartCoroutine(fallingCoroutine());
     }
@@ -65,6 +65,7 @@ public class Tetromino : MonoBehaviour {
         }
 
         if(!falling) {
+            endFalling();
             //TODO delete Tetromino script, spawn next block, lock arena tile etc.
         }
     }
@@ -95,5 +96,13 @@ public class Tetromino : MonoBehaviour {
 
     private void speedUpFalling() {
         fallingTime *= game.speedUpMultiplier;
+    }
+
+    private void endFalling() {
+        foreach (var tile in tetrominoTiles) tile.endFalling();
+
+        spawner.spawn();
+        Destroy(transform.GetChild(0).gameObject); //Rotation colliders
+        Destroy(this);
     }
 }
