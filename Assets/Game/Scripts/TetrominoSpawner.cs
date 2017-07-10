@@ -19,10 +19,11 @@ public class TetrominoSpawner : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.G)) randNew();   
+        if (Input.GetKeyDown(KeyCode.G)) randNew();
+        if (Input.GetKeyDown(KeyCode.Space)) spawn();
     }
 
-    public void randNew() {
+    private void randNew() {
         foreach(var tt in tetrominoes) {
             tt.nextBlockUI.SetActive(false);
         }
@@ -34,5 +35,12 @@ public class TetrominoSpawner : MonoBehaviour {
         foreach(Transform tt in tetrominoes[nextTetrominoID].nextBlockUI.transform) {
             tt.GetComponent<SpriteRenderer>().color = nextTetrominoColor;
         }
+    }
+
+    private void spawn() {
+        GameObject obj = Instantiate(tetrominoes[nextTetrominoID].prefab);
+
+        var sprites = obj.GetComponentsInChildren<SpriteRenderer>();
+        foreach(var spr in sprites) spr.color = nextTetrominoColor;
     }
 }
