@@ -30,8 +30,13 @@ public class Arena : MonoBehaviour {
         }
 
         if (counter == maxTileX) {
-            //TODO Move down tetromino tiles on arena, add points.
+            //TODO Add points.
+
             for (int x = 0; x < maxTileX; ++x) tile[x, y].removeTetrominoTile();
+
+            for(int i = y - 1; i >= 0; --i) {
+                for (int x = 0; x < maxTileX; ++x) tile[x, i].tetrominoFalldown();
+            }
         }
     }
 }

@@ -54,4 +54,12 @@ public class TetrominoTile : MonoBehaviour {
         arenaTile.lockTile(this);
         arena.checkRow(arenaTile.y);
     }
+
+    public void fallDown() {
+        while(arenaTile.y + 1 < arena.maxTileY && arena.tile[arenaTile.x, arenaTile.y + 1].empty) {
+            arenaTile = arena.tile[arenaTile.x, arenaTile.y + 1];
+            transform.position = arenaTile.transform.position;
+        }
+        arenaTile.lockTile(this);
+    }
 }

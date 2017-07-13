@@ -34,4 +34,11 @@ public class ArenaTile : MonoBehaviour {
         Destroy(tile.gameObject);
         unlockTile();
     }
+
+    public void tetrominoFalldown() {
+        if (tile != null) {
+            tile.fallDown();
+            unlockTile();
+        }
+    }
 }
