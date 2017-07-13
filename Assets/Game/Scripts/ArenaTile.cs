@@ -29,4 +29,9 @@ public class ArenaTile : MonoBehaviour {
         empty = true;
         tile = null;
     }
+
+    public void removeTetrominoTile() {
+        Destroy(tile.gameObject);
+        unlockTile();
+    }
 }

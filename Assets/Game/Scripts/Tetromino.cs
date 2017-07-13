@@ -6,7 +6,7 @@ public class Tetromino : MonoBehaviour {
 
     [SerializeField]
     private bool rotation = true;
-    private const float tileSize = 0.4096f;
+    private readonly float tileSize = 0.4096f;
     private TetrominoTile[] rotationColliders = new TetrominoTile[4];
     private TetrominoTile[] tetrominoTiles = new TetrominoTile[4];
     private Game game;

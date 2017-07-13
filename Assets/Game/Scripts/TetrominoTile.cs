@@ -52,5 +52,6 @@ public class TetrominoTile : MonoBehaviour {
 
     public void endFalling() {
         arenaTile.lockTile(this);
+        arena.checkRow(arenaTile.y);
     }
 }
