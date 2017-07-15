@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+//TODO Tile should detect current position using collisions only on spawn
 public class TetrominoTile : MonoBehaviour {
     static readonly string nullIngoreException = "Null reference to arena tile caused by collision detection speed, ignore that.";
     private ArenaTile arenaTile;

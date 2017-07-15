@@ -8,6 +8,8 @@ public class TetrominoSpawner : MonoBehaviour {
     }
 
     [SerializeField]
+    private Transform startPosition;
+    [SerializeField]
     private tetromino[] tetrominoes;
     [SerializeField]
     private Color[] possibleColors;
