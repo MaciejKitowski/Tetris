@@ -44,6 +44,7 @@ public class TetrominoSpawner : MonoBehaviour {
 
         var sprites = obj.GetComponentsInChildren<SpriteRenderer>();
         foreach(var spr in sprites) spr.color = nextTetrominoColor;
+        obj.transform.position = startPosition.position;
         randNew();
     }
 }
