@@ -47,21 +47,17 @@ public class Tetromino : MonoBehaviour {
 
         while(falling) {
             yield return new WaitForSeconds(fallingTime);
-            
-            try {
-                foreach (var tile in tetrominoTiles) {
-                    falling = tile.canFallDown();
-                    if (!falling) break;
-                }
-            }
-            catch (System.NullReferenceException ex) {
-                Debug.LogWarning(ex, gameObject);
-            }
-            catch (System.Exception ex) {
-                Debug.LogError(string.Format("Unhandled exception: {0}", ex), gameObject);
+
+            foreach(var tile in tetrominoTiles) {
+                falling = tile.canFallDown();
+                if (!falling) break;
             }
 
-            if(falling) transform.position = new Vector3(transform.position.x, transform.position.y - tileSize, transform.position.z);
+            if (falling) {
+                foreach (var tile in tetrominoTiles) tile.fallDownOnce();
+
+                transform.position = new Vector3(transform.position.x, transform.position.y - tileSize, transform.position.z);
+            }
         }
 
         if(!falling) endFalling();
@@ -70,20 +66,14 @@ public class Tetromino : MonoBehaviour {
     private void turn(TurnDirection dir) {
         bool canTurn = true;
 
-        try {
-            foreach (var tile in tetrominoTiles) {
-                canTurn = tile.canTurn(dir);
-                if (!canTurn) break;
-            }
-        }
-        catch (System.NullReferenceException ex) {
-            Debug.LogWarning(ex, gameObject);
-        }
-        catch (System.Exception ex) {
-            Debug.LogError(string.Format("Unhandled exception: {0}", ex), gameObject);
+        foreach(var tile in tetrominoTiles) {
+            canTurn = tile.canTurn(dir);
+            if (!canTurn) break;
         }
 
-        if(canTurn) {
+        if (canTurn) {
+            foreach (var tile in tetrominoTiles) tile.turn(dir);
+
             if (dir == TurnDirection.LEFT) transform.position = new Vector3(transform.position.x - tileSize, transform.position.y, transform.position.z);
             else transform.position = new Vector3(transform.position.x + tileSize, transform.position.y, transform.position.z);
         }

@@ -4,11 +4,12 @@ public class ArenaTile : MonoBehaviour {
     [SerializeField]
     private bool _empty = true;
     private int _x, _y;
-    private TetrominoTile tile;
+    private TetrominoTile _tile;
 
     public bool empty { get { return _empty; } private set { _empty = value; } }
     public int x { get { return _x; } private set { _x = value; } }
     public int y { get { return _y; } private set { _y = value; } }
+    public TetrominoTile tile { get { return _tile; } private set { _tile = value; } }
 
     void Awake() {
         if(!int.TryParse(transform.name, out _x) || !int.TryParse(transform.parent.name, out _y)) {
@@ -36,9 +37,6 @@ public class ArenaTile : MonoBehaviour {
     }
 
     public void tetrominoFalldown() {
-        if (tile != null) {
-            tile.fallDown();
-            unlockTile();
-        }
+        if (tile != null) tile.fallDown();
     }
 }
