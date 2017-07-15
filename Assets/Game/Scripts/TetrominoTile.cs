@@ -22,6 +22,7 @@ public class TetrominoTile : MonoBehaviour {
         arenaTile = null;    
     }
 
+    [System.Obsolete("Replace that by TetrominoRotationTile class")]
     public bool canRotate() {
         if (arenaTile == null) return false;
         else return arenaTile.empty;

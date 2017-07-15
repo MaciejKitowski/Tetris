@@ -7,13 +7,19 @@ public class Tetromino : MonoBehaviour {
     [SerializeField]
     private bool rotation = true;
     private readonly float tileSize = 0.4096f;
+
+    [System.Obsolete("Replace that by TetrominoRotationTile class")]
     private TetrominoTile[] rotationColliders = new TetrominoTile[4];
+
     private TetrominoTile[] tetrominoTiles = new TetrominoTile[4];
+    private TetrominoRotationTile[] rotationTiles;
     private Game game;
     private float fallingTime;
     private TetrominoSpawner spawner;
 
     void Start() {
+        rotationTiles = GetComponentsInChildren<TetrominoRotationTile>();
+
         rotationColliders = transform.GetChild(0).GetComponentsInChildren<TetrominoTile>();
         for (int i = 1; i < transform.childCount; ++i) tetrominoTiles[i - 1] = transform.GetChild(i).GetComponent<TetrominoTile>();
         game = Camera.main.GetComponent<Game>();
