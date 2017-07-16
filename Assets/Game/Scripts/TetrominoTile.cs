@@ -42,6 +42,7 @@ public class TetrominoTile : MonoBehaviour {
     }
 
     public void endFalling() {
+        position.lockTile(this);
         arena.checkRow(position.y);
     }
 
