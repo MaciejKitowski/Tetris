@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
 public class TetrominoTile : MonoBehaviour {
-    static readonly string nullIngoreException = "Null reference to arena tile caused by collision detection speed, ignore that.";
-    private ArenaTile arenaTile;
+    private ArenaTile position;
     private Arena arena;
 
     void Start() {
@@ -10,43 +9,66 @@ public class TetrominoTile : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-        arenaTile = collision.gameObject.GetComponent<ArenaTile>();
-    }
-
-    void OnCollisionStay2D(Collision2D collision) {
-        arenaTile = collision.gameObject.GetComponent<ArenaTile>();
-    }
-
-    void OnCollisionExit2D(Collision2D collision) {
-        arenaTile = null;    
-    }
-
-    public bool canRotate() {
-        if (arenaTile == null) return false;
-        else return arenaTile.empty;
+        if(position == null) position = collision.gameObject.GetComponent<ArenaTile>();
     }
 
     public bool canFallDown() {
-        if (arenaTile == null) throw new System.NullReferenceException(nullIngoreException);
-
-        if (arenaTile.y + 2 > arena.maxTileY) return false;
-        if (!arena.tile[arenaTile.x - 1, arenaTile.y + 1].empty) return false;
+        if (position.y + 1 >= arena.maxTileY) return false;
+        else if (!arena.tile[position.x, position.y + 1].empty) {
+            if (arena.tile[position.x, position.y + 1].tile.transform.parent == transform.parent) return true; //Check if is locked by the same tetromino
+            else return false;
+        }
 
         return true;
     }
 
     public bool canTurn(Tetromino.TurnDirection dir) {
-        if (arenaTile == null) throw new System.NullReferenceException(nullIngoreException);
-
         if(dir == Tetromino.TurnDirection.LEFT) {
-            if (arenaTile.x - 1 < 1) return false;
-            if (!arena.tile[arenaTile.x - 2, arenaTile.y - 1].empty) return false;
+            if (position.x <= 0) return false;
+            if (!arena.tile[position.x - 1, position.y].empty) {
+                if (arena.tile[position.x - 1, position.y].tile.transform.parent == transform.parent) return true; //Check if is locked by the same tetromino
+                else return false;
+            }
         }
         else {
-            if (arenaTile.x + 1 > arena.maxTileX) return false;
-            if (!arena.tile[arenaTile.x, arenaTile.y - 1].empty) return false;
+            if (position.x + 1 >= arena.maxTileX) return false;
+            if (!arena.tile[position.x + 1, position.y].empty) {
+                if (arena.tile[position.x + 1, position.y].tile.transform.parent == transform.parent) return true; //Check if is locked by the same tetromino
+                else return false;
+            }
         }
 
         return true;
+    }
+
+    public void endFalling() {
+        position.lockTile(this);
+        arena.checkRow(position.y);
+    }
+
+    public void rotate(TetrominoRotationTile rot) {
+        position.unlockTile();
+        position = rot.tile;
+        position.lockTile(this);
+    }
+
+    public void turn(Tetromino.TurnDirection dir, bool withPositionChange = false) {
+        position.unlockTile();
+        position = arena.tile[position.x + (int)dir, position.y];
+        if (withPositionChange) transform.position = position.transform.position;
+        position.lockTile(this);
+    }
+
+    public void fallDownOnce(bool withPositionChange = false) {
+        position.unlockTile();
+        position = arena.tile[position.x, position.y + 1];
+        if (withPositionChange) transform.position = position.transform.position;
+        position.lockTile(this);
+    }
+
+    public void fallDown() {
+        while(position.y + 1 < arena.maxTileY && arena.tile[position.x, position.y + 1].empty) {
+            fallDownOnce(true);
+        }
     }
 }

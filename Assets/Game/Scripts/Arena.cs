@@ -20,4 +20,23 @@ public class Arena : MonoBehaviour {
             }
         }
     }
+
+    public void checkRow(int y) {
+        int counter = 0;
+
+        for(int x = 0; x < maxTileX; ++x) {
+            if (tile[x, y].empty) break;
+            else ++counter;
+        }
+
+        if (counter == maxTileX) {
+            //TODO Add points.
+
+            for (int x = 0; x < maxTileX; ++x) tile[x, y].removeTetrominoTile();
+
+            for(int i = y - 1; i >= 0; --i) {
+                for (int x = 0; x < maxTileX; ++x) tile[x, i].tetrominoFalldown();
+            }
+        }
+    }
 }

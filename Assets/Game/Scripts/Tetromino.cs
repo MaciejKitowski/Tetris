@@ -1,23 +1,24 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-
-
 public class Tetromino : MonoBehaviour {
-    public enum TurnDirection { LEFT, RIGHT }
+    public enum TurnDirection { LEFT = -1, RIGHT = 1 }
 
     [SerializeField]
     private bool rotation = true;
-    private const float tileSize = 0.4096f;
-    private TetrominoTile[] rotationColliders = new TetrominoTile[4];
+    private readonly float tileSize = 0.4096f;
     private TetrominoTile[] tetrominoTiles = new TetrominoTile[4];
+    private TetrominoRotationTile[] rotationTiles;
     private Game game;
     private float fallingTime;
+    private TetrominoSpawner spawner;
 
     void Start() {
-        rotationColliders = transform.GetChild(0).GetComponentsInChildren<TetrominoTile>();
+        rotationTiles = GetComponentsInChildren<TetrominoRotationTile>();
+
         for (int i = 1; i < transform.childCount; ++i) tetrominoTiles[i - 1] = transform.GetChild(i).GetComponent<TetrominoTile>();
         game = Camera.main.GetComponent<Game>();
+        spawner = GameObject.FindGameObjectWithTag("TetrominoSpawner").GetComponent<TetrominoSpawner>();
         fallingTime = game.tetrominoFallTime;
         StartCoroutine(fallingCoroutine());
     }
@@ -30,12 +31,16 @@ public class Tetromino : MonoBehaviour {
     }
 
     private void rotate() {
-        if(rotation && canRotate()) transform.Rotate(0, 0, 90f);
+        if(rotation && canRotate()) {
+            for (int i = 0; i < rotationTiles.Length; ++i) tetrominoTiles[i].rotate(rotationTiles[i]);
+            transform.Rotate(0, 0, 90f);
+        }
     }
 
 	private bool canRotate() {
-        foreach(var obj in rotationColliders) {
-            if (!obj.canRotate()) return false;
+        foreach(var obj in rotationTiles) {
+            if (!obj.canRotate) return false;
+            else continue;
         }
         return true;
     }
@@ -45,49 +50,33 @@ public class Tetromino : MonoBehaviour {
 
         while(falling) {
             yield return new WaitForSeconds(fallingTime);
-            
-            try {
-                foreach (var tile in tetrominoTiles) {
-                    if (!tile.canFallDown()) {
-                        falling = false;
-                        break;
-                    }
-                }
-            }
-            catch (System.NullReferenceException ex) {
-                Debug.LogWarning(ex, gameObject);
-            }
-            catch (System.Exception ex) {
-                Debug.LogError(string.Format("Unhandled exception: {0}", ex), gameObject);
+
+            foreach(var tile in tetrominoTiles) {
+                falling = tile.canFallDown();
+                if (!falling) break;
             }
 
-            transform.position = new Vector3(transform.position.x, transform.position.y - tileSize, transform.position.z);
+            if (falling) {
+                foreach (var tile in tetrominoTiles) tile.fallDownOnce();
+
+                transform.position = new Vector3(transform.position.x, transform.position.y - tileSize, transform.position.z);
+            }
         }
 
-        if(!falling) {
-            //TODO delete Tetromino script, spawn next block, lock arena tile etc.
-        }
+        if(!falling) endFalling();
     }
 
     private void turn(TurnDirection dir) {
         bool canTurn = true;
 
-        try {
-            foreach (var tile in tetrominoTiles) {
-                if(!tile.canTurn(dir)) {
-                    canTurn = false;
-                    break;
-                }
-            }
-        }
-        catch (System.NullReferenceException ex) {
-            Debug.LogWarning(ex, gameObject);
-        }
-        catch (System.Exception ex) {
-            Debug.LogError(string.Format("Unhandled exception: {0}", ex), gameObject);
+        foreach(var tile in tetrominoTiles) {
+            canTurn = tile.canTurn(dir);
+            if (!canTurn) break;
         }
 
-        if(canTurn) {
+        if (canTurn) {
+            foreach (var tile in tetrominoTiles) tile.turn(dir);
+
             if (dir == TurnDirection.LEFT) transform.position = new Vector3(transform.position.x - tileSize, transform.position.y, transform.position.z);
             else transform.position = new Vector3(transform.position.x + tileSize, transform.position.y, transform.position.z);
         }
@@ -95,5 +84,13 @@ public class Tetromino : MonoBehaviour {
 
     private void speedUpFalling() {
         fallingTime *= game.speedUpMultiplier;
+    }
+
+    private void endFalling() {
+        foreach (var tile in tetrominoTiles) tile.endFalling();
+
+        spawner.spawn();
+        Destroy(transform.GetChild(0).gameObject); //Rotation colliders
+        Destroy(this);
     }
 }
