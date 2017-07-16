@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class Tetromino : MonoBehaviour {
-    public enum TurnDirection { LEFT, RIGHT }
+    public enum TurnDirection { LEFT = -1, RIGHT = 1 }
 
     [SerializeField]
     private bool rotation = true;

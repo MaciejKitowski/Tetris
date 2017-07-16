@@ -53,12 +53,8 @@ public class TetrominoTile : MonoBehaviour {
     }
 
     public void turn(Tetromino.TurnDirection dir, bool withPositionChange = false) {
-        int direction = 0;
-        if (dir == Tetromino.TurnDirection.LEFT) direction = -1;
-        else direction = 1;
-
         position.unlockTile();
-        position = arena.tile[position.x + direction, position.y];
+        position = arena.tile[position.x + (int)dir, position.y];
         if (withPositionChange) transform.position = position.transform.position;
         position.lockTile(this);
     }
