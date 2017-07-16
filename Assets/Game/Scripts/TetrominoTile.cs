@@ -45,6 +45,12 @@ public class TetrominoTile : MonoBehaviour {
         arena.checkRow(position.y);
     }
 
+    public void rotate(TetrominoRotationTile rot) {
+        position.unlockTile();
+        position = rot.tile;
+        position.lockTile(this);
+    }
+
     public void turn(Tetromino.TurnDirection dir, bool withPositionChange = false) {
         int direction = 0;
         if (dir == Tetromino.TurnDirection.LEFT) direction = -1;

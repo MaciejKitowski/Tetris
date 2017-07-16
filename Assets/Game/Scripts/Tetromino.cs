@@ -31,7 +31,10 @@ public class Tetromino : MonoBehaviour {
     }
 
     private void rotate() {
-        if(rotation && canRotate()) transform.Rotate(0, 0, 90f);
+        if(rotation && canRotate()) {
+            for (int i = 0; i < rotationTiles.Length; ++i) tetrominoTiles[i].rotate(rotationTiles[i]);
+            transform.Rotate(0, 0, 90f);
+        }
     }
 
 	private bool canRotate() {
