@@ -3,18 +3,15 @@ using UnityEngine.UI;
 
 public class Game : MonoBehaviour {
     [SerializeField]
-    private float _tetrominoFallTime = 1.0f;
-    [SerializeField]
-    private float _speedUpMultiplier = 0.1f;
+    private Game_components.Tetromino _tetromino;
+    //TODO Separate points to different class like Game_components.Tetromino class
     [SerializeField]
     private Text pointsField;
     [SerializeField]
     private int pointsPerRow = 15;
-
     private int points = 0;
 
-    public float tetrominoFallTime { get { return _tetrominoFallTime; } private set { _tetrominoFallTime = value; } }
-    public float speedUpMultiplier { get { return _speedUpMultiplier; } private set { _speedUpMultiplier = value; } }
+    public Game_components.Tetromino tetromino { get { return _tetromino; } }
 
     void Start() {
         points = 0;

@@ -19,13 +19,13 @@ public class Tetromino : MonoBehaviour {
         for (int i = 1; i < transform.childCount; ++i) tetrominoTiles[i - 1] = transform.GetChild(i).GetComponent<TetrominoTile>();
         game = Camera.main.GetComponent<Game>();
         spawner = GameObject.FindGameObjectWithTag("TetrominoSpawner").GetComponent<TetrominoSpawner>();
-        fallingTime = game.tetrominoFallTime;
+        fallingTime = game.tetromino.fallTime;
         StartCoroutine(fallingCoroutine());
     }
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.W)) rotate();
-        if (Input.GetKeyDown(KeyCode.S)) speedUpFalling();
+        if (Input.GetKeyDown(KeyCode.S)) boostFalling();
         if (Input.GetKeyDown(KeyCode.A)) turn(TurnDirection.LEFT);
         if (Input.GetKeyDown(KeyCode.D)) turn(TurnDirection.RIGHT);
     }
@@ -82,8 +82,8 @@ public class Tetromino : MonoBehaviour {
         }
     }
 
-    private void speedUpFalling() {
-        fallingTime *= game.speedUpMultiplier;
+    private void boostFalling() {
+        fallingTime = game.tetromino.fallTimeBoosted;
     }
 
     private void endFalling() {
