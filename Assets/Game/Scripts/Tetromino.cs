@@ -91,6 +91,7 @@ public class Tetromino : MonoBehaviour {
 
         spawner.spawn();
         Destroy(transform.GetChild(0).gameObject); //Rotation colliders
+        Destroy(GetComponent<Rigidbody>());
         Destroy(this);
     }
 }
