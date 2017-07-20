@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game_components {
     [System.Serializable]
@@ -16,5 +17,23 @@ namespace Game_components {
         [SerializeField] private int rowsToLevel = 5;
 
         public void rowRemoved() { bar.raiseProgress(1f / rowsToLevel); }
+    }
+
+    [System.Serializable]
+    public class Point {
+        [SerializeField] private Text displayValue;
+        [SerializeField] private int pointsPerRow = 15;
+        private int _points;
+
+        public int points {
+            get { return _points; }
+            set {
+                _points = value;
+                displayValue.text = value.ToString();
+            }
+        }
+
+        public void setPoints(int val) { points = val; }
+        public void addPoints() { points += pointsPerRow; }
     }
 }
