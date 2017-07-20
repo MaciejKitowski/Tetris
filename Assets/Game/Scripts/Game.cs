@@ -12,6 +12,7 @@ public class Game : MonoBehaviour {
 
     void Start() {
         points.setPoints(0);
+        level.bar.BarFinished += level.newLevel;
     }
 
     public void addPoints() {

@@ -62,8 +62,6 @@ public class CircleBar : MonoBehaviour {
             yield return new WaitForSeconds(0.01f);
             change = (float)System.Math.Round(change - movePerChange, 2);
 
-            Debug.Log(string.Format("{0}", change));
-
             currentProgress += movePerChange;
             currentProgress = (float)System.Math.Round(currentProgress, 2);
             updateProgress();
