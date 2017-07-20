@@ -29,7 +29,7 @@ public class TetrominoSpawner : MonoBehaviour {
         foreach(var tt in tetrominoes) {
             tt.nextBlockUI.SetActive(false);
         }
-
+        
         nextTetrominoID = Random.Range(0, tetrominoes.Length);
         nextTetrominoColor = possibleColors[Random.Range(0, possibleColors.Length)];
         tetrominoes[nextTetrominoID].nextBlockUI.SetActive(true);

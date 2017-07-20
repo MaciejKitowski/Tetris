@@ -1,17 +1,24 @@
 ﻿using UnityEngine;
-
-//TODO not work yet
-public enum TetrominoFallType { DYNAMIC, STATIC } //DYNAMIC - tetromino tile will always fall down
+using UnityEngine.UI;
 
 public class Game : MonoBehaviour {
-    [SerializeField]
-    private TetrominoFallType _fallype;
-    [SerializeField]
-    private float _tetrominoFallTime = 1.0f;
-    [SerializeField]
-    private float _speedUpMultiplier = 0.1f;
+    [SerializeField] private Game_components.Tetromino _tetromino;
+    [SerializeField] private Game_components.Level _level;
+    [SerializeField] private Game_components.Point _points;
 
-    public float tetrominoFallTime { get { return _tetrominoFallTime; } private set { _tetrominoFallTime = value; } }
-    public float speedUpMultiplier { get { return _speedUpMultiplier; } private set { _speedUpMultiplier = value; } }
-    public TetrominoFallType fallType { get { return _fallype; } private set { _fallype = value; } }
+    public Game_components.Tetromino tetromino { get { return _tetromino; } }
+    public Game_components.Level level { get { return _level; } }
+    public Game_components.Point points { get { return _points; } }
+
+    void Start() {
+        points.setPoints(0);
+        level.bar.BarFinished += level.newLevel;
+        level.bar.BarFinished += tetromino.newLevel;
+        level.bar.BarFinished += points.newLevel;
+    }
+
+    public void addPoints() {
+        points.addPoints();
+        level.rowRemoved();
+    }
 }

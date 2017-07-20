@@ -31,6 +31,7 @@ public class ArenaTile : MonoBehaviour {
         tile = null;
     }
 
+    //TODO BUG: remove tile set tile variable as missing
     public void removeTetrominoTile() {
         Destroy(tile.gameObject);
         unlockTile();
