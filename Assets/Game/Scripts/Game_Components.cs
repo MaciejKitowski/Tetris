@@ -9,4 +9,12 @@ namespace Game_components {
         public float fallTime { get { return _fallTime; } }
         public float fallTimeBoosted { get { return _fallTime * _boostMultiplier; } }
     }
+
+    [System.Serializable]
+    public class Level {
+        [SerializeField] private CircleBar bar;
+        [SerializeField] private int rowsToLevel = 5;
+
+        public void rowRemoved() { bar.raiseProgress(1f / rowsToLevel); }
+    }
 }
