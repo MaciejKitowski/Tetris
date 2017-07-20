@@ -7,7 +7,7 @@ namespace Game_components {
     public class Tetromino : ILevelable {
         [SerializeField] private float _fallTime = 1.0f;
         [SerializeField] private float _boostMultiplier = 0.1f;
-        [SerializeField] private float newLevelMultiplier = 0.8f;
+        [SerializeField] private float newLevelMultiplier = 0.9f;
 
         public float fallTime { get { return _fallTime; } private set { _fallTime = value; } }
         public float fallTimeBoosted { get { return _fallTime * _boostMultiplier; } }
@@ -27,9 +27,10 @@ namespace Game_components {
     }
 
     [System.Serializable]
-    public class Point {
+    public class Point : ILevelable {
         [SerializeField] private Text displayValue;
         [SerializeField] private int pointsPerRow = 15;
+        [SerializeField] private float newLevelMultiplier = 1.5f;
         private int _points;
 
         public int points {
@@ -42,6 +43,7 @@ namespace Game_components {
 
         public void setPoints(int val) { points = val; }
         public void addPoints() { points += pointsPerRow; }
+        public void newLevel() { pointsPerRow = System.Convert.ToInt32(pointsPerRow * newLevelMultiplier); }
     }
 
     public interface ILevelable {

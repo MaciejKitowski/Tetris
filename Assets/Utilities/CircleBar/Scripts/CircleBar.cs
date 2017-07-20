@@ -18,7 +18,7 @@ public class CircleBar : MonoBehaviour {
     public float currentProgress { get { return _currentProgress; } private set { _currentProgress = value; } }
     public float currentValue { get { return _currentValue; } private set { _currentValue = value; } }
 
-	void Start () {
+	void Awake () {
         BarFinished = null;
         progressBar = transform.GetChild(0).GetComponent<Image>();
         valueText = transform.GetChild(2).GetComponent<Text>();
