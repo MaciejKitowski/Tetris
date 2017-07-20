@@ -13,6 +13,7 @@ public class Game : MonoBehaviour {
     void Start() {
         points.setPoints(0);
         level.bar.BarFinished += level.newLevel;
+        level.bar.BarFinished += tetromino.newLevel;
     }
 
     public void addPoints() {

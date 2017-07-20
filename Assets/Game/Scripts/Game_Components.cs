@@ -4,12 +4,14 @@ using UnityEngine.UI;
 
 namespace Game_components {
     [System.Serializable]
-    public class Tetromino {
+    public class Tetromino : ILevelable {
         [SerializeField] private float _fallTime = 1.0f;
         [SerializeField] private float _boostMultiplier = 0.1f;
-        
-        public float fallTime { get { return _fallTime; } }
+        [SerializeField] private float newLevelMultiplier = 0.8f;
+
+        public float fallTime { get { return _fallTime; } private set { _fallTime = value; } }
         public float fallTimeBoosted { get { return _fallTime * _boostMultiplier; } }
+        public void newLevel() { fallTime *= newLevelMultiplier; }
     }
 
     [System.Serializable]
