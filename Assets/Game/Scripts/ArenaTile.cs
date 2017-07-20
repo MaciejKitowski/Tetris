@@ -22,16 +22,15 @@ public class ArenaTile : MonoBehaviour {
     }
 
     public void lockTile(TetrominoTile tile) {
-        empty = false;
         this.tile = tile;
+        empty = false;
     }
 
     public void unlockTile() {
-        empty = true;
         tile = null;
+        empty = true;
     }
 
-    //TODO BUG: remove tile set tile variable as missing
     public void removeTetrominoTile() {
         Destroy(tile.gameObject);
         unlockTile();
