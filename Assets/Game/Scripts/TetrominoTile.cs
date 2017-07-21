@@ -43,7 +43,7 @@ public class TetrominoTile : MonoBehaviour {
 
     public void endFalling() {
         position.lockTile(this);
-        StartCoroutine(arena.checkRow(position.y));
+        arena.addRowToCheck(position.y);
     }
 
     public void rotate(TetrominoRotationTile rot) {
@@ -70,5 +70,7 @@ public class TetrominoTile : MonoBehaviour {
         while(position.y + 1 < arena.maxTileY && arena.tile[position.x, position.y + 1].empty) {
             fallDownOnce(true);
         }
+
+        endFalling();
     }
 }
