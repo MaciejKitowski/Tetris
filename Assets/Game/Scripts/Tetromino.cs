@@ -12,22 +12,33 @@ public class Tetromino : MonoBehaviour {
     private Game game;
     private float fallingTime;
     private TetrominoSpawner spawner;
+    private SwipeInput input;
 
     void Start() {
         rotationTiles = GetComponentsInChildren<TetrominoRotationTile>();
 
         for (int i = 1; i < transform.childCount; ++i) tetrominoTiles[i - 1] = transform.GetChild(i).GetComponent<TetrominoTile>();
         game = Camera.main.GetComponent<Game>();
+        input = Camera.main.GetComponent<SwipeInput>();
         spawner = GameObject.FindGameObjectWithTag("TetrominoSpawner").GetComponent<TetrominoSpawner>();
         fallingTime = game.tetromino.fallTime;
+
+        assignToInputEvents();
         StartCoroutine(fallingCoroutine());
     }
 
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.W)) rotate();
-        if (Input.GetKeyDown(KeyCode.S)) boostFalling();
-        if (Input.GetKeyDown(KeyCode.A)) turn(TurnDirection.LEFT);
-        if (Input.GetKeyDown(KeyCode.D)) turn(TurnDirection.RIGHT);
+    private void assignToInputEvents() {
+        input.SwipedUp += rotate;
+        input.SwipedDown += boostFalling;
+        input.SwipedLeft += turnLeft;
+        input.SwipedRight += turnRight;
+    }
+
+    private void removeFromInputEvents() {
+        input.SwipedUp -= rotate;
+        input.SwipedDown -= boostFalling;
+        input.SwipedLeft -= turnLeft;
+        input.SwipedRight -= turnRight;
     }
 
     private void rotate() {
@@ -66,6 +77,9 @@ public class Tetromino : MonoBehaviour {
         if(!falling) endFalling();
     }
 
+    private void turnLeft() { turn(TurnDirection.LEFT); }
+    private void turnRight() { turn(TurnDirection.RIGHT); }
+
     private void turn(TurnDirection dir) {
         bool canTurn = true;
 
@@ -87,6 +101,7 @@ public class Tetromino : MonoBehaviour {
     }
 
     private void endFalling() {
+        removeFromInputEvents();
         foreach (var tile in tetrominoTiles) tile.endFalling();
 
         spawner.spawn();
