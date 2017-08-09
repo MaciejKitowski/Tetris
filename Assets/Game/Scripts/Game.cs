@@ -22,6 +22,10 @@ public class Game : MonoBehaviour {
         level.bar.BarFinished += points.newLevel;
     }
 
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) StartCoroutine(loadMainMenuSceneAsnyc());    
+    }
+
     public void addPoints() {
         points.addPoints();
         level.rowRemoved();
@@ -39,6 +43,11 @@ public class Game : MonoBehaviour {
 
     private IEnumerator loadGameSceneAsnyc() {
         AsyncOperation async = SceneManager.LoadSceneAsync("Game");
+        yield return async;
+    }
+
+    private IEnumerator loadMainMenuSceneAsnyc() {
+        AsyncOperation async = SceneManager.LoadSceneAsync("MainMenu");
         yield return async;
     }
 }
