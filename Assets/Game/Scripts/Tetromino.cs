@@ -62,15 +62,17 @@ public class Tetromino : MonoBehaviour {
         while(falling) {
             yield return new WaitForSeconds(fallingTime);
 
-            foreach(var tile in tetrominoTiles) {
-                falling = tile.canFallDown();
-                if (!falling) break;
-            }
+            if(!game.pause.paused) {
+                foreach (var tile in tetrominoTiles) {
+                    falling = tile.canFallDown();
+                    if (!falling) break;
+                }
 
-            if (falling) {
-                foreach (var tile in tetrominoTiles) tile.fallDownOnce();
+                if (falling) {
+                    foreach (var tile in tetrominoTiles) tile.fallDownOnce();
 
-                transform.position = new Vector3(transform.position.x, transform.position.y - tileSize, transform.position.z);
+                    transform.position = new Vector3(transform.position.x, transform.position.y - tileSize, transform.position.z);
+                }
             }
         }
 
