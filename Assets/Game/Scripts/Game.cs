@@ -1,10 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour {
     [SerializeField] private Game_components.Tetromino _tetromino;
     [SerializeField] private Game_components.Level _level;
     [SerializeField] private Game_components.Point _points;
     [SerializeField] private Game_components.PauseGame _pause;
+
+    [SerializeField] private GameFinished gameFinishedScreen;
 
     public Game_components.Tetromino tetromino { get { return _tetromino; } }
     public Game_components.Level level { get { return _level; } }
@@ -25,7 +29,16 @@ public class Game : MonoBehaviour {
 
     public void setPause(bool val) { pause.paused = val; }
 
+    public void finishGame() {
+        gameFinishedScreen.display(points.points);
+    }
+
     public void resetGame() {
-        Debug.Log("RESET GAME");
+        StartCoroutine(loadGameSceneAsnyc());
+    }
+
+    private IEnumerator loadGameSceneAsnyc() {
+        AsyncOperation async = SceneManager.LoadSceneAsync("Game");
+        yield return async;
     }
 }

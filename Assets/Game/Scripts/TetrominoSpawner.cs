@@ -48,9 +48,7 @@ public class TetrominoSpawner : MonoBehaviour {
             obj.transform.position = startPosition.position;
             randNew();
         }
-        else {
-            Debug.Log("Cannot spawn");
-        }
+        else Camera.main.GetComponent<Game>().finishGame();
     }
 
     private bool canSpawn() {
