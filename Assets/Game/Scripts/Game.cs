@@ -22,4 +22,6 @@ public class Game : MonoBehaviour {
         points.addPoints();
         level.rowRemoved();
     }
+
+    public void setPause(bool val) { pause.paused = val; }
 }

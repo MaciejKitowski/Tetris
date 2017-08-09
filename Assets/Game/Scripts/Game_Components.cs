@@ -48,14 +48,14 @@ namespace Game_components {
 
     [System.Serializable]
     public class PauseGame {
-        [SerializeField] private GamePauseCanvas controller;
+        [SerializeField] private GameObject controller;
         [SerializeField] private bool _paused = false;
 
         public bool paused {
             get { return _paused; }
             set {
                 _paused = value;
-                controller.gameObject.SetActive(value);
+                controller.SetActive(value);
             }
         }
     }
