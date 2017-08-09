@@ -46,6 +46,20 @@ namespace Game_components {
         public void newLevel() { pointsPerRow = System.Convert.ToInt32(pointsPerRow * newLevelMultiplier); }
     }
 
+    [System.Serializable]
+    public class PauseGame {
+        [SerializeField] private GamePauseCanvas controller;
+        [SerializeField] private bool _paused = false;
+
+        public bool paused {
+            get { return _paused; }
+            set {
+                _paused = value;
+                controller.gameObject.SetActive(value);
+            }
+        }
+    }
+
     public interface ILevelable {
         void newLevel();
     }
