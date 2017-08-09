@@ -24,4 +24,8 @@ public class Game : MonoBehaviour {
     }
 
     public void setPause(bool val) { pause.paused = val; }
+
+    public void resetGame() {
+        Debug.Log("RESET GAME");
+    }
 }

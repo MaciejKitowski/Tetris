@@ -40,11 +40,21 @@ public class TetrominoSpawner : MonoBehaviour {
     }
 
     public void spawn() {
-        GameObject obj = Instantiate(tetrominoes[nextTetrominoID].prefab);
+        if(canSpawn()) {
+            GameObject obj = Instantiate(tetrominoes[nextTetrominoID].prefab);
 
-        var sprites = obj.GetComponentsInChildren<SpriteRenderer>();
-        foreach(var spr in sprites) spr.color = nextTetrominoColor;
-        obj.transform.position = startPosition.position;
-        randNew();
+            var sprites = obj.GetComponentsInChildren<SpriteRenderer>();
+            foreach (var spr in sprites) spr.color = nextTetrominoColor;
+            obj.transform.position = startPosition.position;
+            randNew();
+        }
+        else {
+            Debug.Log("Cannot spawn");
+        }
+    }
+
+    private bool canSpawn() {
+        ArenaTile tl = startPosition.GetComponent<ArenaTile>();
+        return tl.empty;
     }
 }
